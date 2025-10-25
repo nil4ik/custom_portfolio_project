@@ -20,11 +20,11 @@ load data from CSV, display portfolio value over time, and show a detailed table
 
 # Step 2 - Styling & Layout Improvements
 
-- Create assets/styles.css for a clean and modern look
+- Create assets/styles.css for a clean and modern look ✅
 
-- Add consistent margins, fonts, and colors
+- Add consistent margins, fonts, and colors ✅
 
-- Ensure the layout is responsive and easy to read
+- Ensure the layout is responsive and easy to read ✅
 
 - Make sure everything is working correctly
 

@@ -14,7 +14,7 @@ fig_total_line = px.line(df_total,
                     y = 'cumulative_total', 
                     markers=True,
                     )
-fig_total_line.update_traces(marker={'size': 10}, line={'width': 6})
+fig_total_line.update_traces(mode = 'lines', line={'width': 5})
 fig_total_line.update_layout(
     legend={'font': {'size': 16}},
     xaxis_title=None, yaxis_title=None,
@@ -33,14 +33,9 @@ fig_total_pie = px.pie(
     names = 'category',
     hole= .3)
 
-fig_total_pie.update_traces(textinfo = 'percent+label', textfont_size = 26)
+fig_total_pie.update_traces(hoverinfo = 'label+percent+name', textinfo ='none')
 fig_total_pie.update_layout(
-    legend={'font': {'size': 16}},
-    title={
-        'font': {'size': 30},
-        'x': 0.5,
-        'xanchor': 'center'
-        },
+    legend={'font': {'size': 16}}
     )
 
 table = html.Div(
@@ -57,6 +52,9 @@ table = html.Div(
         data=df.to_dict('records'),
         sort_action='native', 
         style_as_list_view=True,
+        page_action='native',
+        page_current=0,
+        page_size=20
     ),
     className = 'portfolio_table_css'
 )
@@ -66,7 +64,6 @@ def serve_layout():
         html.H1('Custom portfolio dashboard', className = 'header'),
 
         html.Div([
-            #html.H2('Portfolio Total Value', style = {'textAlign':'center', 'fontSize':'42px'}),
             dcc.Graph(id = 'line_total_plot', figure = fig_total_line),
             dcc.Graph(id = 'pie_total_plot', figure = fig_total_pie)],
             className='graph_container_total'),

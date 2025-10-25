@@ -5,10 +5,20 @@ Microsoft Stock,Stock,320,3,2024-02-15
 Amazon Stock,Stock,140,8,2024-01-20
 Google Stock,Stock,130,6,2023-12-10
 NVIDIA Stock,Stock,460,4,2024-05-12
+Meta Stock,Stock,295,7,2024-01-15
+Netflix Stock,Stock,380,4,2023-11-20
+Adobe Stock,Stock,425,3,2024-02-28
+Intel Stock,Stock,45,15,2023-10-05
 Bitcoin,Crypto,45000,0.1,2023-11-25
 Ethereum,Crypto,3000,0.5,2024-02-18
 Solana,Crypto,110,2,2024-03-30
 Cardano,Crypto,0.42,1000,2023-09-15
+Ripple,Crypto,0.55,800,2024-01-10
+Polkadot,Crypto,7.2,50,2023-12-15
+Avalanche,Crypto,38,10,2024-02-20
+Chainlink,Crypto,15,30,2023-11-05
+Litecoin,Crypto,85,5,2024-03-12
+Polygon,Crypto,0.95,500,2023-10-20
 Gold Coin,Collectible,1550,2,2023-12-05
 Silver Bar,Collectible,25,20,2023-10-11
 Rare Comic Book,Collectible,300,1,2023-08-09
@@ -19,3 +29,63 @@ Fine Art Print,Collectible,600,1,2024-02-02
 Whiskey Bottle,Collectible,180,2,2023-11-17
 Pokémon Card,Collectible,95,5,2023-12-24
 Sneakers Limited Edition,Collectible,420,1,2024-03-03
+S&P 500 ETF,ETF,450,12,2024-01-05
+NASDAQ ETF,ETF,380,8,2023-11-15
+Vanguard Total Stock,ETF,105,20,2024-02-10
+Real Estate ETF,ETF,95,15,2023-12-20
+Emerging Markets ETF,ETF,42,25,2024-03-15
+Gold ETF,ETF,180,10,2023-10-25
+Bond ETF,ETF,85,18,2024-01-22
+Energy Sector ETF,ETF,68,12,2023-09-18
+Technology ETF,ETF,125,14,2024-04-01
+Dividend ETF,ETF,92,16,2023-11-30
+US Treasury Bond,Bond,980,5,2024-01-12
+Corporate Bond AAA,Bond,1050,3,2023-12-08
+Municipal Bond,Bond,950,4,2024-02-25
+High Yield Bond,Bond,850,6,2023-10-15
+International Bond,Bond,920,5,2024-03-20
+Inflation-Protected Bond,Bond,1020,4,2023-11-22
+Zero Coupon Bond,Bond,780,7,2024-01-30
+Convertible Bond,Bond,1100,2,2023-09-25
+Government Bond,Bond,965,5,2024-04-10
+Green Bond,Bond,990,3,2023-12-18
+Startup Equity A,Private Equity,50000,0.02,2023-07-15
+Tech Startup B,Private Equity,75000,0.015,2024-02-08
+Biotech Venture,Private Equity,100000,0.01,2023-10-22
+Fintech Company,Private Equity,60000,0.025,2024-03-12
+Green Energy Startup,Private Equity,85000,0.018,2023-11-05
+AI Company,Private Equity,120000,0.012,2024-01-18
+Healthcare Venture,Private Equity,90000,0.015,2023-09-08
+E-commerce Platform,Private Equity,70000,0.02,2024-04-25
+Real Estate Fund,Private Equity,150000,0.008,2023-12-12
+SaaS Startup,Private Equity,55000,0.022,2024-02-28
+Palladium Bar,Commodity,1800,1,2023-11-10
+Platinum Coin,Commodity,980,2,2024-01-15
+Crude Oil Futures,Commodity,75,10,2023-10-18
+Natural Gas Futures,Commodity,3.2,50,2024-03-22
+Copper Ingot,Commodity,4.1,100,2023-12-01
+Wheat Futures,Commodity,6.5,200,2024-02-12
+Coffee Beans,Commodity,2.8,150,2023-09-28
+Cotton Futures,Commodity,0.85,500,2024-04-05
+Lumber Futures,Commodity,480,5,2023-11-20
+Corn Futures,Commodity,5.2,180,2024-01-08
+Ancient Roman Coin,Antique,3500,1,2023-08-20
+Persian Rug,Antique,8200,1,2024-02-15
+Art Deco Lamp,Antique,1250,1,2023-11-03
+Victorian Furniture,Antique,4800,1,2024-03-28
+Antique Clock,Antique,2100,1,2023-10-12
+Ming Dynasty Vase,Antique,15000,1,2024-01-22
+Vintage Camera,Antique,950,1,2023-09-17
+Samurai Sword,Antique,6700,1,2024-04-08
+Ancient Manuscript,Antique,12000,1,2023-12-25
+Art Nouveau Jewelry,Antique,3300,1,2024-02-18
+Wine Collection Bordeaux,Luxury Goods,5500,6,2023-07-25
+Rolex Daytona,Luxury Goods,35000,1,2024-01-10
+Hermès Birkin Bag,Luxury Goods,22000,1,2023-10-30
+Diamond Ring,Luxury Goods,18000,1,2024-03-15
+Champagne Dom Pérignon,Luxury Goods,850,12,2023-11-18
+Patek Philippe Watch,Luxury Goods,48000,1,2024-02-22
+Louis Vuitton Trunk,Luxury Goods,12500,1,2023-09-05
+Cognac Louis XIII,Luxury Goods,3800,2,2024-04-12
+Designer Fountain Pen,Luxury Goods,2200,1,2023-12-08
+Pearl Necklace,Luxury Goods,9500,1,2024-01-28

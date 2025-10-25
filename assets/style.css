@@ -44,8 +44,7 @@ body {
     overflow: hidden !important;
     width: 90%;
     border-color: white;
-    border-left: 1px solid;
-    border-right:1px solid;
+
 }
 
 .portfolio_table_css .dash-cell{
@@ -64,7 +63,8 @@ body {
     text-align: left !important;
 }
 
-.container_table_general {
-    border-radius: 1px;    
+.button_load_more {
+    display: flex;
+    text-align: center;
+    justify-content: center;
 }
-
