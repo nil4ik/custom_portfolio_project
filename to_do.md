@@ -2,7 +2,7 @@
 
 ### Goal ✅
 Create the first working version of the Custom Portfolio Dashboard —  
-load data from JSON, display portfolio value over time, and show a detailed table.
+load data from CSV, display portfolio value over time, and show a detailed table.
 
 ------------------------------------------------------------------------
 
@@ -14,7 +14,7 @@ load data from JSON, display portfolio value over time, and show a detailed tabl
 
 - Display a line chart showing total portfolio value over time ✅
 
-- Display a detailed data table with all assets
+- Display a detailed data table with all assets ✅
 
 ------------------------------------------------------------------------
 

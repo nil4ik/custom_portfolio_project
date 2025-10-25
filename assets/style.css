@@ -20,7 +20,10 @@ body {
 }
 
 #line_total_plot {
-    width: 90%; 
+    width: 60%;
+}
+#pie_total_plot {
+    width: 30%;
 }
 
 /********************* Table ************************/

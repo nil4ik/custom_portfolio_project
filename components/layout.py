@@ -9,15 +9,39 @@ df_total = df.groupby('buy_date')['total_value'].sum().reset_index()
 df_total = df.sort_values('buy_date')
 df_total['cumulative_total'] = df_total['total_value'].cumsum()
 
-fig_total = px.line(df_total, 
+fig_total_line = px.line(df_total, 
                     x = 'buy_date', 
                     y = 'cumulative_total', 
-                    title='Portfolio Total value',
                     markers=True,
-                    ).update_layout(
-                        xaxis_title=None, 
-                        yaxis_title=None,
                     )
+fig_total_line.update_traces(marker={'size': 10}, line={'width': 6})
+fig_total_line.update_layout(
+    legend={'font': {'size': 16}},
+    xaxis_title=None, yaxis_title=None,
+    title={
+        'font': {'size': 30},
+        'x': 0.5,
+        'xanchor': 'center'
+        },
+    xaxis=dict(tickfont=dict(size=20)),
+    yaxis=dict(tickfont=dict(size=20)),
+    )
+
+fig_total_pie = px.pie(
+    df_total, 
+    values= 'total_value', 
+    names = 'category',
+    hole= .3)
+
+fig_total_pie.update_traces(textinfo = 'percent+label', textfont_size = 26)
+fig_total_pie.update_layout(
+    legend={'font': {'size': 16}},
+    title={
+        'font': {'size': 30},
+        'x': 0.5,
+        'xanchor': 'center'
+        },
+    )
 
 table = html.Div(
     dash_table.DataTable(
@@ -43,7 +67,8 @@ def serve_layout():
 
         html.Div([
             #html.H2('Portfolio Total Value', style = {'textAlign':'center', 'fontSize':'42px'}),
-            dcc.Graph(id = 'line_total_plot', figure = fig_total)],
+            dcc.Graph(id = 'line_total_plot', figure = fig_total_line),
+            dcc.Graph(id = 'pie_total_plot', figure = fig_total_pie)],
             className='graph_container_total'),
 
         html.Div([
