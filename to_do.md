@@ -8,11 +8,11 @@ load data from JSON, display portfolio value over time, and show a detailed tabl
 
 # Step 1 – Core Dashboard Layout
 
-- Build base Dash app in app.py
+- Build base Dash app in app.py 
 
-- Load data from CSV file
+- Load data from CSV file ✅
 
-- Display a line chart showing total portfolio value over time
+- Display a line chart showing total portfolio value over time ✅
 
 - Display a detailed data table with all assets
 
