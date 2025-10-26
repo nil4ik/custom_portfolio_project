@@ -12,12 +12,19 @@ df_total = df.groupby('buy_date')['total_value'].sum().reset_index()
 df_total = df.sort_values('buy_date')
 df_total['cumulative_total'] = df_total['total_value'].cumsum()
 
+##################################################################################
+
 fig_total_line = px.line(df_total, 
                     x = 'buy_date', 
                     y = 'cumulative_total', 
                     markers=True,
                     )
-fig_total_line.update_traces(mode = 'lines', line={'width': 5})
+fig_total_line.update_traces(
+    line=dict(color='#039be5', width=5),
+    fill='tozeroy',
+    fillcolor="rgba(3, 155, 229, 0.3)",
+    hovertemplate="Date: %{x}<br>Total: %{y}<extra></extra>"
+    )
 fig_total_line.update_layout(
     legend={'font': {'size': 16}},
     xaxis_title=None, yaxis_title=None,
@@ -28,7 +35,24 @@ fig_total_line.update_layout(
         },
     xaxis=dict(tickfont=dict(size=20)),
     yaxis=dict(tickfont=dict(size=20)),
+    plot_bgcolor="#303655",
+    paper_bgcolor="#303655",
     )
+
+fig_total_line.update_yaxes(
+    showgrid=True,
+    gridcolor='rgba(255,255,255,0.2)',
+    side='right',
+    gridwidth=1,
+    tickfont=dict(size=16, color='#f2f2f2')
+)
+
+fig_total_line.update_xaxes(
+    showgrid=False,
+    tickfont=dict(size=16, color='#f2f2f2')
+)
+
+############################################################################
 
 fig_total_pie = px.pie(
     df_total, 
@@ -36,9 +60,12 @@ fig_total_pie = px.pie(
     names = 'category',
     hole= .3)
 
-fig_total_pie.update_traces(hoverinfo = 'label+percent+name', textinfo ='none')
+fig_total_pie.update_traces(hoverinfo = 'label+percent+name', textinfo ='percent')
 fig_total_pie.update_layout(
-    legend={'font': {'size': 16}}
+    font=dict( size=16, color="#f2f2f2"),
+    legend=dict(font=dict(size=16, color="#f2f2f2")),
+    plot_bgcolor="#303655",
+    paper_bgcolor="#303655"
     )
 
 #################################################################################

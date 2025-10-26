@@ -22,6 +22,7 @@ body {
     width: 90%;
     margin: 0 auto;
     gap: 15px;
+    overflow: hidden;
 }
 
 .graph_container_line {
@@ -30,6 +31,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #303655;
+    padding: 5px;
+    border-radius: 10px;
 }
 .graph_container_pie {
     flex: 3;
@@ -37,6 +41,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #303655;
+    padding: 5px;
+    border-radius: 10px;
 }
 
 #line_total_plot {
@@ -107,7 +114,7 @@ body {
 }
 
 .portfolio_table_css .dash-cell{
-    background-color: #303655 !important;
+    background-color: #292e48 !important;
     color: #f2f2f2 !important;
     padding: 5px !important;
     font-family: 'Markazi Text', serif !important;
