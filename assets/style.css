@@ -11,6 +11,51 @@ body {
     text-align: center;
     margin-bottom: 100px;
 }
+/********************* Info panel ************************/
+
+.info_panel {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 70%;
+    margin: 0 auto;
+    gap: 15px;
+    margin-bottom: 80px;
+}
+
+.info_box {
+    font-size: 30px;
+    font-family:"Markazi Text", serif;
+    padding: 20px;
+    background-color: #303655;
+    border-radius: 12px;
+}
+
+/********************* time buttons ************************/
+
+.time_buttons_container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 20px;
+}
+
+.time-btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    color: #f2f2f2;
+    font-size: 16px;
+    font: bolder;
+    background-color: #303655;
+    border-color: #303655;
+    box-shadow: none !important;
+}
+
+.time-btn.active {
+    background-color: #575775;
+}
 
 /***********************************************/
 
@@ -51,45 +96,6 @@ body {
 }
 #pie_total_plot {
     width: 100%;
-}
-/********************* Info panel ************************/
-
-.info_panel {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    width: 70%;
-    margin: 0 auto;
-    gap: 15px;
-    margin-bottom: 80px;
-}
-
-.info_box {
-    font-size: 30px;
-    font-family:"Markazi Text", serif;
-    padding: 20px;
-    background-color: #303655;
-    border-radius: 12px;
-}
-
-/********************* time buttons ************************/
-
-.time_buttons_container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-left: 5%;
-    margin-right: 5%;
-    margin-bottom: 20px;
-}
-
-.time-btn {
-    padding: 10px 20px;
-    border-radius: 6px;
-    color: #f2f2f2;
-    font-size: 16px;
-    font: bolder;
-    background-color: #303655;
 }
 
 /********************* Table ************************/

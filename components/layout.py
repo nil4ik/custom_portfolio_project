@@ -14,46 +14,6 @@ df_total['cumulative_total'] = df_total['total_value'].cumsum()
 
 ##################################################################################
 
-fig_total_line = px.line(df_total, 
-                    x = 'buy_date', 
-                    y = 'cumulative_total', 
-                    markers=True,
-                    )
-fig_total_line.update_traces(
-    line=dict(color='#039be5', width=5),
-    fill='tozeroy',
-    fillcolor="rgba(3, 155, 229, 0.3)",
-    hovertemplate="Date: %{x}<br>Total: %{y}<extra></extra>"
-    )
-fig_total_line.update_layout(
-    legend={'font': {'size': 16}},
-    xaxis_title=None, yaxis_title=None,
-    title={
-        'font': {'size': 30},
-        'x': 0.5,
-        'xanchor': 'center'
-        },
-    xaxis=dict(tickfont=dict(size=20)),
-    yaxis=dict(tickfont=dict(size=20)),
-    plot_bgcolor="#303655",
-    paper_bgcolor="#303655",
-    )
-
-fig_total_line.update_yaxes(
-    showgrid=True,
-    gridcolor='rgba(255,255,255,0.2)',
-    side='right',
-    gridwidth=1,
-    tickfont=dict(size=16, color='#f2f2f2')
-)
-
-fig_total_line.update_xaxes(
-    showgrid=False,
-    tickfont=dict(size=16, color='#f2f2f2')
-)
-
-############################################################################
-
 fig_total_pie = px.pie(
     df_total, 
     values= 'total_value', 
@@ -76,7 +36,7 @@ time_buttons = html.Div([
     html.Button("1M", id="btn-1m", n_clicks=0, className="time-btn"),
     html.Button("6M", id="btn-6m", n_clicks=0, className="time-btn"),
     html.Button("1Y", id="btn-1y", n_clicks=0, className="time-btn"),
-    html.Button("ALL", id="btn-all", n_clicks=0, className="time-btn selected")
+    html.Button("ALL", id="btn-all", n_clicks=0, className="time-btn active")
 ], className="time-filter")
 
 #################################################################################
@@ -111,19 +71,19 @@ def serve_layout():
             className='info_panel',
             children=[
                 html.Div('Total Value: 1234$', className='info_box'),
-                html.Div('Most expensive item: 1234$', className='info_box'),
-                html.Div('The cheapest item: 1234$', className='info_box'),
-                html.Div('Average item price: 1234$', className='info_box'),
-                html.Div('First bought: 1234$', className='info_box'),
-                html.Div('Last bought: 1234$', className='info_box'),
-                html.Div('Number of Assets: 1234$', className='info_box'),
-                html.Div('Category breakdown: 1234$', className='info_box')
+                html.Div('Most expensive item: 1554$', className='info_box'),
+                html.Div('The cheapest item: 3421$', className='info_box'),
+                html.Div('Average item price: 12323414$', className='info_box'),
+                html.Div('First bought: Rolex 2012 gold', className='info_box'),
+                html.Div('Last bought: buggati 2021', className='info_box'),
+                html.Div('Number of Assets: 4331', className='info_box'),
+                html.Div('Category breakdown: crypto', className='info_box')
             ],
         ),
         html.Div(time_buttons, className='time_buttons_container'),
         html.Div([
             html.Div([
-                dcc.Graph(id = 'line_total_plot', figure = fig_total_line)
+                dcc.Graph(id = 'line_total_plot')
                 ], className='graph_container_line'),
             html.Div([dcc.Graph(id = 'pie_total_plot', figure = fig_total_pie)], className= 'graph_container_pie')],
             className='graph_containers_total'),
