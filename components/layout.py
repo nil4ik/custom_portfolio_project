@@ -20,10 +20,18 @@ fig_total_pie = px.pie(
     names = 'category',
     hole= .3)
 
-fig_total_pie.update_traces(hoverinfo = 'label+percent+name', textinfo ='percent')
+fig_total_pie.update_traces(
+    hoverinfo = 'label+percent+name', 
+    textinfo ='percent', 
+    textfont=dict(color='white'),
+    hovertemplate= "<b>%{label}</b><br>" + "Total: %{value}$<br>" + "Percentage: %{percent}",
+    hoverlabel=dict(
+        font_family="Markazi Text",
+        font_size=20,
+    )
+    )
 fig_total_pie.update_layout(
-    font=dict( size=16, color="#f2f2f2"),
-    legend=dict(font=dict(size=16, color="#f2f2f2")),
+    legend=dict(orientation = 'v',yanchor="top", font=dict(size=14, color="#f2f2f2")),
     plot_bgcolor="#303655",
     paper_bgcolor="#303655"
     )
@@ -83,13 +91,13 @@ def serve_layout():
         html.Div(time_buttons, className='time_buttons_container'),
         html.Div([
             html.Div([
-                dcc.Graph(id = 'line_total_plot')
+                dcc.Graph(id = 'line_total_plot', config={'displayModeBar':False})
                 ], className='graph_container_line'),
-            html.Div([dcc.Graph(id = 'pie_total_plot', figure = fig_total_pie)], className= 'graph_container_pie')],
+            html.Div([dcc.Graph(id = 'pie_total_plot', figure = fig_total_pie, config={'displayModeBar':False})], className= 'graph_container_pie')],
             className='graph_containers_total'),
 
         html.Div([
-            html.H2('Portfolio details', style = {'textAlign':'center', 'fontSize':'42px'}),
+            html.H2('Portfolio details', className='portfolio_details_h2'),
             html.Div(table, className = 'table_style_container')], 
             className='container_table_general')
     ])

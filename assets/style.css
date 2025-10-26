@@ -68,6 +68,7 @@ body {
     margin: 0 auto;
     gap: 15px;
     overflow: hidden;
+    margin-bottom: 100px;
 }
 
 .graph_container_line {
@@ -98,7 +99,24 @@ body {
     width: 100%;
 }
 
+@media (max-width: 1700px) {
+    .graph_container_pie .plotly .legend text {
+        font-size: 12px !important;
+    }
+}
+@media (max-width: 1550px) {
+    .graph_container_pie .plotly .legend text {
+        font-size: 10px !important;
+    }
+}
+
 /********************* Table ************************/
+
+.portfolio_details_h2 {
+    text-align: center;
+    font-size: 42px;
+    margin-bottom: 80px;
+}
 
 .table_style_container {
     background-color: none;
@@ -107,7 +125,7 @@ body {
     align-items: center !important;
     flex-direction: column !important;
     font-family: 'Markazi Text', serif !important;
-    font-size: 30px !important;
+    font-size: 25px !important;
     margin-bottom: 50px;
     margin-top: 50px;
 }
@@ -116,11 +134,13 @@ body {
     overflow: hidden !important;
     width: 90%;
     border-color: white;
-
+    background-color: #303655;
+    border-radius: 10px;
+    padding: 10px;
 }
 
 .portfolio_table_css .dash-cell{
-    background-color: #292e48 !important;
+    background-color: #303655 !important;
     color: #f2f2f2 !important;
     padding: 5px !important;
     font-family: 'Markazi Text', serif !important;

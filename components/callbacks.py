@@ -60,7 +60,11 @@ def register_callbacks(app):
             line=dict(color='#039be5', width=5),
             fill='tozeroy',
             fillcolor="rgba(3, 155, 229, 0.3)",
-            hovertemplate="Date: %{x}<br>Total: %{y}<extra></extra>"
+            hovertemplate="Date: %{x}<br>Total: %{y}<extra></extra>",
+            hoverlabel=dict(
+                font_family="Markazi Text",
+                font_size=20,
+            )
             )
         fig_total_line.update_layout(
             legend={'font': {'size': 16}},
