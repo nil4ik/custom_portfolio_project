@@ -2,6 +2,9 @@ from dash import html, dcc, dash_table
 import pandas as pd
 import plotly.express as px
 
+#################################################################################
+
+
 df = pd.read_csv('data/portfolio.csv')
 
 df['total_value'] = df['buy_price'] * df['quantity']
@@ -38,6 +41,19 @@ fig_total_pie.update_layout(
     legend={'font': {'size': 16}}
     )
 
+#################################################################################
+
+time_buttons = html.Div([
+    html.Button("1D", id="btn-1d", n_clicks=0, className="time-btn"),
+    html.Button("1W", id="btn-1w", n_clicks=0, className="time-btn"),
+    html.Button("1M", id="btn-1m", n_clicks=0, className="time-btn"),
+    html.Button("6M", id="btn-6m", n_clicks=0, className="time-btn"),
+    html.Button("1Y", id="btn-1y", n_clicks=0, className="time-btn"),
+    html.Button("ALL", id="btn-all", n_clicks=0, className="time-btn selected")
+], className="time-filter")
+
+#################################################################################
+
 table = html.Div(
     dash_table.DataTable(
         id='portfolio-table',
@@ -59,14 +75,31 @@ table = html.Div(
     className = 'portfolio_table_css'
 )
 
+#################################################################################
+
 def serve_layout():
     return html.Div([
         html.H1('Custom portfolio dashboard', className = 'header'),
-
+        html.Div(
+            className='info_panel',
+            children=[
+                html.Div('Total Value: 1234$', className='info_box'),
+                html.Div('Most expensive item: 1234$', className='info_box'),
+                html.Div('The cheapest item: 1234$', className='info_box'),
+                html.Div('Average item price: 1234$', className='info_box'),
+                html.Div('First bought: 1234$', className='info_box'),
+                html.Div('Last bought: 1234$', className='info_box'),
+                html.Div('Number of Assets: 1234$', className='info_box'),
+                html.Div('Category breakdown: 1234$', className='info_box')
+            ],
+        ),
+        html.Div(time_buttons, className='time_buttons_container'),
         html.Div([
-            dcc.Graph(id = 'line_total_plot', figure = fig_total_line),
-            dcc.Graph(id = 'pie_total_plot', figure = fig_total_pie)],
-            className='graph_container_total'),
+            html.Div([
+                dcc.Graph(id = 'line_total_plot', figure = fig_total_line)
+                ], className='graph_container_line'),
+            html.Div([dcc.Graph(id = 'pie_total_plot', figure = fig_total_pie)], className= 'graph_container_pie')],
+            className='graph_containers_total'),
 
         html.Div([
             html.H2('Portfolio details', style = {'textAlign':'center', 'fontSize':'42px'}),

@@ -9,21 +9,80 @@ body {
 .header {
     font-size: 70px;
     text-align: center;
+    margin-bottom: 100px;
 }
 
-.graph_container_total {
+/***********************************************/
+
+.graph_containers_total {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    width: 90%;
+    margin: 0 auto;
+    gap: 15px;
+}
+
+.graph_container_line {
+    flex: 6;
+    min-width: 600px;
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: auto;
-    margin-bottom: 50px;
+}
+.graph_container_pie {
+    flex: 3;
+    min-width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #line_total_plot {
-    width: 60%;
+    width: 100%;
 }
 #pie_total_plot {
-    width: 30%;
+    width: 100%;
+}
+/********************* Info panel ************************/
+
+.info_panel {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 70%;
+    margin: 0 auto;
+    gap: 15px;
+    margin-bottom: 80px;
+}
+
+.info_box {
+    font-size: 30px;
+    font-family:"Markazi Text", serif;
+    padding: 20px;
+    background-color: #303655;
+    border-radius: 12px;
+}
+
+/********************* time buttons ************************/
+
+.time_buttons_container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 20px;
+}
+
+.time-btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    color: #f2f2f2;
+    font-size: 16px;
+    font: bolder;
+    background-color: #303655;
 }
 
 /********************* Table ************************/
@@ -61,10 +120,4 @@ body {
     font-weight: bold !important;
     font-family: 'Markazi Text', serif !important;
     text-align: left !important;
-}
-
-.button_load_more {
-    display: flex;
-    text-align: center;
-    justify-content: center;
 }
