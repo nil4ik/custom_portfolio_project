@@ -33,7 +33,8 @@ fig_total_pie.update_traces(
 fig_total_pie.update_layout(
     legend=dict(orientation = 'v',yanchor="top", font=dict(size=14, color="#f2f2f2")),
     plot_bgcolor="#303655",
-    paper_bgcolor="#303655"
+    paper_bgcolor="#303655",
+    showlegend=False
     )
 
 #################################################################################

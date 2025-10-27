@@ -68,7 +68,7 @@ body {
     margin: 0 auto;
     gap: 15px;
     overflow: hidden;
-    margin-bottom: 100px;
+    margin-bottom: 70px;
 }
 
 .graph_container_line {
@@ -83,7 +83,7 @@ body {
 }
 .graph_container_pie {
     flex: 3;
-    min-width: 300px;
+    min-width: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -115,7 +115,7 @@ body {
 .portfolio_details_h2 {
     text-align: center;
     font-size: 42px;
-    margin-bottom: 80px;
+    margin-bottom: 70px;
 }
 
 .table_style_container {
@@ -133,10 +133,9 @@ body {
 .portfolio_table_css {
     overflow: hidden !important;
     width: 90%;
-    border-color: white;
     background-color: #303655;
     border-radius: 10px;
-    padding: 10px;
+    padding: 5px;
 }
 
 .portfolio_table_css .dash-cell{

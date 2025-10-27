@@ -1,6 +1,7 @@
 from dash import Input, Output, callback, ctx
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 from datetime import datetime, timedelta
 
 def register_callbacks(app):
@@ -51,6 +52,25 @@ def register_callbacks(app):
         filtered_df = filtered_df.sort_values('buy_date')
         filtered_df['cumulative_total'] = filtered_df['total_value'].cumsum()
 
+        buttons = ["btn-1d", "btn-1w", "btn-1m", "btn-6m", "btn-1y", "btn-all"]
+        classes = ['time-btn active' if btn == triggered_id  else 'time-btn' for btn in buttons]
+
+        if filtered_df.empty:
+            fig = go.Figure()
+            fig.add_annotation(
+                text="There were no transactions for the selected period.",
+                xref="paper", yref="paper",
+                x=0.5, y=0.5, showarrow=False,
+                font=dict(size=24, color="#f2f2f2")
+            )
+            fig.update_layout(
+                plot_bgcolor="#303655",
+                paper_bgcolor="#303655",
+                xaxis_visible=False,
+                yaxis_visible=False
+            )
+            return [fig] + classes
+
         fig_total_line = px.line(filtered_df, 
                         x = 'buy_date', 
                         y = 'cumulative_total', 
@@ -93,8 +113,5 @@ def register_callbacks(app):
             linecolor='grey',
             tickfont=dict(size=16, color='#f2f2f2')
         )
-
-        buttons = ["btn-1d", "btn-1w", "btn-1m", "btn-6m", "btn-1y", "btn-all"]
-        classes = ['time-btn active' if btn == triggered_id  else 'time-btn' for btn in buttons]
 
         return [fig_total_line] + classes
