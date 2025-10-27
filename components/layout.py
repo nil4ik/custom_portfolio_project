@@ -1,8 +1,9 @@
-from dash import html, dcc, dash_table
+from dash import html, dcc, dash_table, State
+import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.express as px
-
-#################################################################################
+from datetime import date
+##################################### Basic Data ############################################
 
 
 df = pd.read_csv('data/portfolio.csv')
@@ -12,7 +13,7 @@ df_total = df.groupby('buy_date')['total_value'].sum().reset_index()
 df_total = df.sort_values('buy_date')
 df_total['cumulative_total'] = df_total['total_value'].cumsum()
 
-##################################################################################
+###############################   Pie graph    ###################################################
 
 fig_total_pie = px.pie(
     df_total, 
@@ -37,7 +38,7 @@ fig_total_pie.update_layout(
     showlegend=False
     )
 
-#################################################################################
+######################################## Time buttons ###############################################
 
 time_buttons = html.Div([
     html.Button("1D", id="btn-1d", n_clicks=0, className="time-btn"),
@@ -48,7 +49,48 @@ time_buttons = html.Div([
     html.Button("ALL", id="btn-all", n_clicks=0, className="time-btn active")
 ], className="time-filter")
 
-#################################################################################
+###################################### Modal add_item_button &  ######################################
+
+alert = html.Div(
+    [
+        html.Hr(),
+        dbc.Alert(
+            "Item added successfully",
+            id="alert-add-item",
+            is_open=False,
+            duration=3000,
+            className="alert_css"
+        ),
+    ], className="alert_container"
+)
+
+add_item_button = html.Div(
+    [
+        dbc.Button("Add item", id="open-add-item", n_clicks=0, className="add_item_button"),
+        dbc.Modal(
+            [
+                dbc.ModalHeader("Add new item to portfolio"),
+                dbc.ModalBody([
+                    dbc.Input(id="name-input", placeholder="Name", type="text"),
+                    dbc.Input(id="category-input", placeholder="Category", type="text", className="mt-2"),
+                    dbc.Input(id="price-input", placeholder="Buy price", type="number", className="mt-2"),
+                    dbc.Input(id="qty-input", placeholder="Quantity", type="number", className="mt-2"),
+                    dbc.Input(id="buy-date-input", placeholder="Buy date (yyyy-mm-d)", type="date", className="mt-2", value=date.today().isoformat()),
+                    alert
+                ]),
+                dbc.ModalFooter([
+                    dbc.Button("Add", id="submit-item", color="success"),
+                    dbc.Button("Close", id="close-add-item", color="danger", n_clicks=0),
+            ]),
+            ],
+            id="modal-add-button",
+            is_open=False,
+            className="custom_model_css"
+        ),
+    ], className="add_item_container"
+)
+
+########################################## Table #############################################
 
 table = html.Div(
     dash_table.DataTable(
@@ -71,11 +113,12 @@ table = html.Div(
     className = 'portfolio_table_css'
 )
 
-#################################################################################
+##################################### Serve layout ############################################
 
 def serve_layout():
     return html.Div([
         html.H1('Custom portfolio dashboard', className = 'header'),
+
         html.Div(
             className='info_panel',
             children=[
@@ -86,10 +129,11 @@ def serve_layout():
                 html.Div('First bought: Rolex 2012 gold', className='info_box'),
                 html.Div('Last bought: buggati 2021', className='info_box'),
                 html.Div('Number of Assets: 4331', className='info_box'),
-                html.Div('Category breakdown: crypto', className='info_box')
             ],
         ),
+
         html.Div(time_buttons, className='time_buttons_container'),
+
         html.Div([
             html.Div([
                 dcc.Graph(id = 'line_total_plot', config={'displayModeBar':False})
@@ -99,6 +143,7 @@ def serve_layout():
 
         html.Div([
             html.H2('Portfolio details', className='portfolio_details_h2'),
+            add_item_button,
             html.Div(table, className = 'table_style_container')], 
-            className='container_table_general')
+            className='container_table_general'),
     ])

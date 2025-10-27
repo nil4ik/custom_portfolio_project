@@ -1,8 +1,12 @@
-from dash import Input, Output, callback, ctx
+from dash import Input, Output, callback, ctx, State
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
+import dash_bootstrap_components as dbc
+import csv
+
+####################################################################################
 
 def register_callbacks(app):
 
@@ -115,3 +119,52 @@ def register_callbacks(app):
         )
 
         return [fig_total_line] + classes
+    
+################################# Add item button#################################################
+
+    @callback(
+        Output("modal-add-button", "is_open"),
+        [Input("open-add-item", "n_clicks"), Input("close-add-item", "n_clicks")],
+        [State("modal-add-button", "is_open")],
+    )
+
+    def toggle_modal(n1, n2, is_open):
+        if n1 or n2:
+            return not is_open
+        return is_open
+    
+################################# Add item fields #################################################
+
+    @callback(
+        Output("alert-add-item", "is_open"),
+        Output("name-input", "value"),
+        Output("category-input", "value"),
+        Output("price-input", "value"),
+        Output("qty-input", "value"),
+        Output("buy-date-input", "value"),
+        Input("submit-item", "n_clicks"),
+        State("name-input", "value"),
+        State("category-input", "value"),
+        State("price-input", "value"),
+        State("qty-input", "value"),
+        State("buy-date-input", "value"),
+        prevent_initial_call=True
+    )
+
+    def add_item(n, name, category, price, qty, buy_date):
+        if not all([name, category, price, qty, buy_date]):
+            return False, name, category, price, qty, buy_date
+        
+        new_item = {
+            "name": name, "category": category, 
+            "buy_price":float(price), "quantity": float(qty),
+            "buy_date": buy_date
+        }
+
+        with open("data/portfolio.csv", "a", newline="") as file:
+            writer = csv.writer(file)
+            writer.writerow(list(new_item.values()))
+        
+        return True, "", "", "", "", date.today().isoformat()
+
+###########################################################################
