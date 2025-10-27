@@ -3,6 +3,21 @@ import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.express as px
 from datetime import date
+
+###############################   Header    ###################################################
+
+header = html.Div([
+    html.Div(html.H1("DataVault"), className="logo_header"),
+    html.Div(
+        children= [
+            html.Div('feauture1', className='header_icon'),
+            html.Div('feauture2', className='header_icon'),
+            html.Div('feature3', className='header_icon'),
+        ], className="header_icons_container"
+    )
+], className="header_container"
+)
+
 ##################################### Basic Data ############################################
 
 
@@ -37,6 +52,20 @@ fig_total_pie.update_layout(
     paper_bgcolor="#303655",
     showlegend=False
     )
+######################################## Info panel ###############################################
+
+info_panel = html.Div(
+            className='info_panel',
+            children=[
+                html.Div('Total Value: 1234$', className='info_box'),
+                html.Div('Most expensive item: 1554$', className='info_box'),
+                html.Div('The cheapest item: 3421$', className='info_box'),
+                html.Div('Average item price: 12323414$', className='info_box'),
+                html.Div('First bought: Rolex 2012 gold', className='info_box'),
+                html.Div('Last bought: buggati 2021', className='info_box'),
+                html.Div('Number of Assets: 4331', className='info_box'),
+            ],
+        )
 
 ######################################## Time buttons ###############################################
 
@@ -117,20 +146,12 @@ table = html.Div(
 
 def serve_layout():
     return html.Div([
-        html.H1('Custom portfolio dashboard', className = 'header'),
 
-        html.Div(
-            className='info_panel',
-            children=[
-                html.Div('Total Value: 1234$', className='info_box'),
-                html.Div('Most expensive item: 1554$', className='info_box'),
-                html.Div('The cheapest item: 3421$', className='info_box'),
-                html.Div('Average item price: 12323414$', className='info_box'),
-                html.Div('First bought: Rolex 2012 gold', className='info_box'),
-                html.Div('Last bought: buggati 2021', className='info_box'),
-                html.Div('Number of Assets: 4331', className='info_box'),
-            ],
-        ),
+        header,
+
+        html.H2('Custom portfolio dashboard', className = 'header'),
+
+        info_panel,
 
         html.Div(time_buttons, className='time_buttons_container'),
 
