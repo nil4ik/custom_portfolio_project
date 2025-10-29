@@ -5,7 +5,10 @@ from components.callbacks import register_callbacks
 
 app = Dash(
     __name__,
-    external_stylesheets=[dbc.themes.DARKLY]
+    external_stylesheets=[
+        dbc.themes.DARKLY,         
+        'https://unpkg.com/ag-grid-community/styles/ag-grid.css',
+        'https://unpkg.com/ag-grid-community/styles/ag-theme-alpine.css']
     )
 
 app.title = 'Custom portfolio dashboard'

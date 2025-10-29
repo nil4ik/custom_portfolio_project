@@ -5,6 +5,8 @@ import plotly.graph_objects as go
 from datetime import datetime, timedelta, date
 import dash_bootstrap_components as dbc
 import csv
+from dash import dcc
+from dash import no_update
 
 ####################################################################################
 
@@ -120,7 +122,7 @@ def register_callbacks(app):
 
         return [fig_total_line] + classes
     
-################################# Add item button#################################################
+################################# Add item button #################################################
 
     @callback(
         Output("modal-add-button", "is_open"),
@@ -128,13 +130,11 @@ def register_callbacks(app):
         [State("modal-add-button", "is_open")],
     )
 
-    def toggle_modal(n1, n2, is_open):
+    def toggle_add_modal(n1, n2, is_open):
         if n1 or n2:
             return not is_open
         return is_open
     
-################################# Add item fields #################################################
-
     @callback(
         Output("alert-add-item", "is_open"),
         Output("name-input", "value"),
@@ -167,4 +167,50 @@ def register_callbacks(app):
         
         return True, "", "", "", "", date.today().isoformat()
 
-###########################################################################
+############################ Edit button ###############################################
+
+
+
+############################ Delete button ###############################################
+
+    @callback(
+        Output("delete-modal", "is_open", allow_duplicate=True),
+        Output("modal-delete-body", "children"),
+        Output("store-delete-row", "data"),
+        Input("portfolio-table", "cellClicked"),
+        State("portfolio-table", "rowData"),
+        prevent_initial_call=True
+    )
+    def open_delete_modal(active_cell, rows):
+        if not active_cell or active_cell["colId"] != "delete":
+            return no_update, no_update, no_update
+        
+        row_idx = active_cell["rowIndex"]
+        if row_idx >= len(rows):
+            return no_update, no_update, no_update
+        
+        item_name = rows[row_idx].get('name', 'this item')
+        return True, f"Are you sure you want to delete '{item_name}'?", row_idx
+
+
+    @callback(
+        Output("delete-modal", "is_open", allow_duplicate=True),
+        Output("portfolio-table", "rowData", allow_duplicate=True),
+        Input("confirm-delete", "n_clicks"),
+        State("store-delete-row", "data"),
+        State("portfolio-table", "rowData"),
+        prevent_initial_call=True
+    )
+    def confirm_delete(n_clicks, row_idx, rows):
+        if not n_clicks or row_idx is None or row_idx >= len(rows):
+            return no_update, no_update, no_update
+
+        try:
+            rows.pop(row_idx)
+            pd.DataFrame(rows).to_csv("data/portfolio.csv", index=False)
+            return False, rows
+        except Exception as e:
+            print(f"Error deleting item: {e}")
+            return True, no_update
+
+############################ Sell button ###############################################

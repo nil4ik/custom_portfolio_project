@@ -2,6 +2,7 @@ from dash import html, dcc, dash_table, State
 import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.express as px
+import dash_ag_grid as dag
 from datetime import date
 
 ###############################   Header    ###################################################
@@ -80,7 +81,7 @@ time_buttons = html.Div([
 
 ###################################### Modal add_item_button &  ######################################
 
-alert = html.Div(
+alert_add_item = html.Div(
     [
         html.Hr(),
         dbc.Alert(
@@ -105,7 +106,7 @@ add_item_button = html.Div(
                     dbc.Input(id="price-input", placeholder="Buy price", type="number", className="mt-2"),
                     dbc.Input(id="qty-input", placeholder="Quantity", type="number", className="mt-2"),
                     dbc.Input(id="buy-date-input", placeholder="Buy date (yyyy-mm-d)", type="date", className="mt-2", value=date.today().isoformat()),
-                    alert
+                    alert_add_item
                 ]),
                 dbc.ModalFooter([
                     dbc.Button("Add", id="submit-item", color="success"),
@@ -121,25 +122,55 @@ add_item_button = html.Div(
 
 ########################################## Table #############################################
 
+df["edit"] = "edit"
+df["delete"] = "delete"
+df["sell"] = "sell"
+
 table = html.Div(
-    dash_table.DataTable(
+    dag.AgGrid(
         id='portfolio-table',
-        columns=[
-            {"name": "Name", "id": "name"},
-            {"name": "Category", "id": "category"},
-            {"name": "Buy Price", "id": "buy_price", "type": "numeric", "format": {"specifier": ".2f"}},
-            {"name": "Quantity", "id": "quantity", "type": "numeric"},
-            {"name": "Buy Date", "id": "buy_date", "type": "datetime"},
-            {"name": "Total Value", "id": "total_value", "type": "numeric", "format": {"specifier": ".2f"}}
+        rowData=df.to_dict('records'),
+        columnDefs=[
+            {"field": "name", "headerName": "Name"},
+            {"field": "category", "headerName": "Category"},
+            {"field": "buy_price", "headerName": "Buy Price", "valueFormatter": {"function": "d3.format(',.2f')(params.value)"}},
+            {"field": "quantity", "headerName": "Quantity"},
+            {"field": "buy_date", "headerName": "Buy Date"},
+            {"field": "total_value", "headerName": "Total Value", "valueFormatter": {"function": "d3.format(',.2f')(params.value)"}},
+            {"field": "edit", "headerName": "", "maxWidth": 80, "cellStyle": {"textAlign": "center", "cursor": "pointer", "color": "#0066cc"}},
+            {"field": "delete", "headerName": "", "maxWidth": 80, "cellStyle": {"textAlign": "center", "cursor": "pointer", "color": "#dc3545"}},
+            {"field": "sell", "headerName": "", "maxWidth": 80, "cellStyle": {"textAlign": "center", "cursor": "pointer", "color": "#28a745"}}
         ],
-        data=df.to_dict('records'),
-        sort_action='native', 
-        style_as_list_view=True,
-        page_action='native',
-        page_current=0,
-        page_size=20
+        defaultColDef={
+            "resizable": True,
+            "sortable": True,
+            "filter": True
+        },
+        dashGridOptions={
+            "pagination": True,
+            "paginationPageSize": 20
+        },
+        className='ag-theme-alpine'
     ),
-    className = 'portfolio_table_css'
+    className='portfolio_table_css'
+)
+
+####################################### delete button ##########################################
+
+store_delete_row = dcc.Store(id="store-delete-row", data=None)
+
+modal_delete = dbc.Modal(
+    [
+        dbc.ModalHeader("Confirm Deletion"),
+        dbc.ModalBody(id="modal-delete-body"),
+        store_delete_row,
+        dbc.ModalFooter([
+            dbc.Button("Confirm", id="confirm-delete", color="success"),
+        ])
+    ],
+    className = "custom_model_css",
+    id="delete-modal",
+    is_open=False,
 )
 
 ##################################### Serve layout ############################################
@@ -165,6 +196,8 @@ def serve_layout():
         html.Div([
             html.H2('Portfolio details', className='portfolio_details_h2'),
             add_item_button,
-            html.Div(table, className = 'table_style_container')], 
+            html.Div(table, className = 'table_style_container'),
+            modal_delete,
+            ],
             className='container_table_general'),
     ])
