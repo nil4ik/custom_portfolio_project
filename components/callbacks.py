@@ -169,7 +169,76 @@ def register_callbacks(app):
 
 ############################ Edit button ###############################################
 
+    @callback(
+        Output("modal-edit", "is_open", allow_duplicate=True),
+        Output("name-edit", "value"),
+        Output("category-edit", "value"),
+        Output("price-edit", "value"),
+        Output("qty-edit", "value"),
+        Output("buy-date-edit", "value"),
+        Output("store-edit-row", "data"),
+        Input("portfolio-table", "cellClicked"),
+        State("portfolio-table", "rowData"),
+        prevent_initial_call=True
+    )
 
+    def open_edit_modal(cell_clicked, rows):
+        if not cell_clicked or cell_clicked.get("colId") != "edit":
+            return no_update, no_update, no_update, no_update, no_update, no_update, no_update
+        
+        row_idx = cell_clicked.get("rowIndex")
+        
+        if row_idx is None or row_idx >= len(rows):
+            return no_update, no_update, no_update, no_update, no_update, no_update, no_update
+
+        row_data = rows[row_idx]
+        
+        return (
+            True,
+            row_data.get("name", ""),         
+            row_data.get("category", ""),     
+            row_data.get("buy_price", 0),     
+            row_data.get("quantity", 0),      
+            row_data.get("buy_date", ""),     
+            row_idx
+        )
+    
+    @callback(
+        Output("modal-edit", "is_open", allow_duplicate=True),
+        Output("portfolio-table", "rowData", allow_duplicate=True),
+        Input("confirm-edit", "n_clicks"),
+        State("name-edit", "value"),
+        State("category-edit", "value"),
+        State("price-edit", "value"),
+        State("qty-edit", "value"),
+        State("buy-date-edit", "value"),
+        State("store-edit-row", "data"),
+        State("portfolio-table", "rowData"),
+        prevent_initial_call=True
+    )
+
+    def confirm_edit(n_clicks, name, category, price, qty, buy_date, row_idx, rows):
+        if not n_clicks or row_idx is None:
+            return no_update, no_update
+
+        try:
+            row = rows[row_idx]
+            row["name"] = name
+            row["category"] = category
+            row["buy_price"] = price
+            row["quantity"] = qty
+            row["buy_date"] = buy_date
+            row["total_value"] = price * qty
+
+            df_to_save = pd.DataFrame(rows).copy()
+            cols_to_save = [c for c in df_to_save.columns if c not in ['id', 'edit', 'delete', 'sell']]
+            df_to_save[cols_to_save].to_csv("data/portfolio.csv", index=False)
+
+            return False, rows
+
+        except Exception as e:
+            print(f"Error editing item: {e}")
+            return no_update, no_update
 
 ############################ Delete button ###############################################
 
@@ -209,6 +278,7 @@ def register_callbacks(app):
             rows.pop(row_idx)
             pd.DataFrame(rows).to_csv("data/portfolio.csv", index=False)
             return False, rows
+        
         except Exception as e:
             print(f"Error deleting item: {e}")
             return True, no_update

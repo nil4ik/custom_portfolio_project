@@ -1,86 +1,88 @@
-name,category,buy_price,quantity,buy_date,total_value,actions,edit,delete,sell
-Intel Stock,Stock,45.0,15.0,2025-05-01,675.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Bitcoin,Crypto,45000.0,0.1,2025-10-24,4500.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Ethereum,Crypto,3000.0,0.5,2025-10-18,1500.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Solana,Crypto,110.0,2.0,2025-10-12,220.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Cardano,Crypto,0.42,1000.0,2025-09-28,420.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Ripple,Crypto,0.55,800.0,2025-09-10,440.00000000000006,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Polkadot,Crypto,7.2,50.0,2025-08-15,360.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Avalanche,Crypto,38.0,10.0,2025-07-20,380.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Chainlink,Crypto,15.0,30.0,2025-06-25,450.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Litecoin,Crypto,85.0,5.0,2025-05-15,425.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Polygon,Crypto,0.95,500.0,2025-04-10,475.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Gold Coin,Collectible,1550.0,2.0,2025-10-23,3100.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Silver Bar,Collectible,25.0,20.0,2025-10-19,500.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Rare Comic Book,Collectible,300.0,1.0,2025-10-08,300.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Vintage Watch,Collectible,2200.0,1.0,2025-09-25,2200.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Classic Vinyl Record,Collectible,120.0,3.0,2025-09-05,360.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-LEGO Star Wars Set,Collectible,350.0,1.0,2025-08-10,350.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Fine Art Print,Collectible,600.0,1.0,2025-07-15,600.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Whiskey Bottle,Collectible,180.0,2.0,2025-06-20,360.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Pokémon Card,Collectible,95.0,5.0,2025-05-25,475.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Sneakers Limited Edition,Collectible,420.0,1.0,2025-04-30,420.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-S&P 500 ETF,ETF,450.0,12.0,2025-10-22,5400.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-NASDAQ ETF,ETF,380.0,8.0,2025-10-16,3040.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Vanguard Total Stock,ETF,105.0,20.0,2025-10-05,2100.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Real Estate ETF,ETF,95.0,15.0,2025-09-20,1425.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Emerging Markets ETF,ETF,42.0,25.0,2025-09-01,1050.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Gold ETF,ETF,180.0,10.0,2025-08-05,1800.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Bond ETF,ETF,85.0,18.0,2025-07-08,1530.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Energy Sector ETF,ETF,68.0,12.0,2025-06-12,816.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Technology ETF,ETF,125.0,14.0,2025-05-18,1750.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Dividend ETF,ETF,92.0,16.0,2025-04-22,1472.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-US Treasury Bond,Bond,980.0,5.0,2025-10-21,4900.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Corporate Bond AAA,Bond,1050.0,3.0,2025-10-14,3150.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Municipal Bond,Bond,950.0,4.0,2025-10-03,3800.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-High Yield Bond,Bond,850.0,6.0,2025-09-18,5100.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-International Bond,Bond,920.0,5.0,2025-08-28,4600.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Inflation-Protected Bond,Bond,1020.0,4.0,2025-08-01,4080.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Zero Coupon Bond,Bond,780.0,7.0,2025-07-05,5460.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Convertible Bond,Bond,1100.0,2.0,2025-06-15,2200.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Government Bond,Bond,965.0,5.0,2025-05-20,4825.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Green Bond,Bond,990.0,3.0,2025-04-25,2970.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Startup Equity A,Private Equity,50000.0,0.02,2025-10-20,1000.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Tech Startup B,Private Equity,75000.0,0.015,2025-10-11,1125.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Biotech Venture,Private Equity,100000.0,0.01,2025-09-22,1000.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Fintech Company,Private Equity,60000.0,0.025,2025-09-08,1500.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Green Energy Startup,Private Equity,85000.0,0.018,2025-08-18,1529.9999999999998,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-AI Company,Private Equity,120000.0,0.012,2025-07-22,1440.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Healthcare Venture,Private Equity,90000.0,0.015,2025-06-28,1350.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-E-commerce Platform,Private Equity,70000.0,0.02,2025-05-30,1400.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Real Estate Fund,Private Equity,150000.0,0.008,2025-04-15,1200.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-SaaS Startup,Private Equity,55000.0,0.022,2025-03-20,1210.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Palladium Bar,Commodity,1800.0,1.0,2025-10-19,1800.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Platinum Coin,Commodity,980.0,2.0,2025-10-13,1960.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Crude Oil Futures,Commodity,75.0,10.0,2025-10-02,750.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Natural Gas Futures,Commodity,3.2,50.0,2025-09-16,160.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Copper Ingot,Commodity,4.1,100.0,2025-08-25,409.99999999999994,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Wheat Futures,Commodity,6.5,200.0,2025-07-30,1300.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Coffee Beans,Commodity,2.8,150.0,2025-06-18,420.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Cotton Futures,Commodity,0.85,500.0,2025-05-28,425.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Lumber Futures,Commodity,480.0,5.0,2025-04-20,2400.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Corn Futures,Commodity,5.2,180.0,2025-03-15,936.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Ancient Roman Coin,Antique,3500.0,1.0,2025-10-18,3500.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Persian Rug,Antique,8200.0,1.0,2025-10-09,8200.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Art Deco Lamp,Antique,1250.0,1.0,2025-09-30,1250.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Victorian Furniture,Antique,4800.0,1.0,2025-09-12,4800.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Antique Clock,Antique,2100.0,1.0,2025-08-22,2100.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Ming Dynasty Vase,Antique,15000.0,1.0,2025-07-18,15000.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Vintage Camera,Antique,950.0,1.0,2025-06-22,950.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Samurai Sword,Antique,6700.0,1.0,2025-05-12,6700.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Ancient Manuscript,Antique,12000.0,1.0,2025-04-08,12000.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Art Nouveau Jewelry,Antique,3300.0,1.0,2025-03-05,3300.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Wine Collection Bordeaux,Luxury Goods,5500.0,6.0,2025-10-17,33000.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Rolex Daytona,Luxury Goods,35000.0,1.0,2025-10-07,35000.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Hermès Birkin Bag,Luxury Goods,22000.0,1.0,2025-09-26,22000.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Diamond Ring,Luxury Goods,18000.0,1.0,2025-09-14,18000.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Champagne Dom Pérignon,Luxury Goods,850.0,12.0,2025-08-30,10200.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Patek Philippe Watch,Luxury Goods,48000.0,1.0,2025-07-25,48000.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Louis Vuitton Trunk,Luxury Goods,12500.0,1.0,2025-06-30,12500.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Cognac Louis XIII,Luxury Goods,3800.0,2.0,2025-05-22,7600.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Designer Fountain Pen,Luxury Goods,2200.0,1.0,2025-04-18,2200.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Pearl Necklace,Luxury Goods,9500.0,1.0,2024-10-26,9500.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-AMD Stock,Stock,111.0,11.0,2025-10-27,1221.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-asdf,aa,22.0,22.0,2025-10-27,484.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-item,ass,222.0,22.0,2025-10-29,4884.0,,edit,delete,sell
-Tesla ,Stock,22.0,11.0,2025-10-29,242.0,,edit,delete,sell
+name,category,buy_price,quantity,buy_date,total_value,actions
+Intel Stockssssssssssss,Stock,45.0,15.0,2025-05-01,675.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Bitcoin,Crypto,45000.0,0.1,2025-10-24,4500.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Ethereum,Crypto,3000.0,0.5,2025-10-18,1500.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Solana,Crypto,110.0,2.0,2025-10-12,220.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Cardano,Crypto,0.42,1000.0,2025-09-28,420.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Ripple,Crypto,0.55,800.0,2025-09-10,440.00000000000006,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Polkadot,Crypto,7.2,50.0,2025-08-15,360.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Avalanche,Crypto,38.0,10.0,2025-07-20,380.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Chainlink,Crypto,15.0,30.0,2025-06-25,450.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Litecoin,Crypto,85.0,5.0,2025-05-15,425.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Polygon,Crypto,0.95,500.0,2025-04-10,475.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Gold Coin,Collectible,1550.0,2.0,2025-10-23,3100.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Silver Bar,Collectible,25.0,20.0,2025-10-19,500.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Rare Comic Book,Collectible,300.0,1.0,2025-10-08,300.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Vintage Watch,Collectible,2200.0,1.0,2025-09-25,2200.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Classic Vinyl Record,Collectible,120.0,3.0,2025-09-05,360.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+LEGO Star Wars Set,Collectible,350.0,1.0,2025-08-10,350.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Fine Art Print,Collectible,600.0,1.0,2025-07-15,600.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Whiskey Bottle,Collectible,180.0,2.0,2025-06-20,360.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Pokémon Card,Collectible,95.0,5.0,2025-05-25,475.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Sneakers Limited Edition,Collectible,420.0,1.0,2025-04-30,420.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+S&P 500 ETF,ETF,450.0,12.0,2025-10-22,5400.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+NASDAQ ETF,ETF,380.0,8.0,2025-10-16,3040.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Vanguard Total Stock,ETF,105.0,20.0,2025-10-05,2100.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Real Estate ETF,ETF,95.0,15.0,2025-09-20,1425.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Emerging Markets ETF,ETF,42.0,25.0,2025-09-01,1050.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Gold ETF,ETF,180.0,10.0,2025-08-05,1800.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Bond ETF,ETF,85.0,18.0,2025-07-08,1530.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Energy Sector ETF,ETF,68.0,12.0,2025-06-12,816.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Technology ETF,ETF,125.0,14.0,2025-05-18,1750.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Dividend ETF,ETF,92.0,16.0,2025-04-22,1472.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+US Treasury Bond,Bond,980.0,5.0,2025-10-21,4900.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Corporate Bond AAA,Bond,1050.0,3.0,2025-10-14,3150.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Municipal Bond,Bond,950.0,4.0,2025-10-03,3800.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+High Yield Bond,Bond,850.0,6.0,2025-09-18,5100.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+International Bond,Bond,920.0,5.0,2025-08-28,4600.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Inflation-Protected Bond,Bond,1020.0,4.0,2025-08-01,4080.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Zero Coupon Bond,Bond,780.0,7.0,2025-07-05,5460.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Convertible Bond,Bond,1100.0,2.0,2025-06-15,2200.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Government Bond,Bond,965.0,5.0,2025-05-20,4825.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Green Bond,Bond,990.0,3.0,2025-04-25,2970.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Startup Equity A,Private Equity,50000.0,0.02,2025-10-20,1000.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Tech Startup B,Private Equity,75000.0,0.015,2025-10-11,1125.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Biotech Venture,Private Equity,100000.0,0.01,2025-09-22,1000.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Fintech Company,Private Equity,60000.0,0.025,2025-09-08,1500.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Green Energy Startup,Private Equity,85000.0,0.018,2025-08-18,1529.9999999999998,[Edit](edit)  [Delete](delete)  [Sell](sell)
+AI Company,Private Equity,120000.0,0.012,2025-07-22,1440.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Healthcare Venture,Private Equity,90000.0,0.015,2025-06-28,1350.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+E-commerce Platform,Private Equity,70000.0,0.02,2025-05-30,1400.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Real Estate Fund,Private Equity,150000.0,0.008,2025-04-15,1200.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+SaaS Startup,Private Equity,55000.0,0.022,2025-03-20,1210.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Palladium Bar,Commodity,1800.0,1.0,2025-10-19,1800.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Platinum Coin,Commodity,980.0,2.0,2025-10-13,1960.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Crude Oil Futures,Commodity,75.0,10.0,2025-10-02,750.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Natural Gas Futures,Commodity,3.2,50.0,2025-09-16,160.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Copper Ingot,Commodity,4.1,100.0,2025-08-25,409.99999999999994,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Wheat Futures,Commodity,6.5,200.0,2025-07-30,1300.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Coffee Beans,Commodity,2.8,150.0,2025-06-18,420.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Cotton Futures,Commodity,0.85,500.0,2025-05-28,425.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Lumber Futures,Commodity,480.0,5.0,2025-04-20,2400.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Corn Futures,Commodity,5.2,180.0,2025-03-15,936.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Ancient Roman Coin,Antique,3500.0,1.0,2025-10-18,3500.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Persian Rug,Antique,8200.0,1.0,2025-10-09,8200.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Art Deco Lamp,Antique,1250.0,1.0,2025-09-30,1250.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Victorian Furniture,Antique,4800.0,1.0,2025-09-12,4800.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Antique Clock,Antique,2100.0,1.0,2025-08-22,2100.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Ming Dynasty Vase,Antique,15000.0,1.0,2025-07-18,15000.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Vintage Camera,Antique,950.0,1.0,2025-06-22,950.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Samurai Sword,Antique,6700.0,1.0,2025-05-12,6700.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Ancient Manuscript,Antique,12000.0,1.0,2025-04-08,12000.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Art Nouveau Jewelry,Antique,3300.0,1.0,2025-03-05,3300.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Wine Collection Bordeaux,Luxury Goods,5500.0,6.0,2025-10-17,33000.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Rolex Daytona,Luxury Goods,35000.0,1.0,2025-10-07,35000.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Hermès Birkin Bag,Luxury Goods,22000.0,1.0,2025-09-26,22000.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Diamond Ring,Luxury Goods,18000.0,1.0,2025-09-14,18000.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Champagne Dom Pérignon,Luxury Goods,850.0,12.0,2025-08-30,10200.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Patek Philippe Watch,Luxury Goods,48000.0,1.0,2025-07-25,48000.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Louis Vuitton Trunk,Luxury Goods,12500.0,1.0,2025-06-30,12500.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Cognac Louis XIII,Luxury Goods,3800.0,2.0,2025-05-22,7600.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Designer Fountain Pen,Luxury Goods,2200.0,1.0,2025-04-18,2200.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+Pearl Necklace,Luxury Goods,9500.0,1.0,2024-10-26,9500.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+AMD Stock,Stock,111.0,11.0,2025-10-27,1221.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+asdf,aa,22.0,22.0,2025-10-27,484.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
+item,ass,222.0,22.0,2025-10-29,4884.0,
+Tesla ,Stock,22.0,11.0,2025-10-29,242.0,
+test,test,33.0,33.0,2025-10-30,1089.0,
+zxcvbnm,vbnm,77.0,88.0,2025-09-30,6776.0,

@@ -177,6 +177,29 @@ modal_delete = dbc.Modal(
     is_open=False,
 )
 
+#######################################  edit  ######################################
+
+store_edit_row = dcc.Store(id="store-edit-row", data=None)
+
+modal_edit = dbc.Modal(
+            [
+                dbc.ModalHeader("Edit item"),
+                dbc.ModalBody([
+                    dbc.Input(id="name-edit", placeholder="Name", type="text"),
+                    dbc.Input(id="category-edit", placeholder="Category", type="text", className="mt-2"),
+                    dbc.Input(id="price-edit", placeholder="Buy price", type="number", className="mt-2"),
+                    dbc.Input(id="qty-edit", placeholder="Quantity", type="number", className="mt-2"),
+                    dbc.Input(id="buy-date-edit", placeholder="Buy date (yyyy-mm-d)", type="date", className="mt-2"),
+                ]),
+                store_edit_row,
+                dbc.ModalFooter([
+                    dbc.Button("Confirm", id="confirm-edit", color="success"),
+            ]),
+            ],
+            id="modal-edit",
+            is_open=False,
+            className=""
+        )
 ##################################### Serve layout ############################################
 
 def serve_layout():
@@ -202,6 +225,7 @@ def serve_layout():
 
             html.Div(table, className = 'table_style_container'),
             modal_delete,
+            modal_edit,
             ],
             className='container_table_general'),
     ])
