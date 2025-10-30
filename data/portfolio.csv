@@ -1,6 +1,4 @@
 name,category,buy_price,quantity,buy_date,total_value,actions,edit,delete,sell
-Netflix Stock,Stock,380.0,4.0,2025-07-10,1520.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
-Adobe Stock,Stock,425.0,3.0,2025-06-05,1275.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
 Intel Stock,Stock,45.0,15.0,2025-05-01,675.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
 Bitcoin,Crypto,45000.0,0.1,2025-10-24,4500.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
 Ethereum,Crypto,3000.0,0.5,2025-10-18,1500.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
@@ -85,3 +83,4 @@ Pearl Necklace,Luxury Goods,9500.0,1.0,2024-10-26,9500.0,[Edit](edit)  [Delete](
 AMD Stock,Stock,111.0,11.0,2025-10-27,1221.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
 asdf,aa,22.0,22.0,2025-10-27,484.0,[Edit](edit)  [Delete](delete)  [Sell](sell),edit,delete,sell
 item,ass,222.0,22.0,2025-10-29,4884.0,,edit,delete,sell
+Tesla ,Stock,22.0,11.0,2025-10-29,242.0,,edit,delete,sell

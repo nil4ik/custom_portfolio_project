@@ -85,7 +85,7 @@ body {
     background-color: #575775;
 }
 
-/***********************************************/
+/***************** graphs ******************************/
 
 .graph_containers_total {
     display: flex;
@@ -142,44 +142,52 @@ body {
 
 .portfolio_details_h2 {
     text-align: center;
-    font-size: 42px;
-    margin-bottom: 70px;
+    margin-bottom: 80px;
 }
 
-.table_style_container {
-    background-color: none;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    flex-direction: column !important;
-    font-family: 'Markazi Text', serif !important;
-    font-size: 25px !important;
-    margin-bottom: 50px;
-    margin-top: 50px;
+.portfolio_table_css .ag-theme-alpine {
+    --ag-background-color: #303655;
+    --ag-odd-row-background-color: #1f2236;
+    --ag-foreground-color: #f2f2f2;
+    --ag-header-height: 50px;
+    --ag-header-foreground-color: #f2f2f2;
+    --ag-header-background-color: #171819;
+    --ag-font-size: 25px;
+    --ag-font-family: "Markazi Text", serif;
+    --ag-row-height: 50px;
+    --ag-border-color: none;
+}
+
+.portfolio_table_css .ag-header-cell {
+    font-weight: bold;
+    font-size: 27px;
+}
+
+.portfolio_table_css .ag-cell {
+    padding: 12px 8px;
+    line-height: 1;
+}
+
+.portfolio_table_css .ag-row:hover {
+    background-color: #373e63 !important;
 }
 
 .portfolio_table_css {
-    overflow: hidden !important;
     width: 90%;
-    background-color: #303655;
-    border-radius: 10px;
-    padding: 5px;
+    margin: 0 auto;
+    margin-bottom: 50px;
 }
 
-.portfolio_table_css .dash-cell{
-    background-color: #303655 !important;
-    color: #f2f2f2 !important;
-    padding: 5px !important;
-    font-family: 'Markazi Text', serif !important;
-    text-align: left !important;
+.portfolio_table_css .ag-paging-panel {
+    justify-content: center !important;
 }
 
-.portfolio_table_css .dash-header {
-    background-color:#1f1f2e !important;
-    color:#f2f2f2 !important;
-    font-weight: bold !important;
-    font-family: 'Markazi Text', serif !important;
-    text-align: left !important;
+.portfolio_table_css 
+.ag-cell[col-id="edit"], 
+.ag-cell[col-id="delete"], 
+.ag-cell[col-id="sell"] {
+    text-align: center;
+    cursor: pointer;
 }
 
 /***************** add item button ****************************/
@@ -195,6 +203,10 @@ body {
     font-size: 23px;
     background-color: #303655;
     border-color: none !important;
+}
+
+.modal {
+    z-index: 3000 !important;
 }
 
 .custom_model_css .modal-content {
@@ -217,44 +229,3 @@ body {
 }
 
 /****************** Edit Delete Sell button ********************/
-
-.dash-table-container a {
-    display: inline-block;
-    border-radius: 8px;
-    padding: 5px 10px;
-    font-size: 20px;
-    background-color: #3b3f6b;
-    color: #f2f2f2;
-    text-decoration: none;
-    font-weight: 200;
-    transition: 0.2s ease-in-out;
-}
-
-.dash-table-container p {
-    margin: 0 !important;
-    padding: 0 !important;
-}
-
-.dash-table-container a[href*="edit"] {
-    background-color: #303655;
-}
-
-.dash-table-container a[href*="delete"] {
-    background-color: #303655;
-}
-
-.dash-table-container a[href*="sell"] {
-    background-color: #303655;
-}
-
-.dash-table-container a[href*="edit"]:hover {
-    background-color: #0056b3;
-}
-
-.dash-table-container a[href*="delete"]:hover {
-    background-color: #a71d2a;
-}
-
-.dash-table-container a[href*="sell"]:hover {
-    background-color: #1e7e34;
-}

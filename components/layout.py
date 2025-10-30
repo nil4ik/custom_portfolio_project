@@ -5,6 +5,47 @@ import plotly.express as px
 import dash_ag_grid as dag
 from datetime import date
 
+###################################### Modal add_item_button &  ######################################
+
+alert_add_item = html.Div(
+    [
+        html.Hr(),
+        dbc.Alert(
+            "Item added successfully",
+            id="alert-add-item",
+            is_open=False,
+            duration=3000,
+            className="alert_css"
+        ),
+    ], className="alert_container"
+)
+
+add_item_button = html.Div(
+    [
+        dbc.Button("Add item", id="open-add-item", n_clicks=0, className="add_item_button"),
+        dbc.Modal(
+            [
+                dbc.ModalHeader("Add new item to portfolio"),
+                dbc.ModalBody([
+                    dbc.Input(id="name-input", placeholder="Name", type="text"),
+                    dbc.Input(id="category-input", placeholder="Category", type="text", className="mt-2"),
+                    dbc.Input(id="price-input", placeholder="Buy price", type="number", className="mt-2"),
+                    dbc.Input(id="qty-input", placeholder="Quantity", type="number", className="mt-2"),
+                    dbc.Input(id="buy-date-input", placeholder="Buy date (yyyy-mm-d)", type="date", className="mt-2", value=date.today().isoformat()),
+                    alert_add_item
+                ]),
+                dbc.ModalFooter([
+                    dbc.Button("Add", id="submit-item", color="success"),
+                    dbc.Button("Close", id="close-add-item", color="danger", n_clicks=0),
+            ]),
+            ],
+            id="modal-add-button",
+            is_open=False,
+            className="custom_model_css"
+        ),
+    ], className="add_item_container"
+)
+
 ###############################   Header    ###################################################
 
 header = html.Div([
@@ -13,7 +54,7 @@ header = html.Div([
         children= [
             html.Div('feauture1', className='header_icon'),
             html.Div('feauture2', className='header_icon'),
-            html.Div('feature3', className='header_icon'),
+            html.Div(add_item_button, className='header_icon'),
         ], className="header_icons_container"
     )
 ], className="header_container"
@@ -79,47 +120,6 @@ time_buttons = html.Div([
     html.Button("ALL", id="btn-all", n_clicks=0, className="time-btn active")
 ], className="time-filter")
 
-###################################### Modal add_item_button &  ######################################
-
-alert_add_item = html.Div(
-    [
-        html.Hr(),
-        dbc.Alert(
-            "Item added successfully",
-            id="alert-add-item",
-            is_open=False,
-            duration=3000,
-            className="alert_css"
-        ),
-    ], className="alert_container"
-)
-
-add_item_button = html.Div(
-    [
-        dbc.Button("Add item", id="open-add-item", n_clicks=0, className="add_item_button"),
-        dbc.Modal(
-            [
-                dbc.ModalHeader("Add new item to portfolio"),
-                dbc.ModalBody([
-                    dbc.Input(id="name-input", placeholder="Name", type="text"),
-                    dbc.Input(id="category-input", placeholder="Category", type="text", className="mt-2"),
-                    dbc.Input(id="price-input", placeholder="Buy price", type="number", className="mt-2"),
-                    dbc.Input(id="qty-input", placeholder="Quantity", type="number", className="mt-2"),
-                    dbc.Input(id="buy-date-input", placeholder="Buy date (yyyy-mm-d)", type="date", className="mt-2", value=date.today().isoformat()),
-                    alert_add_item
-                ]),
-                dbc.ModalFooter([
-                    dbc.Button("Add", id="submit-item", color="success"),
-                    dbc.Button("Close", id="close-add-item", color="danger", n_clicks=0),
-            ]),
-            ],
-            id="modal-add-button",
-            is_open=False,
-            className="custom_model_css"
-        ),
-    ], className="add_item_container"
-)
-
 ########################################## Table #############################################
 
 df["edit"] = "edit"
@@ -131,25 +131,29 @@ table = html.Div(
         id='portfolio-table',
         rowData=df.to_dict('records'),
         columnDefs=[
-            {"field": "name", "headerName": "Name"},
-            {"field": "category", "headerName": "Category"},
-            {"field": "buy_price", "headerName": "Buy Price", "valueFormatter": {"function": "d3.format(',.2f')(params.value)"}},
-            {"field": "quantity", "headerName": "Quantity"},
-            {"field": "buy_date", "headerName": "Buy Date"},
-            {"field": "total_value", "headerName": "Total Value", "valueFormatter": {"function": "d3.format(',.2f')(params.value)"}},
-            {"field": "edit", "headerName": "", "maxWidth": 80, "cellStyle": {"textAlign": "center", "cursor": "pointer", "color": "#0066cc"}},
-            {"field": "delete", "headerName": "", "maxWidth": 80, "cellStyle": {"textAlign": "center", "cursor": "pointer", "color": "#dc3545"}},
-            {"field": "sell", "headerName": "", "maxWidth": 80, "cellStyle": {"textAlign": "center", "cursor": "pointer", "color": "#28a745"}}
+            {"field": "name", "headerName": "Name", "resizable": False,},
+            {"field": "category", "headerName": "Category", "resizable": False,},
+            {"field": "buy_price", "headerName": "Buy Price", "resizable": False,"valueFormatter": {"function": "d3.format(',.2f')(params.value)"}},
+            {"field": "quantity", "headerName": "Quantity", "resizable": False,},
+            {"field": "buy_date", "headerName": "Buy Date", "resizable": False, },
+            {"field": "total_value", "headerName": "Total Value", "resizable": False,  "valueFormatter": {"function": "d3.format(',.2f')(params.value)"}},
+            {"field": "edit", "headerName": "", "filter": False, "sortable": False, "resizable": False, "maxWidth": 80,},
+            {"field": "delete", "headerName": "", "filter": False, "sortable": False, "resizable": False, "maxWidth": 80,},
+            {"field": "sell", "headerName": "", "filter": False, "sortable": False, "resizable": False, "maxWidth": 80, },
         ],
         defaultColDef={
             "resizable": True,
             "sortable": True,
-            "filter": True
+            "filter": True,
+            "flex": 1,
         },
         dashGridOptions={
             "pagination": True,
-            "paginationPageSize": 20
+            "paginationPageSize": 20,
+            "domLayout": "autoHeight",
+            "suppressHorizontalScroll": True
         },
+        style={"width": "100%", "height": "100%"},
         className='ag-theme-alpine'
     ),
     className='portfolio_table_css'
@@ -195,7 +199,7 @@ def serve_layout():
 
         html.Div([
             html.H2('Portfolio details', className='portfolio_details_h2'),
-            add_item_button,
+
             html.Div(table, className = 'table_style_container'),
             modal_delete,
             ],
