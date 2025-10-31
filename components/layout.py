@@ -147,7 +147,7 @@ modal_delete = dbc.Modal(
     is_open=False,
 )
 
-#######################################  edit  ######################################
+#######################################  edit button ######################################
 
 store_edit_row = dcc.Store(id="store-edit-row", data=None)
 
@@ -170,6 +170,23 @@ modal_edit = dbc.Modal(
             is_open=False,
             className = "custom_model_css",
         )
+
+#######################################  sell button ######################################
+
+
+#######################################  footer ######################################
+
+footer = html.Footer(
+    [
+        html.Span("© 2025 DataVault — Built by Daniils Nils Gosperskis"),
+        html.Br(),
+        html.A("nil4ik", href="https://github.com/nil4ik", target="_blank", className="footer-link"),
+        html.Span(" | "),
+        html.A("GitHub Repo", href="https://github.com/nil4ik/custom_portfolio_dash", target="_blank", className="footer-link"),
+    ],
+    className="footer_container"
+)
+
 ##################################### Serve layout ############################################
 
 def serve_layout():
@@ -198,4 +215,5 @@ def serve_layout():
             modal_edit,
             ],
             className='container_table_general'),
+            footer,
     ])

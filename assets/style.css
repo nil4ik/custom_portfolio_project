@@ -229,3 +229,30 @@ body {
 }
 
 /****************** Edit Delete Sell button ********************/
+
+
+
+/************************* footer ***************************/
+
+.footer_container {
+  width: 100%;
+  background-color: rgb(27, 25, 38);
+  color: #f2f2f2;
+  text-align: center;
+  padding: 15px 0;
+  font-size: 22px;
+  font-family:"Markazi Text", serif;
+  margin-top: 40px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.footer_container .footer-link {
+  color: #66b2ff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.footer_container .footer-link:hover {
+  text-decoration: underline;
+  color: #99ccff;
+}
