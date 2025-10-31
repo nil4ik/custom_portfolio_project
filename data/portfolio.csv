@@ -1,88 +1,84 @@
-name,category,buy_price,quantity,buy_date,total_value,actions
-Intel Stockssssssssssss,Stock,45.0,15.0,2025-05-01,675.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Bitcoin,Crypto,45000.0,0.1,2025-10-24,4500.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Ethereum,Crypto,3000.0,0.5,2025-10-18,1500.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Solana,Crypto,110.0,2.0,2025-10-12,220.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Cardano,Crypto,0.42,1000.0,2025-09-28,420.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Ripple,Crypto,0.55,800.0,2025-09-10,440.00000000000006,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Polkadot,Crypto,7.2,50.0,2025-08-15,360.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Avalanche,Crypto,38.0,10.0,2025-07-20,380.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Chainlink,Crypto,15.0,30.0,2025-06-25,450.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Litecoin,Crypto,85.0,5.0,2025-05-15,425.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Polygon,Crypto,0.95,500.0,2025-04-10,475.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Gold Coin,Collectible,1550.0,2.0,2025-10-23,3100.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Silver Bar,Collectible,25.0,20.0,2025-10-19,500.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Rare Comic Book,Collectible,300.0,1.0,2025-10-08,300.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Vintage Watch,Collectible,2200.0,1.0,2025-09-25,2200.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Classic Vinyl Record,Collectible,120.0,3.0,2025-09-05,360.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-LEGO Star Wars Set,Collectible,350.0,1.0,2025-08-10,350.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Fine Art Print,Collectible,600.0,1.0,2025-07-15,600.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Whiskey Bottle,Collectible,180.0,2.0,2025-06-20,360.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Pokémon Card,Collectible,95.0,5.0,2025-05-25,475.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Sneakers Limited Edition,Collectible,420.0,1.0,2025-04-30,420.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-S&P 500 ETF,ETF,450.0,12.0,2025-10-22,5400.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-NASDAQ ETF,ETF,380.0,8.0,2025-10-16,3040.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Vanguard Total Stock,ETF,105.0,20.0,2025-10-05,2100.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Real Estate ETF,ETF,95.0,15.0,2025-09-20,1425.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Emerging Markets ETF,ETF,42.0,25.0,2025-09-01,1050.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Gold ETF,ETF,180.0,10.0,2025-08-05,1800.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Bond ETF,ETF,85.0,18.0,2025-07-08,1530.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Energy Sector ETF,ETF,68.0,12.0,2025-06-12,816.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Technology ETF,ETF,125.0,14.0,2025-05-18,1750.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Dividend ETF,ETF,92.0,16.0,2025-04-22,1472.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-US Treasury Bond,Bond,980.0,5.0,2025-10-21,4900.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Corporate Bond AAA,Bond,1050.0,3.0,2025-10-14,3150.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Municipal Bond,Bond,950.0,4.0,2025-10-03,3800.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-High Yield Bond,Bond,850.0,6.0,2025-09-18,5100.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-International Bond,Bond,920.0,5.0,2025-08-28,4600.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Inflation-Protected Bond,Bond,1020.0,4.0,2025-08-01,4080.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Zero Coupon Bond,Bond,780.0,7.0,2025-07-05,5460.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Convertible Bond,Bond,1100.0,2.0,2025-06-15,2200.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Government Bond,Bond,965.0,5.0,2025-05-20,4825.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Green Bond,Bond,990.0,3.0,2025-04-25,2970.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Startup Equity A,Private Equity,50000.0,0.02,2025-10-20,1000.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Tech Startup B,Private Equity,75000.0,0.015,2025-10-11,1125.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Biotech Venture,Private Equity,100000.0,0.01,2025-09-22,1000.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Fintech Company,Private Equity,60000.0,0.025,2025-09-08,1500.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Green Energy Startup,Private Equity,85000.0,0.018,2025-08-18,1529.9999999999998,[Edit](edit)  [Delete](delete)  [Sell](sell)
-AI Company,Private Equity,120000.0,0.012,2025-07-22,1440.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Healthcare Venture,Private Equity,90000.0,0.015,2025-06-28,1350.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-E-commerce Platform,Private Equity,70000.0,0.02,2025-05-30,1400.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Real Estate Fund,Private Equity,150000.0,0.008,2025-04-15,1200.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-SaaS Startup,Private Equity,55000.0,0.022,2025-03-20,1210.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Palladium Bar,Commodity,1800.0,1.0,2025-10-19,1800.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Platinum Coin,Commodity,980.0,2.0,2025-10-13,1960.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Crude Oil Futures,Commodity,75.0,10.0,2025-10-02,750.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Natural Gas Futures,Commodity,3.2,50.0,2025-09-16,160.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Copper Ingot,Commodity,4.1,100.0,2025-08-25,409.99999999999994,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Wheat Futures,Commodity,6.5,200.0,2025-07-30,1300.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Coffee Beans,Commodity,2.8,150.0,2025-06-18,420.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Cotton Futures,Commodity,0.85,500.0,2025-05-28,425.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Lumber Futures,Commodity,480.0,5.0,2025-04-20,2400.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Corn Futures,Commodity,5.2,180.0,2025-03-15,936.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Ancient Roman Coin,Antique,3500.0,1.0,2025-10-18,3500.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Persian Rug,Antique,8200.0,1.0,2025-10-09,8200.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Art Deco Lamp,Antique,1250.0,1.0,2025-09-30,1250.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Victorian Furniture,Antique,4800.0,1.0,2025-09-12,4800.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Antique Clock,Antique,2100.0,1.0,2025-08-22,2100.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Ming Dynasty Vase,Antique,15000.0,1.0,2025-07-18,15000.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Vintage Camera,Antique,950.0,1.0,2025-06-22,950.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Samurai Sword,Antique,6700.0,1.0,2025-05-12,6700.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Ancient Manuscript,Antique,12000.0,1.0,2025-04-08,12000.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Art Nouveau Jewelry,Antique,3300.0,1.0,2025-03-05,3300.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Wine Collection Bordeaux,Luxury Goods,5500.0,6.0,2025-10-17,33000.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Rolex Daytona,Luxury Goods,35000.0,1.0,2025-10-07,35000.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Hermès Birkin Bag,Luxury Goods,22000.0,1.0,2025-09-26,22000.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Diamond Ring,Luxury Goods,18000.0,1.0,2025-09-14,18000.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Champagne Dom Pérignon,Luxury Goods,850.0,12.0,2025-08-30,10200.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Patek Philippe Watch,Luxury Goods,48000.0,1.0,2025-07-25,48000.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Louis Vuitton Trunk,Luxury Goods,12500.0,1.0,2025-06-30,12500.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Cognac Louis XIII,Luxury Goods,3800.0,2.0,2025-05-22,7600.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Designer Fountain Pen,Luxury Goods,2200.0,1.0,2025-04-18,2200.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-Pearl Necklace,Luxury Goods,9500.0,1.0,2024-10-26,9500.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-AMD Stock,Stock,111.0,11.0,2025-10-27,1221.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-asdf,aa,22.0,22.0,2025-10-27,484.0,[Edit](edit)  [Delete](delete)  [Sell](sell)
-item,ass,222.0,22.0,2025-10-29,4884.0,
-Tesla ,Stock,22.0,11.0,2025-10-29,242.0,
-test,test,33.0,33.0,2025-10-30,1089.0,
-zxcvbnm,vbnm,77.0,88.0,2025-09-30,6776.0,
+id,name,category,buy_price,quantity,buy_date,total_value
+e1f38680-773f-4752-a3ba-495ce9c897f1,Intel Stock,Stock,45.0,10.0,2025-05-01,450.0
+96c29e26-5dc5-4cca-a3ed-475e9a48f2ae,Bitcoin,Crypto,45000.0,0.1,2025-10-24,4500.0
+a91c814d-33ac-4420-b2fa-09b6b4a2a7b5,Ethereum,Crypto,3000.0,0.5,2025-10-18,1500.0
+3ee90ef7-ea38-4b08-ae3e-9eb25ff3c025,Solana,Crypto,110.0,2.0,2025-10-12,220.0
+83a278fa-d9fd-47da-a44b-2479e7557239,Cardano,Crypto,0.42,1000.0,2025-09-28,420.0
+159d0059-a3c4-4bad-8a20-01d00dccbbd8,Ripple,Crypto,0.55,800.0,2025-09-10,440.00000000000006
+5c7bbc08-7940-426a-9576-5511c3431ae1,Polkadot,Crypto,7.2,50.0,2025-08-15,360.0
+8390daef-485a-4c34-ac19-3b497aabe263,Avalanche,Crypto,38.0,10.0,2025-07-20,380.0
+2189f893-1b03-4175-ba33-c0752af829c4,Chainlink,Crypto,15.0,30.0,2025-06-25,450.0
+d1b7eb82-5b66-481e-af4f-84c2a6dd4d8c,Litecoin,Crypto,85.0,5.0,2025-05-15,425.0
+8487016c-2f82-46f1-a268-62e3cd0cab0b,Polygon,Crypto,0.95,500.0,2025-04-10,475.0
+b150bbba-670a-46d1-bf27-91b0f338ff0a,Gold Coin,Collectible,1550.0,2.0,2025-10-23,3100.0
+4129911b-697d-452e-986c-899256ebbf4e,Silver Bar,Collectible,25.0,20.0,2025-10-19,500.0
+67f36909-316c-46db-85e0-4ec9d53357a8,Rare Comic Book,Collectible,300.0,1.0,2025-10-08,300.0
+d1098b58-afef-4d5a-be82-1f287e56159f,Vintage Watch,Collectible,2200.0,1.0,2025-09-25,2200.0
+8972a471-9fca-4514-816d-b06018066331,Classic Vinyl Record,Collectible,120.0,3.0,2025-09-05,360.0
+7ef40fd0-69e0-4acf-80df-fc6da00284b7,LEGO Star Wars Set,Collectible,350.0,1.0,2025-08-10,350.0
+b581fac3-f94b-4839-baa1-5be5ef238f61,Fine Art Print,Collectible,600.0,1.0,2025-07-15,600.0
+8e25f06f-24bc-481c-9ee8-9029f81a368d,Whiskey Bottle,Collectible,180.0,2.0,2025-06-20,360.0
+e9a9aac9-dbb7-4618-85e9-7898f0f808a5,Pokémon Card,Collectible,95.0,5.0,2025-05-25,475.0
+757cc04d-e6b0-42ba-8765-aad55c309db0,Sneakers Limited Edition,Collectible,420.0,1.0,2025-04-30,420.0
+7160ea1b-85fa-459d-b4cf-9554bbd28427,S&P 500 ETF,ETF,450.0,12.0,2025-10-22,5400.0
+cdecb537-f0e8-4014-a49a-bd6aa1cce0a7,NASDAQ ETF,ETF,380.0,8.0,2025-10-16,3040.0
+e3f379d8-57f3-4655-873c-ba0b23d14a46,Vanguard Total Stock,ETF,105.0,20.0,2025-10-05,2100.0
+ae68e098-97b1-40fb-8f37-50e527ac43a7,Real Estate ETF,ETF,95.0,15.0,2025-09-20,1425.0
+e0f02f85-07f5-49f6-a55e-7511a75dc220,Emerging Markets ETF,ETF,42.0,25.0,2025-09-01,1050.0
+6c938f0f-6978-49ca-a772-3919c237ea09,Gold ETF,ETF,180.0,10.0,2025-08-05,1800.0
+4f51ff48-33f4-46a9-805c-de1959df52ed,Bond ETF,ETF,85.0,18.0,2025-07-08,1530.0
+374c30f5-574b-4e8b-804e-00187149e79e,Energy Sector ETF,ETF,68.0,12.0,2025-06-12,816.0
+3c67ab4f-e17a-4b6a-8fac-054510394d61,Technology ETF,ETF,125.0,14.0,2025-05-18,1750.0
+d656553b-b508-47f6-a74f-e5814902ca91,Dividend ETF,ETF,92.0,16.0,2025-04-22,1472.0
+0b783cb3-cf5c-4b06-ad81-6f5188f6b36c,US Treasury Bond,Bond,980.0,5.0,2025-10-21,4900.0
+c7053c11-70cf-49b0-83a6-2ecf627e24fa,Corporate Bond AAA,Bond,1050.0,3.0,2025-10-14,3150.0
+c19d0676-4184-439a-83f9-9b73452d27de,Municipal Bond,Bond,950.0,4.0,2025-10-03,3800.0
+907f777f-ae9b-450d-a0b4-2096351d77a8,High Yield Bond,Bond,850.0,6.0,2025-09-18,5100.0
+5aee78db-759f-467e-9db0-a1ca7aa1b85b,International Bond,Bond,920.0,5.0,2025-08-28,4600.0
+fa0abc65-1b47-44db-9195-01928cc3a54c,Inflation-Protected Bond,Bond,1020.0,4.0,2025-08-01,4080.0
+50ad617a-5f42-4615-889d-23740f30f194,Zero Coupon Bond,Bond,780.0,7.0,2025-07-05,5460.0
+5d55225a-3dce-4118-9148-e3384cd80fca,Convertible Bond,Bond,1100.0,2.0,2025-06-15,2200.0
+24725d64-f42f-4b42-9d66-7e773a508bbb,Government Bond,Bond,965.0,5.0,2025-05-20,4825.0
+48e67120-9c25-4e09-b288-66f7eb636b5a,Green Bond,Bond,990.0,3.0,2025-04-25,2970.0
+e9824634-044a-4612-8379-7c65a8ffe83c,Startup Equity A,Private Equity,50000.0,0.02,2025-10-20,1000.0
+fb036432-cbbe-4722-8ee3-a359f0168c76,Tech Startup B,Private Equity,75000.0,0.015,2025-10-11,1125.0
+c2cb5a0c-0b18-4869-b345-77adb0f366a2,Biotech Venture,Private Equity,100000.0,0.01,2025-09-22,1000.0
+95b2265f-760e-4a41-a254-8e96b8c34196,Fintech Company,Private Equity,60000.0,0.025,2025-09-08,1500.0
+7bf38c4f-d8b2-44a3-8162-622c0fcc13a2,Green Energy Startup,Private Equity,85000.0,0.018,2025-08-18,1529.9999999999998
+aab427db-6874-4f4a-beec-3d4368c31af6,AI Company,Private Equity,120000.0,0.012,2025-07-22,1440.0
+2b33546f-44ef-40fe-a87e-3e251121d829,Healthcare Venture,Private Equity,90000.0,0.015,2025-06-28,1350.0
+5f89ded4-5cc9-415f-97e9-7e6ee97bebad,E-commerce Platform,Private Equity,70000.0,0.02,2025-05-30,1400.0
+6f0beed3-81ea-4262-984d-d4fdfa26f7fb,Real Estate Fund,Private Equity,150000.0,0.008,2025-04-15,1200.0
+4085494b-84eb-4ed5-9f90-b8d6a0e7ca8a,SaaS Startup,Private Equity,55000.0,0.022,2025-03-20,1210.0
+4277671a-a0db-4672-9f4b-07542c402e83,Palladium Bar,Commodity,1800.0,1.0,2025-10-19,1800.0
+44ff2b08-0f6b-4439-9259-6bb16926d912,Platinum Coin,Commodity,980.0,2.0,2025-10-13,1960.0
+9f7d35cf-8863-4077-9f9b-0eb969c2334b,Crude Oil Futures,Commodity,75.0,10.0,2025-10-02,750.0
+1c683c8b-c8d1-493d-bc9a-146315debd46,Natural Gas Futures,Commodity,3.2,50.0,2025-09-16,160.0
+d2a39bdd-5435-4ecf-ace5-22b1a82a824a,Copper Ingot,Commodity,4.1,100.0,2025-08-25,410.0
+eab30a6d-5458-4fbc-bd8f-a59174ced98d,Wheat Futures,Commodity,6.5,200.0,2025-07-30,1300.0
+15da8039-0f7a-4c5a-8f35-46c0dbc09e75,Coffee Beans,Commodity,2.8,150.0,2025-06-18,420.0
+94ed2f83-cfc3-46fa-8fde-01e43ff527d5,Cotton Futures,Commodity,0.85,500.0,2025-05-28,425.0
+f2bcb77f-111f-45fd-b468-e08087dbee7d,Lumber Futures,Commodity,480.0,5.0,2025-04-20,2400.0
+ed7fbe54-1182-4e31-bbc8-103a351f90c9,Corn Futures,Commodity,5.2,180.0,2025-03-15,936.0
+e358c377-c0cc-4495-a94a-15ac22381f3a,Ancient Roman Coin,Antique,3500.0,1.0,2025-10-18,3500.0
+730278db-7dac-4ed5-82de-f2bd9e46b191,Persian Rug,Antique,8200.0,1.0,2025-10-09,8200.0
+8b9a576e-1175-4344-9cdf-1cbabb114cb3,Art Deco Lamp,Antique,1250.0,1.0,2025-09-30,1250.0
+71bb2a46-6629-46a2-ba61-49c186dd47d1,Victorian Furniture,Antique,4800.0,1.0,2025-09-12,4800.0
+575dc5e6-5782-4ea5-be0f-383089471e3c,Antique Clock,Antique,2100.0,1.0,2025-08-22,2100.0
+b2bf6acb-6afb-441b-b4f6-4a1ca698248d,Ming Dynasty Vase,Antique,15000.0,1.0,2025-07-18,15000.0
+b4a5c068-6632-4aec-8809-f6ac2c238ccf,Vintage Camera,Antique,950.0,1.0,2025-06-22,950.0
+cbb526d2-e611-4c43-8efe-4cf83371cf5e,Samurai Sword,Antique,6700.0,1.0,2025-05-12,6700.0
+e784bd18-61d8-4a9e-9b9a-a563e9dd3a8b,Ancient Manuscript,Antique,12000.0,1.0,2025-04-08,12000.0
+a68a34c0-0b97-4f0a-8a2e-2bba025468d0,Art Nouveau Jewelry,Antique,3300.0,1.0,2025-03-05,3300.0
+9da60da7-f7ca-4bee-b7c7-f877819cd3d0,Wine Collection Bordeaux,Luxury Goods,5500.0,6.0,2025-10-17,33000.0
+f6490925-0298-4395-81bc-1d6723186b88,Rolex Daytona,Luxury Goods,35000.0,1.0,2025-10-07,35000.0
+bf6d047f-2363-429c-ba9a-37dc94a7ec47,Hermès Birkin Bag,Luxury Goods,22000.0,1.0,2025-09-26,22000.0
+9555ad32-8673-43d7-9feb-3e4f1d30b085,Diamond Ring,Luxury Goods,18000.0,1.0,2025-09-14,18000.0
+35c54a82-1ce3-4a73-a35b-87929c7337d1,Champagne Dom Pérignon,Luxury Goods,850.0,12.0,2025-08-30,10200.0
+4a0e66e3-7c72-4d05-818e-92943dc871e7,Patek Philippe Watch,Luxury Goods,48000.0,1.0,2025-07-25,48000.0
+757b524b-9014-4886-9ee2-a8e229850cd3,Louis Vuitton Trunk,Luxury Goods,12500.0,1.0,2025-06-30,12500.0
+4732971f-2ce4-4f37-8d4e-dc037170ac33,Cognac Louis XIII,Luxury Goods,3800.0,2.0,2025-05-22,7600.0
+5187e15c-1560-42ee-ac91-68a84e474617,Designer Fountain Pen,Luxury Goods,2200.0,1.0,2025-04-18,2200.0
+36771a6a-7f18-4e99-be1c-4a9ff23bc2c8,Pearl Necklace,Luxury Goods,9500.0,1.0,2024-10-26,9500.0
+640f16c2-2502-466e-8036-646bc15240fc,AMD Stock,Stock,111.0,11.0,2025-10-27,1221.0
+87fb61a5-5126-45d2-9100-8a813c2d4f24,Tesla ,Stock,22.0,11.0,2025-10-29,242.0

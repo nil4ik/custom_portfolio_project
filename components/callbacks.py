@@ -7,15 +7,11 @@ import dash_bootstrap_components as dbc
 import csv
 from dash import dcc
 from dash import no_update
+import uuid
 
 ####################################################################################
 
 def register_callbacks(app):
-
-    df = pd.read_csv('data/portfolio.csv')
-
-    df['total_value'] = df['buy_price'] * df['quantity']
-    df['buy_date'] = pd.to_datetime(df['buy_date'])
 
     @callback (
         Output('line_total_plot', 'figure'),
@@ -31,14 +27,36 @@ def register_callbacks(app):
             Input("btn-1m", "n_clicks"),
             Input("btn-6m", "n_clicks"),
             Input("btn-1y", "n_clicks"),
-            Input("btn-all", "n_clicks")
+            Input("btn-all", "n_clicks"),
+            Input("portfolio-table", "rowData")
         ]
     )
-
-    def update_line_chart(btn_1d, btn_1w, btn_1m, btn_6m, btn_1y, btn_all):
+    def update_line_chart(btn_1d, btn_1w, btn_1m, btn_6m, btn_1y, btn_all, row_data):
+        
+        df = pd.DataFrame(row_data) if row_data else pd.read_csv('data/portfolio.csv')
+        
+        if df.empty:
+            fig = go.Figure()
+            fig.add_annotation(
+                text="No data available",
+                xref="paper", yref="paper",
+                x=0.5, y=0.5, showarrow=False,
+                font=dict(size=24, color="#f2f2f2")
+            )
+            fig.update_layout(
+                plot_bgcolor="#303655",
+                paper_bgcolor="#303655",
+                xaxis_visible=False,
+                yaxis_visible=False
+            )
+            buttons = ["btn-1d", "btn-1w", "btn-1m", "btn-6m", "btn-1y", "btn-all"]
+            classes = ['time-btn' for _ in buttons]
+            return [fig] + classes
+        
+        df['total_value'] = df['buy_price'] * df['quantity']
+        df['buy_date'] = pd.to_datetime(df['buy_date'])
 
         triggered_id = ctx.triggered_id or "btn-all"
-
         today = datetime.today()
 
         if triggered_id == "btn-1d":
@@ -59,7 +77,7 @@ def register_callbacks(app):
         filtered_df['cumulative_total'] = filtered_df['total_value'].cumsum()
 
         buttons = ["btn-1d", "btn-1w", "btn-1m", "btn-6m", "btn-1y", "btn-all"]
-        classes = ['time-btn active' if btn == triggered_id  else 'time-btn' for btn in buttons]
+        classes = ['time-btn active' if btn == triggered_id else 'time-btn' for btn in buttons]
 
         if filtered_df.empty:
             fig = go.Figure()
@@ -78,33 +96,27 @@ def register_callbacks(app):
             return [fig] + classes
 
         fig_total_line = px.line(filtered_df, 
-                        x = 'buy_date', 
-                        y = 'cumulative_total', 
-                        markers=True,
-                        )
+                        x='buy_date', 
+                        y='cumulative_total', 
+                        markers=True)
+        
         fig_total_line.update_traces(
             line=dict(color='#039be5', width=5),
             fill='tozeroy',
             fillcolor="rgba(3, 155, 229, 0.3)",
             hovertemplate="Date: %{x}<br>Total: %{y}<extra></extra>",
-            hoverlabel=dict(
-                font_family="Markazi Text",
-                font_size=20,
-            )
-            )
+            hoverlabel=dict(font_family="Markazi Text", font_size=20)
+        )
+        
         fig_total_line.update_layout(
             legend={'font': {'size': 16}},
             xaxis_title=None, yaxis_title=None,
-            title={
-                'font': {'size': 30},
-                'x': 0.5,
-                'xanchor': 'center'
-                },
+            title={'font': {'size': 30}, 'x': 0.5, 'xanchor': 'center'},
             xaxis=dict(tickfont=dict(size=20)),
             yaxis=dict(tickfont=dict(size=20)),
             plot_bgcolor="#303655",
             paper_bgcolor="#303655",
-            )
+        )
 
         fig_total_line.update_yaxes(
             showgrid=True,
@@ -121,22 +133,71 @@ def register_callbacks(app):
         )
 
         return [fig_total_line] + classes
+
+    @callback(
+        Output('pie_total_plot', 'figure'),
+        Input("portfolio-table", "rowData")
+    )
+    def update_pie_chart(row_data):
+        df = pd.DataFrame(row_data) if row_data else pd.read_csv('data/portfolio.csv')
+        
+        if df.empty:
+            fig = go.Figure()
+            fig.add_annotation(
+                text="No data available",
+                xref="paper", yref="paper",
+                x=0.5, y=0.5, showarrow=False,
+                font=dict(size=24, color="#f2f2f2")
+            )
+            fig.update_layout(
+                plot_bgcolor="#303655",
+                paper_bgcolor="#303655"
+            )
+            return fig
+        
+        df['total_value'] = df['buy_price'] * df['quantity']
+        df_grouped = df.groupby('category')['total_value'].sum().reset_index()
+        
+        fig_total_pie = px.pie(
+            df_grouped, 
+            values='total_value', 
+            names='category',
+            hole=.3
+        )
+
+        fig_total_pie.update_traces(
+            hoverinfo='label+percent+name', 
+            textinfo='percent', 
+            textfont=dict(color='white'),
+            hovertemplate="<b>%{label}</b><br>Total: %{value}$<br>Percentage: %{percent}",
+            hoverlabel=dict(font_family="Markazi Text", font_size=20)
+        )
+        
+        fig_total_pie.update_layout(
+            legend=dict(orientation='v', yanchor="top", font=dict(size=14, color="#f2f2f2")),
+            plot_bgcolor="#303655",
+            paper_bgcolor="#303655",
+            showlegend=False
+        )
+        
+        return fig_total_pie
     
 ################################# Add item button #################################################
 
     @callback(
         Output("modal-add-button", "is_open"),
-        [Input("open-add-item", "n_clicks"), Input("close-add-item", "n_clicks")],
-        [State("modal-add-button", "is_open")],
+        Input("open-add-item", "n_clicks"),
+        State("modal-add-button", "is_open"),
     )
 
-    def toggle_add_modal(n1, n2, is_open):
-        if n1 or n2:
+    def toggle_add_modal(n1, is_open):
+        if n1:
             return not is_open
         return is_open
     
     @callback(
         Output("alert-add-item", "is_open"),
+        Output("portfolio-table", "rowData", allow_duplicate=True),
         Output("name-input", "value"),
         Output("category-input", "value"),
         Output("price-input", "value"),
@@ -148,24 +209,40 @@ def register_callbacks(app):
         State("price-input", "value"),
         State("qty-input", "value"),
         State("buy-date-input", "value"),
+        State("portfolio-table", "rowData"),
         prevent_initial_call=True
     )
-
-    def add_item(n, name, category, price, qty, buy_date):
+    def add_item(n, name, category, price, qty, buy_date, rows):
+        if not n:
+            return no_update, no_update, no_update, no_update, no_update, no_update, no_update
+        
         if not all([name, category, price, qty, buy_date]):
-            return False, name, category, price, qty, buy_date
+            return False, no_update, name, category, price, qty, buy_date
         
-        new_item = {
-            "name": name, "category": category, 
-            "buy_price":float(price), "quantity": float(qty),
-            "buy_date": buy_date
-        }
-
-        with open("data/portfolio.csv", "a", newline="") as file:
-            writer = csv.writer(file)
-            writer.writerow(list(new_item.values()))
-        
-        return True, "", "", "", "", date.today().isoformat()
+        try:
+            new_id = str(uuid.uuid4())
+            
+            new_item = {
+                "id": new_id,
+                "name": name,
+                "category": category,
+                "buy_price": float(price),
+                "quantity": float(qty),
+                "buy_date": buy_date,
+                "total_value": float(price) * float(qty),
+            }
+            
+            rows.append(new_item)
+            
+            df_to_save = pd.DataFrame(rows)
+            cols_to_save = ["id", "name", "category", "buy_price", "quantity", "buy_date", "total_value"]
+            df_to_save[cols_to_save].to_csv("data/portfolio.csv", index=False)
+            
+            return True, rows, "", "", "", "", date.today().isoformat()
+            
+        except Exception as e:
+            print(f"Error adding item: {e}")
+            return False, no_update, name, category, price, qty, buy_date
 
 ############################ Edit button ###############################################
 
@@ -186,12 +263,15 @@ def register_callbacks(app):
         if not cell_clicked or cell_clicked.get("colId") != "edit":
             return no_update, no_update, no_update, no_update, no_update, no_update, no_update
         
-        row_idx = cell_clicked.get("rowIndex")
+        row_id = cell_clicked.get("rowId")
         
-        if row_idx is None or row_idx >= len(rows):
+        if not row_id:
             return no_update, no_update, no_update, no_update, no_update, no_update, no_update
 
-        row_data = rows[row_idx]
+        row_data = next((row for row in rows if row.get("id") == row_id), None)
+
+        if not row_data:
+            return no_update, no_update, no_update, no_update, no_update, no_update, no_update
         
         return (
             True,
@@ -200,7 +280,7 @@ def register_callbacks(app):
             row_data.get("buy_price", 0),     
             row_data.get("quantity", 0),      
             row_data.get("buy_date", ""),     
-            row_idx
+            row_id
         )
     
     @callback(
@@ -217,12 +297,16 @@ def register_callbacks(app):
         prevent_initial_call=True
     )
 
-    def confirm_edit(n_clicks, name, category, price, qty, buy_date, row_idx, rows):
-        if not n_clicks or row_idx is None:
+    def confirm_edit(n_clicks, name, category, price, qty, buy_date, row_id, rows):
+        if not n_clicks or row_id is None:
             return no_update, no_update
 
         try:
-            row = rows[row_idx]
+            row = next((r for r in rows if r.get("id") == row_id), None)
+
+            if not row:
+                return no_update, no_update
+
             row["name"] = name
             row["category"] = category
             row["buy_price"] = price
@@ -230,8 +314,9 @@ def register_callbacks(app):
             row["buy_date"] = buy_date
             row["total_value"] = price * qty
 
-            df_to_save = pd.DataFrame(rows).copy()
-            cols_to_save = [c for c in df_to_save.columns if c not in ['id', 'edit', 'delete', 'sell']]
+            df_to_save = pd.DataFrame(rows)
+
+            cols_to_save = ["id", "name", "category", "buy_price", "quantity", "buy_date", "total_value"]
             df_to_save[cols_to_save].to_csv("data/portfolio.csv", index=False)
 
             return False, rows
@@ -254,12 +339,18 @@ def register_callbacks(app):
         if not active_cell or active_cell["colId"] != "delete":
             return no_update, no_update, no_update
         
-        row_idx = active_cell["rowIndex"]
-        if row_idx >= len(rows):
+        row_id = active_cell.get("rowId")
+
+        if not row_id:
             return no_update, no_update, no_update
         
-        item_name = rows[row_idx].get('name', 'this item')
-        return True, f"Are you sure you want to delete '{item_name}'?", row_idx
+        row_data = next((row for row in rows if row.get("id") == row_id), None)
+
+        if not row_data:
+            return no_update, no_update, no_update
+
+        item_name = row_data.get('name', 'this item')
+        return True, f"Are you sure you want to delete '{item_name}'?", row_id
 
 
     @callback(
@@ -270,13 +361,22 @@ def register_callbacks(app):
         State("portfolio-table", "rowData"),
         prevent_initial_call=True
     )
-    def confirm_delete(n_clicks, row_idx, rows):
-        if not n_clicks or row_idx is None or row_idx >= len(rows):
-            return no_update, no_update, no_update
+    def confirm_delete(n_clicks, row_id, rows):
+        if not n_clicks or row_id is None:
+            return no_update, no_update
 
         try:
+            row_idx = next((i for i, row in enumerate(rows) if row.get("id") == row_id), None)
+            
+            if row_idx is None:
+                return no_update, no_update
+            
             rows.pop(row_idx)
-            pd.DataFrame(rows).to_csv("data/portfolio.csv", index=False)
+            
+            df_to_save = pd.DataFrame(rows)
+            cols_to_save = ["id", "name", "category", "buy_price", "quantity", "buy_date", "total_value"]
+            df_to_save[cols_to_save].to_csv("data/portfolio.csv", index=False)
+            
             return False, rows
         
         except Exception as e:

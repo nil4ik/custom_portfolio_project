@@ -4,6 +4,7 @@ import pandas as pd
 import plotly.express as px
 import dash_ag_grid as dag
 from datetime import date
+import uuid
 
 ###################################### Modal add_item_button &  ######################################
 
@@ -36,7 +37,6 @@ add_item_button = html.Div(
                 ]),
                 dbc.ModalFooter([
                     dbc.Button("Add", id="submit-item", color="success"),
-                    dbc.Button("Close", id="close-add-item", color="danger", n_clicks=0),
             ]),
             ],
             id="modal-add-button",
@@ -60,40 +60,6 @@ header = html.Div([
 ], className="header_container"
 )
 
-##################################### Basic Data ############################################
-
-
-df = pd.read_csv('data/portfolio.csv')
-
-df['total_value'] = df['buy_price'] * df['quantity']
-df_total = df.groupby('buy_date')['total_value'].sum().reset_index()
-df_total = df.sort_values('buy_date')
-df_total['cumulative_total'] = df_total['total_value'].cumsum()
-
-###############################   Pie graph    ###################################################
-
-fig_total_pie = px.pie(
-    df_total, 
-    values= 'total_value', 
-    names = 'category',
-    hole= .3)
-
-fig_total_pie.update_traces(
-    hoverinfo = 'label+percent+name', 
-    textinfo ='percent', 
-    textfont=dict(color='white'),
-    hovertemplate= "<b>%{label}</b><br>" + "Total: %{value}$<br>" + "Percentage: %{percent}",
-    hoverlabel=dict(
-        font_family="Markazi Text",
-        font_size=20,
-    )
-    )
-fig_total_pie.update_layout(
-    legend=dict(orientation = 'v',yanchor="top", font=dict(size=14, color="#f2f2f2")),
-    plot_bgcolor="#303655",
-    paper_bgcolor="#303655",
-    showlegend=False
-    )
 ######################################## Info panel ###############################################
 
 info_panel = html.Div(
@@ -122,6 +88,8 @@ time_buttons = html.Div([
 
 ########################################## Table #############################################
 
+df = pd.read_csv('data/portfolio.csv')
+
 df["edit"] = "edit"
 df["delete"] = "delete"
 df["sell"] = "sell"
@@ -131,6 +99,7 @@ table = html.Div(
         id='portfolio-table',
         rowData=df.to_dict('records'),
         columnDefs=[
+            {"field": "id", "hide": True},
             {"field": "name", "headerName": "Name", "resizable": False,},
             {"field": "category", "headerName": "Category", "resizable": False,},
             {"field": "buy_price", "headerName": "Buy Price", "resizable": False,"valueFormatter": {"function": "d3.format(',.2f')(params.value)"}},
@@ -151,7 +120,8 @@ table = html.Div(
             "pagination": True,
             "paginationPageSize": 20,
             "domLayout": "autoHeight",
-            "suppressHorizontalScroll": True
+            "suppressHorizontalScroll": True,
+            "getRowId": {"function": "params.data.id"}
         },
         style={"width": "100%", "height": "100%"},
         className='ag-theme-alpine'
@@ -198,7 +168,7 @@ modal_edit = dbc.Modal(
             ],
             id="modal-edit",
             is_open=False,
-            className=""
+            className = "custom_model_css",
         )
 ##################################### Serve layout ############################################
 
@@ -217,7 +187,7 @@ def serve_layout():
             html.Div([
                 dcc.Graph(id = 'line_total_plot', config={'displayModeBar':False})
                 ], className='graph_container_line'),
-            html.Div([dcc.Graph(id = 'pie_total_plot', figure = fig_total_pie, config={'displayModeBar':False})], className= 'graph_container_pie')],
+            html.Div([dcc.Graph(id='pie_total_plot', config={'displayModeBar':False})], className='graph_container_pie')],
             className='graph_containers_total'),
 
         html.Div([
