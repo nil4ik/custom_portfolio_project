@@ -221,6 +221,7 @@ def register_callbacks(app):
         
         try:
             new_id = str(uuid.uuid4())
+            total_value = float(price) * float(qty)
             
             new_item = {
                 "id": new_id,
@@ -229,20 +230,139 @@ def register_callbacks(app):
                 "buy_price": float(price),
                 "quantity": float(qty),
                 "buy_date": buy_date,
-                "total_value": float(price) * float(qty),
+                "total_value": total_value,
             }
+            
+            df = pd.read_csv("data/portfolio.csv")
+            df = pd.concat([df, pd.DataFrame([new_item])], ignore_index=True)
+            df.to_csv("data/portfolio.csv", index=False)
+            
+            history = pd.read_csv("data/portfolio_history.csv")
+            new_transaction = {
+                'transaction_id': str(uuid.uuid4()),
+                'asset_id': new_id,
+                'name': name,
+                'category': category,
+                'price': price,
+                'quantity': qty,
+                'date': buy_date,
+                'total_value': total_value,
+                'transaction_type': 'buy',
+                'profit_loss': 0
+            }
+            history = pd.concat([history, pd.DataFrame([new_transaction])], ignore_index=True)
+            history.to_csv("data/portfolio_history.csv", index=False)
             
             rows.append(new_item)
             
-            df_to_save = pd.DataFrame(rows)
-            cols_to_save = ["id", "name", "category", "buy_price", "quantity", "buy_date", "total_value"]
-            df_to_save[cols_to_save].to_csv("data/portfolio.csv", index=False)
-            
             return True, rows, "", "", "", "", date.today().isoformat()
-            
+        
         except Exception as e:
-            print(f"Error adding item: {e}")
+            print(f"Error adding item {e}")
             return False, no_update, name, category, price, qty, buy_date
+
+############################ Add more button ###########################################
+
+    @callback(
+        Output("modal-add-more", "is_open", allow_duplicate=True),
+        Output("modal-add-more-header", "children"),
+        Output("buy-date-add-more", "value"),
+        Output("store-add-more-row", "data"),
+        Input("portfolio-table", "cellClicked"),
+        State("portfolio-table", "rowData"),
+        prevent_initial_call=True
+    )
+
+    def open_add_more_modal(cell_clicked, rows):
+        if not cell_clicked or cell_clicked.get("colId") != "add":
+            return no_update, no_update, no_update, no_update
+    
+        row_id = cell_clicked.get("rowId")
+        
+        if not row_id:
+            return no_update, no_update, no_update, no_update
+
+        row_data = next((row for row in rows if row.get("id") == row_id), None)
+
+        if not row_data:
+            return no_update, no_update, no_update, no_update
+        
+        return (
+            True,
+            f"Add more '{row_data.get('name', '')}'",
+            date.today().isoformat(),
+            row_id
+        )
+    
+    @callback(
+        Output("modal-add-more", "is_open", allow_duplicate=True),
+        Output("portfolio-table", "rowData", allow_duplicate=True),
+        Input("confirm-add-more", "n_clicks"),
+        State("price-add-more", "value"),
+        State("qty-add-more", "value"),
+        State("buy-date-add-more", "value"),
+        State("store-add-more-row", "data"),
+        State("portfolio-table", "rowData"),
+        prevent_initial_call=True
+    )
+
+    def add_more_item(n_clicks, price, qty, buy_date, row_id, rows):
+        if not n_clicks or row_id is None:
+            return no_update, no_update
+        
+        if not all([price, qty, buy_date]):
+            return no_update, no_update
+
+        try:
+            row = next((r for r in rows if r.get("id") == row_id), None)
+            if not row:
+                return no_update, no_update
+            
+            price_float = float(price)
+            qty_float = float(qty)
+            
+            old_quantity = float(row["quantity"])
+            new_quantity = old_quantity + qty_float
+            
+            old_total_value = float(row["total_value"])
+            new_total_value = qty_float * price_float
+            total_value = old_total_value + new_total_value
+            
+            avg_price = total_value / new_quantity
+
+            row["buy_price"] = avg_price
+            row["quantity"] = new_quantity
+            row["total_value"] = total_value
+
+            df = pd.read_csv("data/portfolio.csv")
+            
+            df.loc[df['id'] == row_id, 'buy_price'] = avg_price
+            df.loc[df['id'] == row_id, 'quantity'] = new_quantity
+            df.loc[df['id'] == row_id, 'total_value'] = total_value
+            
+            df.to_csv("data/portfolio.csv", index=False)
+
+            history = pd.read_csv("data/portfolio_history.csv")
+            new_transaction = {
+                'transaction_id': str(uuid.uuid4()),
+                'asset_id': row_id,
+                'name': row['name'],
+                'category': row['category'],
+                'price': float(price),
+                'quantity': float(qty),
+                'date': buy_date,
+                'total_value': new_total_value,
+                'transaction_type': 'buy',
+                'profit_loss': 0
+            }
+            history = pd.concat([history, pd.DataFrame([new_transaction])], ignore_index=True)
+            history.to_csv("data/portfolio_history.csv", index=False)
+
+            return False, rows
+
+        except Exception as e:
+            print(f"Error editing item: {e}")
+            return no_update, no_update
 
 ############################ Edit button ###############################################
 
@@ -250,9 +370,6 @@ def register_callbacks(app):
         Output("modal-edit", "is_open", allow_duplicate=True),
         Output("name-edit", "value"),
         Output("category-edit", "value"),
-        Output("price-edit", "value"),
-        Output("qty-edit", "value"),
-        Output("buy-date-edit", "value"),
         Output("store-edit-row", "data"),
         Input("portfolio-table", "cellClicked"),
         State("portfolio-table", "rowData"),
@@ -261,63 +378,58 @@ def register_callbacks(app):
 
     def open_edit_modal(cell_clicked, rows):
         if not cell_clicked or cell_clicked.get("colId") != "edit":
-            return no_update, no_update, no_update, no_update, no_update, no_update, no_update
-        
+            return no_update, no_update, no_update, no_update
+    
         row_id = cell_clicked.get("rowId")
         
         if not row_id:
-            return no_update, no_update, no_update, no_update, no_update, no_update, no_update
+            return no_update, no_update, no_update, no_update
 
         row_data = next((row for row in rows if row.get("id") == row_id), None)
 
         if not row_data:
-            return no_update, no_update, no_update, no_update, no_update, no_update, no_update
+            return no_update, no_update, no_update, no_update
         
         return (
             True,
             row_data.get("name", ""),         
-            row_data.get("category", ""),     
-            row_data.get("buy_price", 0),     
-            row_data.get("quantity", 0),      
-            row_data.get("buy_date", ""),     
+            row_data.get("category", ""),  
             row_id
         )
-    
+
     @callback(
         Output("modal-edit", "is_open", allow_duplicate=True),
         Output("portfolio-table", "rowData", allow_duplicate=True),
         Input("confirm-edit", "n_clicks"),
         State("name-edit", "value"),
         State("category-edit", "value"),
-        State("price-edit", "value"),
-        State("qty-edit", "value"),
-        State("buy-date-edit", "value"),
         State("store-edit-row", "data"),
         State("portfolio-table", "rowData"),
         prevent_initial_call=True
     )
-
-    def confirm_edit(n_clicks, name, category, price, qty, buy_date, row_id, rows):
+    def confirm_edit(n_clicks, name, category, row_id, rows):
         if not n_clicks or row_id is None:
             return no_update, no_update
 
         try:
             row = next((r for r in rows if r.get("id") == row_id), None)
-
             if not row:
                 return no_update, no_update
-
+            
             row["name"] = name
             row["category"] = category
-            row["buy_price"] = price
-            row["quantity"] = qty
-            row["buy_date"] = buy_date
-            row["total_value"] = price * qty
 
-            df_to_save = pd.DataFrame(rows)
+            df = pd.read_csv("data/portfolio.csv")
+            
+            df.loc[df['id'] == row_id, 'name'] = name
+            df.loc[df['id'] == row_id, 'category'] = category
+            
+            df.to_csv("data/portfolio.csv", index=False)
 
-            cols_to_save = ["id", "name", "category", "buy_price", "quantity", "buy_date", "total_value"]
-            df_to_save[cols_to_save].to_csv("data/portfolio.csv", index=False)
+            history = pd.read_csv("data/portfolio_history.csv")
+            history.loc[history['asset_id'] == row_id, 'name'] = name
+            history.loc[history['asset_id'] == row_id, 'category'] = category
+            history.to_csv("data/portfolio_history.csv", index=False)
 
             return False, rows
 
@@ -350,7 +462,7 @@ def register_callbacks(app):
             return no_update, no_update, no_update
 
         item_name = row_data.get('name', 'this item')
-        return True, f"Are you sure you want to delete '{item_name}'?", row_id
+        return True, f"Are you sure you want to delete '{item_name}'", row_id
 
 
     @callback(
@@ -366,16 +478,15 @@ def register_callbacks(app):
             return no_update, no_update
 
         try:
-            row_idx = next((i for i, row in enumerate(rows) if row.get("id") == row_id), None)
+            rows = [row for row in rows if row.get("id") != row_id]
             
-            if row_idx is None:
-                return no_update, no_update
+            df = pd.read_csv("data/portfolio.csv")
+            df = df[df['id'] != row_id]
+            df.to_csv("data/portfolio.csv", index=False)
             
-            rows.pop(row_idx)
-            
-            df_to_save = pd.DataFrame(rows)
-            cols_to_save = ["id", "name", "category", "buy_price", "quantity", "buy_date", "total_value"]
-            df_to_save[cols_to_save].to_csv("data/portfolio.csv", index=False)
+            history = pd.read_csv("data/portfolio_history.csv")
+            history = history[history['asset_id'] != row_id]
+            history.to_csv("data/portfolio_history.csv", index=False)
             
             return False, rows
         
@@ -384,3 +495,4 @@ def register_callbacks(app):
             return True, no_update
 
 ############################ Sell button ###############################################
+

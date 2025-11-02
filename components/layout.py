@@ -90,6 +90,7 @@ time_buttons = html.Div([
 
 df = pd.read_csv('data/portfolio.csv')
 
+df["add"] = "add"
 df["edit"] = "edit"
 df["delete"] = "delete"
 df["sell"] = "sell"
@@ -106,6 +107,7 @@ table = html.Div(
             {"field": "quantity", "headerName": "Quantity", "resizable": False,},
             {"field": "buy_date", "headerName": "Buy Date", "resizable": False, },
             {"field": "total_value", "headerName": "Total Value", "resizable": False,  "valueFormatter": {"function": "d3.format(',.2f')(params.value)"}},
+            {"field": "add", "headerName": "", "filter": False, "sortable": False, "resizable": False, "maxWidth": 80,},
             {"field": "edit", "headerName": "", "filter": False, "sortable": False, "resizable": False, "maxWidth": 80,},
             {"field": "delete", "headerName": "", "filter": False, "sortable": False, "resizable": False, "maxWidth": 80,},
             {"field": "sell", "headerName": "", "filter": False, "sortable": False, "resizable": False, "maxWidth": 80, },
@@ -128,6 +130,29 @@ table = html.Div(
     ),
     className='portfolio_table_css'
 )
+
+###################################### add more button ########################################
+
+
+store_add_more_row = dcc.Store(id="store-add-more-row", data=None)
+
+modal_add_more = dbc.Modal(
+            [
+                dbc.ModalHeader(id="modal-add-more-header"),
+                dbc.ModalBody([
+                    dbc.Input(id="price-add-more", placeholder="Buy price", type="number", className="mt-2"),
+                    dbc.Input(id="qty-add-more", placeholder="Quantity", type="number", className="mt-2"),
+                    dbc.Input(id="buy-date-add-more", placeholder="Buy date (yyyy-mm-d)", type="date", className="mt-2"),
+                ]),
+                store_add_more_row,
+                dbc.ModalFooter([
+                    dbc.Button("Confirm", id="confirm-add-more", color="success"),
+            ]),
+            ],
+            id="modal-add-more",
+            is_open=False,
+            className = "custom_model_css",
+        )
 
 ####################################### delete button ##########################################
 
@@ -157,9 +182,6 @@ modal_edit = dbc.Modal(
                 dbc.ModalBody([
                     dbc.Input(id="name-edit", placeholder="Name", type="text"),
                     dbc.Input(id="category-edit", placeholder="Category", type="text", className="mt-2"),
-                    dbc.Input(id="price-edit", placeholder="Buy price", type="number", className="mt-2"),
-                    dbc.Input(id="qty-edit", placeholder="Quantity", type="number", className="mt-2"),
-                    dbc.Input(id="buy-date-edit", placeholder="Buy date (yyyy-mm-d)", type="date", className="mt-2"),
                 ]),
                 store_edit_row,
                 dbc.ModalFooter([
@@ -172,6 +194,7 @@ modal_edit = dbc.Modal(
         )
 
 #######################################  sell button ######################################
+
 
 
 #######################################  footer ######################################
@@ -211,6 +234,7 @@ def serve_layout():
             html.H2('Portfolio details', className='portfolio_details_h2'),
 
             html.Div(table, className = 'table_style_container'),
+            modal_add_more,
             modal_delete,
             modal_edit,
             ],

@@ -1,6 +1,5 @@
 id,name,category,buy_price,quantity,buy_date,total_value
-e1f38680-773f-4752-a3ba-495ce9c897f1,Intel Stock,Stock,45.0,10.0,2025-05-01,450.0
-96c29e26-5dc5-4cca-a3ed-475e9a48f2ae,Bitcoin,Crypto,45000.0,0.1,2025-10-24,4500.0
+e1f38680-773f-4752-a3ba-495ce9c897f1,Intel Stocksssssssss,Stock,67.5,20.0,2025-05-01,1350.0
 a91c814d-33ac-4420-b2fa-09b6b4a2a7b5,Ethereum,Crypto,3000.0,0.5,2025-10-18,1500.0
 3ee90ef7-ea38-4b08-ae3e-9eb25ff3c025,Solana,Crypto,110.0,2.0,2025-10-12,220.0
 83a278fa-d9fd-47da-a44b-2479e7557239,Cardano,Crypto,0.42,1000.0,2025-09-28,420.0
@@ -82,3 +81,5 @@ bf6d047f-2363-429c-ba9a-37dc94a7ec47,Hermès Birkin Bag,Luxury Goods,22000.0,1.0
 36771a6a-7f18-4e99-be1c-4a9ff23bc2c8,Pearl Necklace,Luxury Goods,9500.0,1.0,2024-10-26,9500.0
 640f16c2-2502-466e-8036-646bc15240fc,AMD Stock,Stock,111.0,11.0,2025-10-27,1221.0
 87fb61a5-5126-45d2-9100-8a813c2d4f24,Tesla ,Stock,22.0,11.0,2025-10-29,242.0
+f3247c94-6eb1-49bf-8340-6e49c870b732,"add,item",aa,2.0,3.0,2025-11-02,6.0
+d868e3c8-fe7a-48a4-bcce-36c1fa17af5f,testing,testing,22.0,11.0,2025-11-02,242.0

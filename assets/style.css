@@ -185,7 +185,8 @@ body {
 .portfolio_table_css 
 .ag-cell[col-id="edit"], 
 .ag-cell[col-id="delete"], 
-.ag-cell[col-id="sell"] {
+.ag-cell[col-id="sell"],
+.ag-cell[col-id="add"] {
     text-align: center;
     cursor: pointer;
 }
