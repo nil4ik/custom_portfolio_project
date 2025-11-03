@@ -6,7 +6,7 @@ import dash_ag_grid as dag
 from datetime import date
 import uuid
 
-###################################### Modal add_item_button &  ######################################
+###################################### Modal add_item_button  ######################################
 
 alert_add_item = html.Div(
     [
@@ -131,7 +131,7 @@ table = html.Div(
     className='portfolio_table_css'
 )
 
-###################################### add more button ########################################
+###################################### Modal add more button ########################################
 
 
 store_add_more_row = dcc.Store(id="store-add-more-row", data=None)
@@ -154,7 +154,7 @@ modal_add_more = dbc.Modal(
             className = "custom_model_css",
         )
 
-####################################### delete button ##########################################
+####################################### Modal delete button ##########################################
 
 store_delete_row = dcc.Store(id="store-delete-row", data=None)
 
@@ -172,7 +172,7 @@ modal_delete = dbc.Modal(
     is_open=False,
 )
 
-#######################################  edit button ######################################
+####################################### Modal edit button ######################################
 
 store_edit_row = dcc.Store(id="store-edit-row", data=None)
 
@@ -193,7 +193,7 @@ modal_edit = dbc.Modal(
             className = "custom_model_css",
         )
 
-#######################################  sell button ######################################
+####################################### Modal sell button ######################################
 
 
 store_sell_row = dcc.Store(id="store-sell-row", data=None)
@@ -217,7 +217,7 @@ modal_sell = dbc.Modal(
             className = "custom_model_css",
         )
 
-#######################################  footer ######################################
+####################################### footer ######################################
 
 footer = html.Footer(
     [

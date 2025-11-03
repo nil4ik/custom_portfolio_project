@@ -1,8 +1,8 @@
 id,name,category,buy_price,quantity,buy_date,total_value
-a91c814d-33ac-4420-b2fa-09b6b4a2a7b5,Ethereum,Crypto,3000.0,0.5,2025-10-18,1500.0
+a91c814d-33ac-4420-b2fa-09b6b4a2a7b5,Ethereum,Crypto,3026.6666666666665,1.5,2025-10-18,4540.0
 3ee90ef7-ea38-4b08-ae3e-9eb25ff3c025,Solana,Crypto,110.0,2.0,2025-10-12,220.0
-83a278fa-d9fd-47da-a44b-2479e7557239,Cardano,Crypto,0.42,1000.0,2025-09-28,420.0
-159d0059-a3c4-4bad-8a20-01d00dccbbd8,Ripple,Crypto,0.55,800.0,2025-09-10,440.00000000000006
+83a278fa-d9fd-47da-a44b-2479e7557239,Cardano,Crypto,0.42,500.0,2025-09-28,210.0
+159d0059-a3c4-4bad-8a20-01d00dccbbd8,Ripple,Crypto,0.55,600.0,2025-09-10,330.0
 5c7bbc08-7940-426a-9576-5511c3431ae1,Polkadot,Crypto,7.2,50.0,2025-08-15,360.0
 8390daef-485a-4c34-ac19-3b497aabe263,Avalanche,Crypto,38.0,10.0,2025-07-20,380.0
 2189f893-1b03-4175-ba33-c0752af829c4,Chainlink,Crypto,15.0,30.0,2025-06-25,450.0
@@ -18,7 +18,6 @@ b581fac3-f94b-4839-baa1-5be5ef238f61,Fine Art Print,Collectible,600.0,1.0,2025-0
 8e25f06f-24bc-481c-9ee8-9029f81a368d,Whiskey Bottle,Collectible,180.0,2.0,2025-06-20,360.0
 e9a9aac9-dbb7-4618-85e9-7898f0f808a5,Pokémon Card,Collectible,95.0,5.0,2025-05-25,475.0
 757cc04d-e6b0-42ba-8765-aad55c309db0,Sneakers Limited Edition,Collectible,420.0,1.0,2025-04-30,420.0
-7160ea1b-85fa-459d-b4cf-9554bbd28427,S&P 500 ETF,ETF,450.0,12.0,2025-10-22,5400.0
 cdecb537-f0e8-4014-a49a-bd6aa1cce0a7,NASDAQ ETF,ETF,380.0,8.0,2025-10-16,3040.0
 e3f379d8-57f3-4655-873c-ba0b23d14a46,Vanguard Total Stock,ETF,105.0,20.0,2025-10-05,2100.0
 ae68e098-97b1-40fb-8f37-50e527ac43a7,Real Estate ETF,ETF,95.0,15.0,2025-09-20,1425.0
@@ -72,14 +71,10 @@ a68a34c0-0b97-4f0a-8a2e-2bba025468d0,Art Nouveau Jewelry,Antique,3300.0,1.0,2025
 f6490925-0298-4395-81bc-1d6723186b88,Rolex Daytona,Luxury Goods,35000.0,1.0,2025-10-07,35000.0
 bf6d047f-2363-429c-ba9a-37dc94a7ec47,Hermès Birkin Bag,Luxury Goods,22000.0,1.0,2025-09-26,22000.0
 9555ad32-8673-43d7-9feb-3e4f1d30b085,Diamond Ring,Luxury Goods,18000.0,1.0,2025-09-14,18000.0
-35c54a82-1ce3-4a73-a35b-87929c7337d1,Champagne Dom Pérignon,Luxury Goods,850.0,12.0,2025-08-30,10200.0
 4a0e66e3-7c72-4d05-818e-92943dc871e7,Patek Philippe Watch,Luxury Goods,48000.0,1.0,2025-07-25,48000.0
-757b524b-9014-4886-9ee2-a8e229850cd3,Louis Vuitton Trunk,Luxury Goods,12500.0,1.0,2025-06-30,12500.0
 4732971f-2ce4-4f37-8d4e-dc037170ac33,Cognac Louis XIII,Luxury Goods,3800.0,2.0,2025-05-22,7600.0
 5187e15c-1560-42ee-ac91-68a84e474617,Designer Fountain Pen,Luxury Goods,2200.0,1.0,2025-04-18,2200.0
 36771a6a-7f18-4e99-be1c-4a9ff23bc2c8,Pearl Necklace,Luxury Goods,9500.0,1.0,2024-10-26,9500.0
 640f16c2-2502-466e-8036-646bc15240fc,AMD Stock,Stock,111.0,11.0,2025-10-27,1221.0
 87fb61a5-5126-45d2-9100-8a813c2d4f24,Tesla ,Stock,22.0,11.0,2025-10-29,242.0
-f3247c94-6eb1-49bf-8340-6e49c870b732,"add,item",aa,2.0,3.0,2025-11-02,6.0
-d868e3c8-fe7a-48a4-bcce-36c1fa17af5f,testing,testing,22.0,11.0,2025-11-02,242.0
-4f393e81-f974-4a34-9097-dca83578e40c,test negative,asd,22.0,22.0,2025-11-03,484.0
+6d7e90da-a61a-488d-be4f-e7c48740b83e,Btc,Crypto,30000.0,1.0,2025-01-23,30000.0

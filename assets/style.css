@@ -191,7 +191,7 @@ body {
     cursor: pointer;
 }
 
-/***************** add item button ****************************/
+/***************** Modal buttons ****************************/
 
 .add_item_container {
     display: flex;
@@ -215,7 +215,7 @@ body {
     color: #f2f2f2 !important;
     border-radius: 15px !important;
     font-family: 'Markazi Text', serif !important; 
-    font-size: 23px !important;
+    font-size: 30px !important;
 }
 
 .custom_model_css .btn {
@@ -228,10 +228,6 @@ body {
     text-align: center;
     font-family:"Markazi Text", serif !important;
 }
-
-/****************** Edit Delete Sell button ********************/
-
-
 
 /************************* footer ***************************/
 

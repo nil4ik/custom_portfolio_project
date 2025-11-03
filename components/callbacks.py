@@ -33,7 +33,8 @@ def register_callbacks(app):
     )
     def update_line_chart(btn_1d, btn_1w, btn_1m, btn_6m, btn_1y, btn_all, row_data):
         
-        df = pd.DataFrame(row_data) if row_data else pd.read_csv('data/portfolio.csv')
+        df = pd.read_csv('data/portfolio_history.csv')
+        df["date"] = pd.to_datetime(df["date"])
         
         if df.empty:
             fig = go.Figure()
@@ -53,9 +54,6 @@ def register_callbacks(app):
             classes = ['time-btn' for _ in buttons]
             return [fig] + classes
         
-        df['total_value'] = df['buy_price'] * df['quantity']
-        df['buy_date'] = pd.to_datetime(df['buy_date'])
-
         triggered_id = ctx.triggered_id or "btn-all"
         today = datetime.today()
 
@@ -68,16 +66,14 @@ def register_callbacks(app):
         elif triggered_id == "btn-6m":
             start_date = today - timedelta(days=180)
         elif triggered_id == "btn-1y":
-            start_date = today - timedelta(days=700)
+            start_date = today - timedelta(days=365)
         else:
-            start_date = df["buy_date"].min()
-
-        filtered_df = df[df['buy_date'] >= start_date].copy()
-        filtered_df = filtered_df.sort_values('buy_date')
-        filtered_df['cumulative_total'] = filtered_df['total_value'].cumsum()
+            start_date = df["date"].min()
 
         buttons = ["btn-1d", "btn-1w", "btn-1m", "btn-6m", "btn-1y", "btn-all"]
         classes = ['time-btn active' if btn == triggered_id else 'time-btn' for btn in buttons]
+
+        filtered_df = df[df["date"] >= start_date].copy()
 
         if filtered_df.empty:
             fig = go.Figure()
@@ -94,10 +90,19 @@ def register_callbacks(app):
                 yaxis_visible=False
             )
             return [fig] + classes
+        
+        df["delta"] = df.apply(
+            lambda row: row["total_value"] if row["transaction_type"] == "buy" else -row["total_value"],
+            axis = 1
+        )
+        df_grouped = df.groupby("date", as_index=False)["delta"].sum()
+        df_grouped["total_portfolio_value"] = df_grouped["delta"].cumsum()
+
+        filtered_df = df_grouped[df_grouped["date"] >= start_date].copy()
 
         fig_total_line = px.line(filtered_df, 
-                        x='buy_date', 
-                        y='cumulative_total', 
+                        x='date', 
+                        y='total_portfolio_value', 
                         markers=True)
         
         fig_total_line.update_traces(
@@ -133,6 +138,8 @@ def register_callbacks(app):
         )
 
         return [fig_total_line] + classes
+
+######################### Pie chart #############################################
 
     @callback(
         Output('pie_total_plot', 'figure'),
