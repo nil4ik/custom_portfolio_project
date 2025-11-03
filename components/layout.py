@@ -196,6 +196,26 @@ modal_edit = dbc.Modal(
 #######################################  sell button ######################################
 
 
+store_sell_row = dcc.Store(id="store-sell-row", data=None)
+
+modal_sell = dbc.Modal(
+            [
+                dbc.ModalHeader(id="modal-sell-header"),
+                dbc.ModalBody([
+                    dbc.Input(id="price-sell", placeholder="Sell price", type="text", className="mt-2"),
+                    dbc.Input(id="quantity-sell", placeholder="Quantity", type="text", className="mt-2"),
+                    dbc.Input(id="date-sell", placeholder="Buy date (yyyy-mm-d)", type="date", className="mt-2"),
+
+                ]),
+                store_sell_row,
+                dbc.ModalFooter([
+                    dbc.Button("Confirm", id="confirm-sell", color="success"),
+            ]),
+            ],
+            id="modal-sell",
+            is_open=False,
+            className = "custom_model_css",
+        )
 
 #######################################  footer ######################################
 
@@ -237,6 +257,7 @@ def serve_layout():
             modal_add_more,
             modal_delete,
             modal_edit,
+            modal_sell,
             ],
             className='container_table_general'),
             footer,

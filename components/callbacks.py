@@ -219,6 +219,9 @@ def register_callbacks(app):
         if not all([name, category, price, qty, buy_date]):
             return False, no_update, name, category, price, qty, buy_date
         
+        if (price <= 0) or (qty <= 0):
+            return False, no_update, name, category, price, qty, buy_date
+        
         try:
             new_id = str(uuid.uuid4())
             total_value = float(price) * float(qty)
@@ -311,6 +314,9 @@ def register_callbacks(app):
             return no_update, no_update
         
         if not all([price, qty, buy_date]):
+            return no_update, no_update
+        
+        if (price <= 0) or (qty <= 0):
             return no_update, no_update
 
         try:
@@ -496,3 +502,113 @@ def register_callbacks(app):
 
 ############################ Sell button ###############################################
 
+    @callback(
+        Output("modal-sell", "is_open", allow_duplicate=True),
+        Output("modal-sell-header", "children"),
+        Output("date-sell", "value"),
+        Output("store-sell-row", "data"),
+        Input("portfolio-table", "cellClicked"),
+        State("portfolio-table", "rowData"),
+        prevent_initial_call=True
+    )
+
+    def open_sell_modal(cell_clicked, rows):
+        if not cell_clicked or cell_clicked.get("colId") != "sell":
+            return no_update, no_update, no_update, no_update
+    
+        row_id = cell_clicked.get("rowId")
+        
+        if not row_id:
+            return no_update, no_update, no_update, no_update
+
+        row_data = next((row for row in rows if row.get("id") == row_id), None)
+
+        if not row_data:
+            return no_update, no_update, no_update, no_update
+        
+        return (
+            True,
+            f"Sell '{row_data.get('name', '')}'",
+            date.today().isoformat(),
+            row_id
+        )
+    
+    @callback(
+        Output("modal-sell", "is_open", allow_duplicate=True),
+        Output("portfolio-table", "rowData", allow_duplicate=True),
+        Input("confirm-sell", "n_clicks"),
+        State("price-sell", "value"),
+        State("quantity-sell", "value"),
+        State("date-sell", "value"),
+        State("store-sell-row", "data"),
+        State("portfolio-table", "rowData"),
+        prevent_initial_call=True
+    )
+
+    def confirm_sell(n_clicks, price, qty, sell_date, row_id, rows):
+        if not n_clicks or row_id is None:
+            return no_update, no_update
+        
+        if not all([price, qty, sell_date]):
+            return no_update, no_update
+        
+        price = float(price)
+        qty = float(qty)
+
+        if (price < 0) or (qty < 0):
+            return no_update, no_update
+        
+        sell_total_value = qty * price
+
+        try:
+            row = next((r for r in rows if r.get("id") == row_id), None)
+            if not row:
+                return no_update, no_update
+            
+            old_quantity = float(row["quantity"])
+            old_price = float(row["buy_price"])
+
+            if qty > old_quantity:
+                return no_update, no_update
+            
+            profit_loss = (price - old_price) * qty
+            
+            if qty >= old_quantity:
+                rows = [r for r in rows if r.get("id") != row_id]
+                
+                df = pd.read_csv("data/portfolio.csv")
+                df = df[df['id'] != row_id]
+                df.to_csv("data/portfolio.csv", index=False)
+            else:
+                new_quantity = old_quantity - qty
+                new_total_value = new_quantity * old_price
+                
+                row["quantity"] = new_quantity
+                row["total_value"] = new_total_value
+
+                df = pd.read_csv("data/portfolio.csv")
+                df.loc[df['id'] == row_id, 'quantity'] = new_quantity
+                df.loc[df['id'] == row_id, 'total_value'] = new_total_value
+                df.to_csv("data/portfolio.csv", index=False)
+
+            history = pd.read_csv("data/portfolio_history.csv")
+            new_transaction = {
+                'transaction_id': str(uuid.uuid4()),
+                'asset_id': row_id,
+                'name': row['name'],
+                'category': row['category'],
+                'price': price,
+                'quantity': qty,
+                'date': sell_date,
+                'total_value': sell_total_value,
+                'transaction_type': 'sell',
+                'profit_loss': profit_loss
+            }
+            history = pd.concat([history, pd.DataFrame([new_transaction])], ignore_index=True)
+            history.to_csv("data/portfolio_history.csv", index=False)
+
+            return False, rows
+
+        except Exception as e:
+            print(f"Error {e}")
+            return no_update, no_update
