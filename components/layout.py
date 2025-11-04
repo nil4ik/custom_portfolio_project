@@ -88,17 +88,10 @@ time_buttons = html.Div([
 
 ########################################## Table #############################################
 
-df = pd.read_csv('data/portfolio.csv')
-
-df["add"] = "add"
-df["edit"] = "edit"
-df["delete"] = "delete"
-df["sell"] = "sell"
-
 table = html.Div(
     dag.AgGrid(
         id='portfolio-table',
-        rowData=df.to_dict('records'),
+        rowData= [],
         columnDefs=[
             {"field": "id", "hide": True},
             {"field": "name", "headerName": "Name", "resizable": False,},
