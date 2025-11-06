@@ -5,6 +5,7 @@ import plotly.graph_objects as go
 from datetime import datetime, timedelta, date
 import dash_bootstrap_components as dbc
 import csv
+from dash import html
 from dash import dcc
 from dash import no_update
 import uuid
@@ -28,6 +29,62 @@ def register_callbacks(app):
         df["sell"] = "sell"
         
         return df.to_dict('records')
+    
+################################### History update ####################################
+
+    @callback(
+        Output('portfolio-history-table', 'rowData'),
+        Input('portfolio-history-table', 'id')
+    )
+    def initialize_history_table(_):
+        df_his = pd.read_csv('data/portfolio_history.csv')
+        
+        return df_his.to_dict('records')
+    
+################################### Info Panel #######################################33
+
+    @callback(
+        Output('total-value-box', 'children'),
+        Output('number-of-assets-box', 'children'),
+        Output('most-expensive-box', 'children'),
+        Output('average-price-box', 'children'),
+        Output('popular-category-box', 'children'),
+        Input('portfolio-table', 'rowData')
+    )
+
+    def update_info_panel(row_data):
+        df = pd.read_csv('data/portfolio.csv')
+
+        if df.empty:
+            return (
+                [html.Span("Total Value:", className='info-text'), html.Br(), "0.00€"],
+                [html.Span("Number of Assets:", className='info-text'), html.Br(), "0"],
+                [html.Span("Most expensive item:", className='info-text'), html.Br(), "N/A"],
+                [html.Span("Average buy price:", className='info-text'), html.Br(), "0€"],
+                [html.Span("Most popular category:", className='info-text'), html.Br(), "N/A"],
+            )
+        
+        total_value = df['total_value'].sum()
+
+        number_of_assets = df['quantity'].sum()
+
+        most_expensive = df.loc[df['total_value'].idxmax()]
+        most_expensive_text = f"{most_expensive['name']} ({most_expensive['total_value']:,.2f}€)"
+
+        average_price = df['total_value'].mean()
+
+        popular_category = df.groupby('category')['total_value'].sum().reset_index()
+        popular_category = popular_category.loc[popular_category['total_value'].idxmax()]
+
+        popular_category_text = f"{popular_category['category']} ({popular_category['total_value']:,.2f}€)"
+
+        return (
+            [html.Span("Total Value:", className='info-text'), html.Br(), f"{total_value:,.2f}€"],
+            [html.Span("Number of Assets:", className='info-text'), html.Br(), f"{number_of_assets:,.0f}"],
+            [html.Span("Most expensive item:", className='info-text'), html.Br(), most_expensive_text],
+            [html.Span("Average buy price:", className='info-text'), html.Br(), f"{average_price:,.2f}€"],
+            [html.Span("Most popular category:", className='info-text'), html.Br(), popular_category_text],
+        )
 
 ################################## line plot #########################################
 
@@ -228,6 +285,7 @@ def register_callbacks(app):
         Output("price-input", "value"),
         Output("qty-input", "value"),
         Output("buy-date-input", "value"),
+        Output('portfolio-history-table', 'rowData', allow_duplicate=True),
         Input("submit-item", "n_clicks"),
         State("name-input", "value"),
         State("category-input", "value"),
@@ -238,13 +296,13 @@ def register_callbacks(app):
     )
     def add_item(n, name, category, price, qty, buy_date):
         if not n:
-            return no_update, no_update, no_update, no_update, no_update, no_update, no_update
+            return no_update, no_update, no_update, no_update, no_update, no_update, no_update, no_update
         
         if not all([name, category, price, qty, buy_date]):
-            return False, no_update, name, category, price, qty, buy_date
+            return False, no_update, name, category, price, qty, buy_date, no_update
         
         if (float(price) <= 0) or (float(qty) <= 0):
-            return False, no_update, name, category, price, qty, buy_date
+            return False, no_update, name, category, price, qty, buy_date, no_update
         
         try:
             new_id = str(uuid.uuid4())
@@ -285,11 +343,13 @@ def register_callbacks(app):
             df["delete"] = "delete"
             df["sell"] = "sell"
 
-            return True, df.to_dict('records'), "", "", "", "", date.today().isoformat()
+            history = pd.read_csv('data/portfolio_history.csv')
+
+            return True, df.to_dict('records'), "", "", "", "", date.today().isoformat(), history.to_dict('records')
         
         except Exception as e:
             print(f"Error adding item {e}")
-            return False, no_update, name, category, price, qty, buy_date
+            return False, no_update, name, category, price, qty, buy_date, no_update
 
 ############################ Add more button ###########################################
 
@@ -328,6 +388,7 @@ def register_callbacks(app):
     @callback(
         Output("modal-add-more", "is_open", allow_duplicate=True),
         Output("portfolio-table", "rowData", allow_duplicate=True),
+        Output('portfolio-history-table', 'rowData', allow_duplicate=True),
         Input("confirm-add-more", "n_clicks"),
         State("price-add-more", "value"),
         State("qty-add-more", "value"),
@@ -337,23 +398,23 @@ def register_callbacks(app):
     )
     def add_more_item(n_clicks, price, qty, buy_date, row_id):
         if not n_clicks or row_id is None:
-            return no_update, no_update
+            return no_update, no_update, no_update
         
         if not all([price, qty, buy_date]):
-            return no_update, no_update
+            return no_update, no_update, no_update
         
         price_float = float(price)
         qty_float = float(qty)
         
         if (price_float <= 0) or (qty_float <= 0):
-            return no_update, no_update
+            return no_update, no_update, no_update
 
         try:
             df = pd.read_csv("data/portfolio.csv")
             row_data = df[df['id'] == row_id]
             
             if row_data.empty:
-                return no_update, no_update
+                return no_update, no_update, no_update
             
             row = row_data.iloc[0].to_dict()
             
@@ -393,11 +454,11 @@ def register_callbacks(app):
             df["delete"] = "delete"
             df["sell"] = "sell"
 
-            return False, df.to_dict('records')
+            return False, df.to_dict('records'), history.to_dict('records')
 
         except Exception as e:
             print(f"Error adding more: {e}")
-            return no_update, no_update
+            return no_update, no_update, no_update
 
 ############################ Edit button ###############################################
 
@@ -437,6 +498,7 @@ def register_callbacks(app):
     @callback(
         Output("modal-edit", "is_open", allow_duplicate=True),
         Output("portfolio-table", "rowData", allow_duplicate=True),
+        Output('portfolio-history-table', 'rowData', allow_duplicate=True),
         Input("confirm-edit", "n_clicks"),
         State("name-edit", "value"),
         State("category-edit", "value"),
@@ -445,13 +507,13 @@ def register_callbacks(app):
     )
     def confirm_edit(n_clicks, name, category, row_id):
         if not n_clicks or row_id is None:
-            return no_update, no_update
+            return no_update, no_update, no_update
 
         try:
             df = pd.read_csv("data/portfolio.csv")
             
             if df[df['id'] == row_id].empty:
-                return no_update, no_update
+                return no_update, no_update, no_update
             
             df.loc[df['id'] == row_id, 'name'] = name
             df.loc[df['id'] == row_id, 'category'] = category
@@ -468,11 +530,11 @@ def register_callbacks(app):
             df["delete"] = "delete"
             df["sell"] = "sell"
 
-            return False, df.to_dict('records')
+            return False, df.to_dict('records'), history.to_dict('records')
 
         except Exception as e:
             print(f"Error editing item: {e}")
-            return no_update, no_update
+            return no_update, no_update, no_update
 
 ############################ Delete button ###############################################
 
@@ -507,13 +569,14 @@ def register_callbacks(app):
     @callback(
         Output("delete-modal", "is_open", allow_duplicate=True),
         Output("portfolio-table", "rowData", allow_duplicate=True),
+        Output('portfolio-history-table', 'rowData', allow_duplicate=True),
         Input("confirm-delete", "n_clicks"),
         State("store-delete-row", "data"),
         prevent_initial_call=True
     )
     def confirm_delete(n_clicks, row_id):
         if not n_clicks or row_id is None:
-            return no_update, no_update
+            return no_update, no_update, no_update
 
         try:
             df = pd.read_csv("data/portfolio.csv")
@@ -529,11 +592,11 @@ def register_callbacks(app):
             df["delete"] = "delete"
             df["sell"] = "sell"
             
-            return False, df.to_dict('records')
+            return False, df.to_dict('records'), history.to_dict('records')
         
         except Exception as e:
             print(f"Error deleting item: {e}")
-            return True, no_update
+            return True, no_update, no_update
 
 ############################ Sell button ###############################################
 
@@ -573,6 +636,7 @@ def register_callbacks(app):
     @callback(
         Output("modal-sell", "is_open", allow_duplicate=True),
         Output("portfolio-table", "rowData", allow_duplicate=True),
+        Output('portfolio-history-table', 'rowData', allow_duplicate=True),
         Input("confirm-sell", "n_clicks"),
         State("price-sell", "value"),
         State("quantity-sell", "value"),
@@ -583,23 +647,23 @@ def register_callbacks(app):
 
     def confirm_sell(n_clicks, price, qty, sell_date, row_id):
         if not n_clicks or row_id is None:
-            return no_update, no_update
+            return no_update, no_update, no_update
         
         if not all([price, qty, sell_date]):
-            return no_update, no_update
-        
+            return no_update, no_update, no_update
+
         price = float(price)
         qty = float(qty)
 
         if (price < 0) or (qty < 0):
-            return no_update, no_update
+            return no_update, no_update, no_update
 
         try:
             df = pd.read_csv("data/portfolio.csv")
             row_data = df[df['id'] == row_id]
-            
+
             if row_data.empty:
-                return no_update, no_update
+                return no_update, no_update, no_update
             
             row = row_data.iloc[0].to_dict()
             
@@ -607,12 +671,12 @@ def register_callbacks(app):
             old_price = float(row["buy_price"])
 
             if qty > old_quantity:
-                return no_update, no_update
+                return no_update, no_update, no_update
             
             sell_total_value = qty * price
             profit_loss = (price - old_price) * qty
             
-            if qty >= old_quantity:
+            if qty == old_quantity:
                 df = df[df['id'] != row_id]
             else:
                 new_quantity = old_quantity - qty
@@ -639,13 +703,15 @@ def register_callbacks(app):
             history = pd.concat([history, pd.DataFrame([new_transaction])], ignore_index=True)
             history.to_csv("data/portfolio_history.csv", index=False)
 
-            df["add"] = "add"
-            df["edit"] = "edit"
-            df["delete"] = "delete"
-            df["sell"] = "sell"
+            if not df.empty:
+                df["add"] = "add"
+                df["edit"] = "edit"
+                df["delete"] = "delete"
+                df["sell"] = "sell"
 
-            return False, df.to_dict('records')
+            return False, df.to_dict('records'), history.to_dict('records')
 
         except Exception as e:
             print(f"Error {e}")
-            return no_update, no_update
+            return no_update, no_update, no_update
+        

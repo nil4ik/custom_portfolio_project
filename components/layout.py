@@ -65,13 +65,11 @@ header = html.Div([
 info_panel = html.Div(
             className='info_panel',
             children=[
-                html.Div('Total Value: 1234$', className='info_box'),
-                html.Div('Most expensive item: 1554$', className='info_box'),
-                html.Div('The cheapest item: 3421$', className='info_box'),
-                html.Div('Average item price: 12323414$', className='info_box'),
-                html.Div('First bought: Rolex 2012 gold', className='info_box'),
-                html.Div('Last bought: buggati 2021', className='info_box'),
-                html.Div('Number of Assets: 4331', className='info_box'),
+                html.Div(id='total-value-box', className='info_box'),
+                html.Div(id='number-of-assets-box', className='info_box'),
+                html.Div(id='most-expensive-box', className='info_box'),
+                html.Div(id='average-price-box', className='info_box'),
+                html.Div(id='popular-category-box', className='info_box'),
             ],
         )
 
@@ -210,6 +208,45 @@ modal_sell = dbc.Modal(
             className = "custom_model_css",
         )
 
+################################# history transaction ##############################
+
+history = html.Div(
+        dag.AgGrid(
+        id='portfolio-history-table',
+        rowData= [],
+        columnDefs=[
+            {"field": "transaction_id", "hide": True},
+            {"field": "name", "headerName": "Name", "resizable": False,},
+            {"field": "transaction_type", "headerName": "Type", "resizable": False, "cellStyle": {"function": """
+             params.value === 'buy' ? {'color': 'green'} : {'color': 'red'} """}},
+            {"field": "price", "headerName": "Price", "resizable": False,"valueFormatter": {"function": "d3.format(',.2f')(params.value)"}},
+            {"field": "quantity", "headerName": "Quantity", "resizable": False,},
+            {"field": "total_value", "headerName": "Total value", "resizable": False,"valueFormatter": {"function": "d3.format(',.2f')(params.value)"}},
+            {"field": "date", "headerName": "Date", "resizable": False, "sort": "desc"},
+            {"field": "profit_loss", "headerName": "Profit/Loss", "resizable": False, 
+             "valueFormatter": {"function": "d3.format(',.2f')(params.value)"}, 
+             "cellStyle": {"function": """
+             params.value > 0 ? {'color': 'green', 'fontWeight': 'bold'} : 
+             params.value < 0 ? {'color': 'red', 'fontWeight': 'bold'} : {}"""}}
+        ],
+        defaultColDef={
+            "resizable": True,
+            "sortable": True,
+            "filter": True,
+            "flex": 1,
+        },
+        dashGridOptions={
+            "pagination": False,
+            "domLayout": "normal",
+            "suppressHorizontalScroll": True,
+            "getRowId": {"function": "params.data.transaction_id"}
+        },
+        style={"width": "100%", "height": "400px"},
+        className='ag-theme-alpine'
+    ),
+    className='portfolio_history_table_css'
+)
+
 ####################################### footer ######################################
 
 footer = html.Footer(
@@ -244,7 +281,7 @@ def serve_layout():
             className='graph_containers_total'),
 
         html.Div([
-            html.H2('Portfolio details', className='portfolio_details_h2'),
+            html.Div(html.H2('Portfolio details', className='portfolio_details_h2'), className="details_h2_container"),
 
             html.Div(table, className = 'table_style_container'),
             modal_add_more,
@@ -253,5 +290,11 @@ def serve_layout():
             modal_sell,
             ],
             className='container_table_general'),
-            footer,
+
+        html.Div([
+            html.Div(html.H2('Transaction history', className = 'portfolio_transaction_history_h2'), className="history_h2_container"),
+
+            html.Div(history, className='history_style_container')
+        ]),
+        footer,
     ])
