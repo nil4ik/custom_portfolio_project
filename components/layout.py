@@ -15,7 +15,7 @@ alert_add_item = html.Div(
             "Item added successfully",
             id="alert-add-item",
             is_open=False,
-            duration=3000,
+            duration=2000,
             className="alert_css"
         ),
     ], className="alert_container"
@@ -98,10 +98,10 @@ table = html.Div(
             {"field": "quantity", "headerName": "Quantity", "resizable": False,},
             {"field": "buy_date", "headerName": "Buy Date", "resizable": False, },
             {"field": "total_value", "headerName": "Total Value", "resizable": False,  "valueFormatter": {"function": "d3.format(',.2f')(params.value)"}},
-            {"field": "add", "headerName": "", "filter": False, "sortable": False, "resizable": False, "maxWidth": 80,},
-            {"field": "edit", "headerName": "", "filter": False, "sortable": False, "resizable": False, "maxWidth": 80,},
-            {"field": "delete", "headerName": "", "filter": False, "sortable": False, "resizable": False, "maxWidth": 80,},
-            {"field": "sell", "headerName": "", "filter": False, "sortable": False, "resizable": False, "maxWidth": 80, },
+            {"field": "add", "headerName": "", "filter": False, "sortable": False, "resizable": False, "width": 40, "flex": 0},
+            {"field": "edit", "headerName": "", "filter": False, "sortable": False, "resizable": False, "width": 40, "flex": 0},
+            {"field": "delete", "headerName": "", "filter": False, "sortable": False, "resizable": False, "width": 40, "flex": 0},
+            {"field": "sell", "headerName": "", "filter": False, "sortable": False, "resizable": False, "width": 40, "flex": 0},
         ],
         defaultColDef={
             "resizable": True,

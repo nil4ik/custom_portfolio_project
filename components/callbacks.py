@@ -10,6 +10,20 @@ from dash import dcc
 from dash import no_update
 import uuid
 
+
+def load_portfolio_with_buttons():
+    df = pd.read_csv('data/portfolio.csv')
+    df["add"] = "➕"
+    df["edit"] = "🖋️"
+    df["delete"] = "❌"
+    df["sell"] = "💲"
+    return df.to_dict('records')
+
+def load_history():
+    df = pd.read_csv('data/portfolio_history.csv')
+    return df.to_dict('records')
+
+
 ####################################################################################
 
 def register_callbacks(app):
@@ -23,10 +37,10 @@ def register_callbacks(app):
     def initialize_table(_):
         df = pd.read_csv('data/portfolio.csv')
         
-        df["add"] = "add"
-        df["edit"] = "edit"
-        df["delete"] = "delete"
-        df["sell"] = "sell"
+        df["add"] = "➕"
+        df["edit"] = "🖋️"
+        df["delete"] = "❌"
+        df["sell"] = "💲"
         
         return df.to_dict('records')
     
@@ -337,15 +351,8 @@ def register_callbacks(app):
             }
             history = pd.concat([history, pd.DataFrame([new_transaction])], ignore_index=True)
             history.to_csv("data/portfolio_history.csv", index=False)
-            
-            df["add"] = "add"
-            df["edit"] = "edit"
-            df["delete"] = "delete"
-            df["sell"] = "sell"
 
-            history = pd.read_csv('data/portfolio_history.csv')
-
-            return True, df.to_dict('records'), "", "", "", "", date.today().isoformat(), history.to_dict('records')
+            return True, load_portfolio_with_buttons(), "", "", "", "", date.today().isoformat(), load_history()
         
         except Exception as e:
             print(f"Error adding item {e}")
@@ -380,7 +387,7 @@ def register_callbacks(app):
         
         return (
             True,
-            f"Add more '{row_data.get('name', '')}'",
+            f"Buy more '{row_data.get('name', '')}'",
             date.today().isoformat(),
             row_id
         )
@@ -449,12 +456,7 @@ def register_callbacks(app):
             history = pd.concat([history, pd.DataFrame([new_transaction])], ignore_index=True)
             history.to_csv("data/portfolio_history.csv", index=False)
 
-            df["add"] = "add"
-            df["edit"] = "edit"
-            df["delete"] = "delete"
-            df["sell"] = "sell"
-
-            return False, df.to_dict('records'), history.to_dict('records')
+            return False, load_portfolio_with_buttons(), load_history()
 
         except Exception as e:
             print(f"Error adding more: {e}")
@@ -525,12 +527,7 @@ def register_callbacks(app):
             history.loc[history['asset_id'] == row_id, 'category'] = category
             history.to_csv("data/portfolio_history.csv", index=False)
 
-            df["add"] = "add"
-            df["edit"] = "edit"
-            df["delete"] = "delete"
-            df["sell"] = "sell"
-
-            return False, df.to_dict('records'), history.to_dict('records')
+            return False, load_portfolio_with_buttons(), load_history()
 
         except Exception as e:
             print(f"Error editing item: {e}")
@@ -587,12 +584,7 @@ def register_callbacks(app):
             history = history[history['asset_id'] != row_id]
             history.to_csv("data/portfolio_history.csv", index=False)
             
-            df["add"] = "add"
-            df["edit"] = "edit"
-            df["delete"] = "delete"
-            df["sell"] = "sell"
-            
-            return False, df.to_dict('records'), history.to_dict('records')
+            return False, load_portfolio_with_buttons(), load_history()
         
         except Exception as e:
             print(f"Error deleting item: {e}")
@@ -655,7 +647,7 @@ def register_callbacks(app):
         price = float(price)
         qty = float(qty)
 
-        if (price < 0) or (qty < 0):
+        if (price <= 0) or (qty <= 0):
             return no_update, no_update, no_update
 
         try:
@@ -703,13 +695,7 @@ def register_callbacks(app):
             history = pd.concat([history, pd.DataFrame([new_transaction])], ignore_index=True)
             history.to_csv("data/portfolio_history.csv", index=False)
 
-            if not df.empty:
-                df["add"] = "add"
-                df["edit"] = "edit"
-                df["delete"] = "delete"
-                df["sell"] = "sell"
-
-            return False, df.to_dict('records'), history.to_dict('records')
+            return False, load_portfolio_with_buttons(), load_history()
 
         except Exception as e:
             print(f"Error {e}")

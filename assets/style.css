@@ -178,11 +178,16 @@ body {
 .portfolio_table_css .ag-header-cell {
     font-weight: bold;
     font-size: 27px;
+    text-align: start;
 }
 
 .portfolio_table_css .ag-cell {
-    padding: 12px 8px;
+    padding: 12px 0px;
+    padding-left: 16px;
     line-height: 1;
+    display: flex;
+    align-items: start;
+    justify-content: start;
 }
 
 .portfolio_table_css .ag-row:hover {
@@ -206,6 +211,8 @@ body {
 .ag-cell[col-id="add"] {
     text-align: center;
     cursor: pointer;
+    font-size: 15px;
+    padding: 18px 1px;
 }
 
 /***************** Modal buttons ****************************/
@@ -280,11 +287,16 @@ body {
 .portfolio_history_table_css .ag-header-cell {
     font-weight: bold;
     font-size: 27px;
+    text-align: start;
 }
 
 .portfolio_history_table_css .ag-cell {
-    padding: 12px 8px;
+    padding: 12px 0px;
+    padding-left: 16px;
     line-height: 1;
+    display: flex;
+    align-items: start;
+    justify-content: start;
 }
 
 .portfolio_history_table_css .ag-row:hover {
