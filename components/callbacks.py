@@ -1,3 +1,4 @@
+from components.layout import dashboard_content, portfolio_content, transactions_content
 from dash import Input, Output, callback, ctx, State
 import pandas as pd
 import plotly.express as px
@@ -28,34 +29,55 @@ def load_history():
 
 def register_callbacks(app):
 
+############################## tabs callback ######################################
+
+    @callback(
+        Output("page-content", "children"),
+        Input("main-tabs", "active_tab")
+    )
+    def switch_tab(active_tab):
+        if active_tab == "dashboard":
+            return dashboard_content()
+        elif active_tab == "portfolio":
+            return portfolio_content()
+        else:
+            return transactions_content()
+
 ################################### Table update ###############################
 
     @callback(
         Output('portfolio-table', 'rowData'),
-        Input('portfolio-table', 'id')
+        Input('main-tabs', 'active_tab'),
+        Input('data-refresh-trigger', 'data'),
+        prevent_initial_call=False
     )
-    def initialize_table(_):
+    def initialize_table(active_tab, refresh_trigger):
+        if active_tab != 'portfolio':
+            return no_update
+            
         df = pd.read_csv('data/portfolio.csv')
-        
         df["add"] = "➕"
         df["edit"] = "🖋️"
         df["delete"] = "❌"
         df["sell"] = "💲"
-        
         return df.to_dict('records')
     
 ################################### History update ####################################
 
     @callback(
         Output('portfolio-history-table', 'rowData'),
-        Input('portfolio-history-table', 'id')
+        Input('main-tabs', 'active_tab'),
+        Input('data-refresh-trigger', 'data'),
+        prevent_initial_call=False
     )
-    def initialize_history_table(_):
+    def initialize_history_table(active_tab, refresh_trigger):
+        if active_tab != 'transactions':
+            return no_update
+            
         df_his = pd.read_csv('data/portfolio_history.csv')
-        
         return df_his.to_dict('records')
     
-################################### Info Panel #######################################33
+################################### Info Panel #######################################
 
     @callback(
         Output('total-value-box', 'children'),
@@ -63,10 +85,14 @@ def register_callbacks(app):
         Output('most-expensive-box', 'children'),
         Output('average-price-box', 'children'),
         Output('popular-category-box', 'children'),
-        Input('portfolio-table', 'rowData')
+        Input('main-tabs', 'active_tab'),
+        Input('data-refresh-trigger', 'data'),
+        prevent_initial_call=False
     )
-
-    def update_info_panel(row_data):
+    def update_info_panel(active_tab, refresh_trigger):
+        if active_tab != 'dashboard':
+            return no_update, no_update, no_update, no_update, no_update
+            
         df = pd.read_csv('data/portfolio.csv')
 
         if df.empty:
@@ -79,17 +105,12 @@ def register_callbacks(app):
             )
         
         total_value = df['total_value'].sum()
-
         number_of_assets = df.shape[0]
-
         most_expensive = df.loc[df['total_value'].idxmax()]
         most_expensive_text = f"{most_expensive['name']} ({most_expensive['total_value']:,.2f}€)"
-
         average_price = df['total_value'].mean()
-
         popular_category = df.groupby('category')['total_value'].sum().reset_index()
         popular_category = popular_category.loc[popular_category['total_value'].idxmax()]
-
         popular_category_text = f"{popular_category['category']} ({popular_category['total_value']:,.2f}€)"
 
         return (
@@ -110,18 +131,20 @@ def register_callbacks(app):
         Output("btn-6m", "className"),
         Output("btn-1y", "className"),
         Output("btn-all", "className"),
-        [
-            Input('btn-1d', 'n_clicks'),
-            Input("btn-1w", "n_clicks"),
-            Input("btn-1m", "n_clicks"),
-            Input("btn-6m", "n_clicks"),
-            Input("btn-1y", "n_clicks"),
-            Input("btn-all", "n_clicks"),
-            Input("portfolio-table", "rowData")
-        ]
+        Input('main-tabs', 'active_tab'),
+        Input('data-refresh-trigger', 'data'),
+        Input('btn-1d', 'n_clicks'),
+        Input("btn-1w", "n_clicks"),
+        Input("btn-1m", "n_clicks"),
+        Input("btn-6m", "n_clicks"),
+        Input("btn-1y", "n_clicks"),
+        Input("btn-all", "n_clicks"),
+        prevent_initial_call=False
     )
-    def update_line_chart(btn_1d, btn_1w, btn_1m, btn_6m, btn_1y, btn_all, row_data):
-        
+    def update_line_chart(active_tab, refresh_trigger, btn_1d, btn_1w, btn_1m, btn_6m, btn_1y, btn_all):
+        if active_tab != 'dashboard':
+            return no_update, no_update, no_update, no_update, no_update, no_update, no_update
+            
         df = pd.read_csv('data/portfolio_history.csv')
         df["date"] = pd.to_datetime(df["date"])
         
@@ -134,8 +157,8 @@ def register_callbacks(app):
                 font=dict(size=24, color="#f2f2f2")
             )
             fig.update_layout(
-                plot_bgcolor="#303655",
-                paper_bgcolor="#303655",
+                plot_bgcolor="rgba(255, 255, 255, 0.05)",
+                paper_bgcolor="rgba(255, 255, 255, 0.05)",
                 xaxis_visible=False,
                 yaxis_visible=False
             )
@@ -173,8 +196,8 @@ def register_callbacks(app):
                 font=dict(size=24, color="#f2f2f2")
             )
             fig.update_layout(
-                plot_bgcolor="#303655",
-                paper_bgcolor="#303655",
+                plot_bgcolor= "#141836",
+                paper_bgcolor="#141836",
                 xaxis_visible=False,
                 yaxis_visible=False
             )
@@ -195,9 +218,8 @@ def register_callbacks(app):
                         markers=True)
         
         fig_total_line.update_traces(
-            line=dict(color='#039be5', width=5),
+            line=dict(color='#3b82f6', width=5),
             fill='tozeroy',
-            fillcolor="rgba(3, 155, 229, 0.3)",
             hovertemplate="Date: %{x}<br>Total: %{y}<extra></extra>",
             hoverlabel=dict(font_family="Markazi Text", font_size=20)
         )
@@ -208,8 +230,8 @@ def register_callbacks(app):
             title={'font': {'size': 30}, 'x': 0.5, 'xanchor': 'center'},
             xaxis=dict(tickfont=dict(size=20)),
             yaxis=dict(tickfont=dict(size=20)),
-            plot_bgcolor="#303655",
-            paper_bgcolor="#303655",
+            plot_bgcolor="#141836",
+            paper_bgcolor="#141836",
         )
 
         fig_total_line.update_yaxes(
@@ -232,9 +254,14 @@ def register_callbacks(app):
 
     @callback(
         Output('pie_total_plot', 'figure'),
-        Input("portfolio-table", "rowData")
+        Input('main-tabs', 'active_tab'),
+        Input('data-refresh-trigger', 'data'),
+        prevent_initial_call=False
     )
-    def update_pie_chart(row_data):
+    def update_pie_chart(active_tab, refresh_trigger):
+        if active_tab != 'dashboard':
+            return no_update
+            
         df = pd.read_csv('data/portfolio.csv')
         
         if df.empty:
@@ -246,8 +273,8 @@ def register_callbacks(app):
                 font=dict(size=24, color="#f2f2f2")
             )
             fig.update_layout(
-                plot_bgcolor="#303655",
-                paper_bgcolor="#303655"
+                plot_bgcolor="#141836",
+                paper_bgcolor="#141836"
             )
             return fig
         
@@ -271,8 +298,8 @@ def register_callbacks(app):
         
         fig_total_pie.update_layout(
             legend=dict(orientation='v', yanchor="top", font=dict(size=14, color="#f2f2f2")),
-            plot_bgcolor="#303655",
-            paper_bgcolor="#303655",
+            plot_bgcolor="#141836",
+            paper_bgcolor="#141836",
             showlegend=False
         )
         
@@ -285,7 +312,6 @@ def register_callbacks(app):
         Input("open-add-item", "n_clicks"),
         State("modal-add-button", "is_open"),
     )
-
     def toggle_add_modal(n1, is_open):
         if n1:
             return not is_open
@@ -293,30 +319,30 @@ def register_callbacks(app):
     
     @callback(
         Output("alert-add-item", "is_open"),
-        Output("portfolio-table", "rowData", allow_duplicate=True),
+        Output("data-refresh-trigger", "data"),
         Output("name-input", "value"),
         Output("category-input", "value"),
         Output("price-input", "value"),
         Output("qty-input", "value"),
         Output("buy-date-input", "value"),
-        Output('portfolio-history-table', 'rowData', allow_duplicate=True),
         Input("submit-item", "n_clicks"),
         State("name-input", "value"),
         State("category-input", "value"),
         State("price-input", "value"),
         State("qty-input", "value"),
         State("buy-date-input", "value"),
+        State("data-refresh-trigger", "data"),
         prevent_initial_call=True
     )
-    def add_item(n, name, category, price, qty, buy_date):
+    def add_item(n, name, category, price, qty, buy_date, current_trigger):
         if not n:
-            return no_update, no_update, no_update, no_update, no_update, no_update, no_update, no_update
+            return no_update, no_update, no_update, no_update, no_update, no_update, no_update
         
         if not all([name, category, price, qty, buy_date]):
-            return False, no_update, name, category, price, qty, buy_date, no_update
+            return False, no_update, name, category, price, qty, buy_date
         
         if (float(price) <= 0) or (float(qty) <= 0):
-            return False, no_update, name, category, price, qty, buy_date, no_update
+            return False, no_update, name, category, price, qty, buy_date
         
         try:
             new_id = str(uuid.uuid4())
@@ -352,11 +378,11 @@ def register_callbacks(app):
             history = pd.concat([history, pd.DataFrame([new_transaction])], ignore_index=True)
             history.to_csv("data/portfolio_history.csv", index=False)
 
-            return True, load_portfolio_with_buttons(), "", "", "", "", date.today().isoformat(), load_history()
+            return True, current_trigger + 1, "", "", "", "", date.today().isoformat()
         
         except Exception as e:
             print(f"Error adding item {e}")
-            return False, no_update, name, category, price, qty, buy_date, no_update
+            return False, no_update, name, category, price, qty, buy_date
 
 ############################ Add more button ###########################################
 
@@ -394,34 +420,34 @@ def register_callbacks(app):
 
     @callback(
         Output("modal-add-more", "is_open", allow_duplicate=True),
-        Output("portfolio-table", "rowData", allow_duplicate=True),
-        Output('portfolio-history-table', 'rowData', allow_duplicate=True),
+        Output("data-refresh-trigger", "data", allow_duplicate=True),
         Input("confirm-add-more", "n_clicks"),
         State("price-add-more", "value"),
         State("qty-add-more", "value"),
         State("buy-date-add-more", "value"),
         State("store-add-more-row", "data"),
+        State("data-refresh-trigger", "data"),
         prevent_initial_call=True
     )
-    def add_more_item(n_clicks, price, qty, buy_date, row_id):
+    def add_more_item(n_clicks, price, qty, buy_date, row_id, current_trigger):
         if not n_clicks or row_id is None:
-            return no_update, no_update, no_update
+            return no_update, no_update
         
         if not all([price, qty, buy_date]):
-            return no_update, no_update, no_update
+            return no_update, no_update
         
         price_float = float(price)
         qty_float = float(qty)
         
         if (price_float <= 0) or (qty_float <= 0):
-            return no_update, no_update, no_update
+            return no_update, no_update
 
         try:
             df = pd.read_csv("data/portfolio.csv")
             row_data = df[df['id'] == row_id]
             
             if row_data.empty:
-                return no_update, no_update, no_update
+                return no_update, no_update
             
             row = row_data.iloc[0].to_dict()
             
@@ -456,11 +482,11 @@ def register_callbacks(app):
             history = pd.concat([history, pd.DataFrame([new_transaction])], ignore_index=True)
             history.to_csv("data/portfolio_history.csv", index=False)
 
-            return False, load_portfolio_with_buttons(), load_history()
+            return False, current_trigger + 1
 
         except Exception as e:
             print(f"Error adding more: {e}")
-            return no_update, no_update, no_update
+            return no_update, no_update
 
 ############################ Edit button ###############################################
 
@@ -496,26 +522,25 @@ def register_callbacks(app):
             row_id
         )
 
-
     @callback(
         Output("modal-edit", "is_open", allow_duplicate=True),
-        Output("portfolio-table", "rowData", allow_duplicate=True),
-        Output('portfolio-history-table', 'rowData', allow_duplicate=True),
+        Output("data-refresh-trigger", "data", allow_duplicate=True),
         Input("confirm-edit", "n_clicks"),
         State("name-edit", "value"),
         State("category-edit", "value"),
         State("store-edit-row", "data"),
+        State("data-refresh-trigger", "data"),
         prevent_initial_call=True
     )
-    def confirm_edit(n_clicks, name, category, row_id):
+    def confirm_edit(n_clicks, name, category, row_id, current_trigger):
         if not n_clicks or row_id is None:
-            return no_update, no_update, no_update
+            return no_update, no_update
 
         try:
             df = pd.read_csv("data/portfolio.csv")
             
             if df[df['id'] == row_id].empty:
-                return no_update, no_update, no_update
+                return no_update, no_update
             
             df.loc[df['id'] == row_id, 'name'] = name
             df.loc[df['id'] == row_id, 'category'] = category
@@ -527,11 +552,11 @@ def register_callbacks(app):
             history.loc[history['asset_id'] == row_id, 'category'] = category
             history.to_csv("data/portfolio_history.csv", index=False)
 
-            return False, load_portfolio_with_buttons(), load_history()
+            return False, current_trigger + 1
 
         except Exception as e:
             print(f"Error editing item: {e}")
-            return no_update, no_update, no_update
+            return no_update, no_update
 
 ############################ Delete button ###############################################
 
@@ -562,18 +587,17 @@ def register_callbacks(app):
         
         return True, f"Are you sure you want to delete '{item_name}'", row_id
 
-
     @callback(
         Output("delete-modal", "is_open", allow_duplicate=True),
-        Output("portfolio-table", "rowData", allow_duplicate=True),
-        Output('portfolio-history-table', 'rowData', allow_duplicate=True),
+        Output("data-refresh-trigger", "data", allow_duplicate=True),
         Input("confirm-delete", "n_clicks"),
         State("store-delete-row", "data"),
+        State("data-refresh-trigger", "data"),
         prevent_initial_call=True
     )
-    def confirm_delete(n_clicks, row_id):
+    def confirm_delete(n_clicks, row_id, current_trigger):
         if not n_clicks or row_id is None:
-            return no_update, no_update, no_update
+            return no_update, no_update
 
         try:
             df = pd.read_csv("data/portfolio.csv")
@@ -584,11 +608,11 @@ def register_callbacks(app):
             history = history[history['asset_id'] != row_id]
             history.to_csv("data/portfolio_history.csv", index=False)
             
-            return False, load_portfolio_with_buttons(), load_history()
+            return False, current_trigger + 1
         
         except Exception as e:
             print(f"Error deleting item: {e}")
-            return True, no_update, no_update
+            return True, no_update
 
 ############################ Sell button ###############################################
 
@@ -600,7 +624,6 @@ def register_callbacks(app):
         Input("portfolio-table", "cellClicked"),
         prevent_initial_call=True
     )
-
     def open_sell_modal(cell_clicked):
         if not cell_clicked or cell_clicked.get("colId") != "sell":
             return no_update, no_update, no_update, no_update
@@ -627,35 +650,34 @@ def register_callbacks(app):
     
     @callback(
         Output("modal-sell", "is_open", allow_duplicate=True),
-        Output("portfolio-table", "rowData", allow_duplicate=True),
-        Output('portfolio-history-table', 'rowData', allow_duplicate=True),
+        Output("data-refresh-trigger", "data", allow_duplicate=True),
         Input("confirm-sell", "n_clicks"),
         State("price-sell", "value"),
         State("quantity-sell", "value"),
         State("date-sell", "value"),
         State("store-sell-row", "data"),
+        State("data-refresh-trigger", "data"),
         prevent_initial_call=True
     )
-
-    def confirm_sell(n_clicks, price, qty, sell_date, row_id):
+    def confirm_sell(n_clicks, price, qty, sell_date, row_id, current_trigger):
         if not n_clicks or row_id is None:
-            return no_update, no_update, no_update
+            return no_update, no_update
         
         if not all([price, qty, sell_date]):
-            return no_update, no_update, no_update
+            return no_update, no_update
 
         price = float(price)
         qty = float(qty)
 
         if (price <= 0) or (qty <= 0):
-            return no_update, no_update, no_update
+            return no_update, no_update
 
         try:
             df = pd.read_csv("data/portfolio.csv")
             row_data = df[df['id'] == row_id]
 
             if row_data.empty:
-                return no_update, no_update, no_update
+                return no_update, no_update
             
             row = row_data.iloc[0].to_dict()
             
@@ -663,7 +685,7 @@ def register_callbacks(app):
             old_price = float(row["buy_price"])
 
             if qty > old_quantity:
-                return no_update, no_update, no_update
+                return no_update, no_update
             
             sell_total_value = qty * price
             profit_loss = (price - old_price) * qty
@@ -695,9 +717,8 @@ def register_callbacks(app):
             history = pd.concat([history, pd.DataFrame([new_transaction])], ignore_index=True)
             history.to_csv("data/portfolio_history.csv", index=False)
 
-            return False, load_portfolio_with_buttons(), load_history()
+            return False, current_trigger + 1
 
         except Exception as e:
             print(f"Error {e}")
-            return no_update, no_update, no_update
-        
+            return no_update, no_update

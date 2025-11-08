@@ -6,6 +6,21 @@ import dash_ag_grid as dag
 from datetime import date
 import uuid
 
+###################################### Navigation tabs ############################################
+
+navigation_tabs = html.Div(html.Div([
+    dbc.Tabs(
+        id="main-tabs",
+        active_tab="dashboard",
+        children=[
+            dbc.Tab(label="Dashboard", tab_id="dashboard", className="custom-tab"),
+            dbc.Tab(label="Portfolio", tab_id="portfolio", className="custom-tab"),
+            dbc.Tab(label="Transactions", tab_id="transactions", className="custom-tab"),
+        ],
+        className="custom-tabs-nav"
+    ),
+], className="tabs-container"), className="tabs-main-container")
+
 ###################################### Modal add_item_button  ######################################
 
 alert_add_item = html.Div(
@@ -74,12 +89,12 @@ info_panel = html.Div(
 ######################################## Time buttons ###############################################
 
 time_buttons = html.Div([
-    html.Button("1D", id="btn-1d", n_clicks=0, className="time-btn"),
-    html.Button("1W", id="btn-1w", n_clicks=0, className="time-btn"),
-    html.Button("1M", id="btn-1m", n_clicks=0, className="time-btn"),
-    html.Button("6M", id="btn-6m", n_clicks=0, className="time-btn"),
-    html.Button("1Y", id="btn-1y", n_clicks=0, className="time-btn"),
-    html.Button("ALL", id="btn-all", n_clicks=0, className="time-btn active")
+    html.Button("1d", id="btn-1d", n_clicks=0, className="time-btn"),
+    html.Button("1w", id="btn-1w", n_clicks=0, className="time-btn"),
+    html.Button("1m", id="btn-1m", n_clicks=0, className="time-btn"),
+    html.Button("6m", id="btn-6m", n_clicks=0, className="time-btn"),
+    html.Button("1y", id="btn-1y", n_clicks=0, className="time-btn"),
+    html.Button("all", id="btn-all", n_clicks=0, className="time-btn active")
 ], className="time-filter")
 
 ########################################## Table #############################################
@@ -258,41 +273,49 @@ footer = html.Footer(
     className="footer_container"
 )
 
-##################################### Serve layout ############################################
+#################################### Content functions ######################################
 
-def serve_layout():
-    return html.Div([
-
-        header,
-
-        html.H2('Custom portfolio dashboard', className = 'header'),
-
+def dashboard_content():
+    return html.Div([        
         info_panel,
-
+        
         html.Div(time_buttons, className='time_buttons_container'),
-
+        
         html.Div([
             html.Div([
-                dcc.Graph(id = 'line_total_plot', config={'displayModeBar':False})
-                ], className='graph_container_line'),
-            html.Div([dcc.Graph(id='pie_total_plot', config={'displayModeBar':False})], className='graph_container_pie')],
-            className='graph_containers_total'),
+                dcc.Graph(id='line_total_plot', config={'displayModeBar': False})
+            ], className='graph_container_line'),
+            html.Div([
+                dcc.Graph(id='pie_total_plot', config={'displayModeBar': False})
+            ], className='graph_container_pie')
+        ], className='graph_containers_total'),
+    ])
 
+def portfolio_content():
+    return html.Div([
         html.Div([
             html.Div(html.H2('Portfolio details', className='portfolio_details_h2'), className="details_h2_container"),
-
-            html.Div(table, className = 'table_style_container'),
+            html.Div(table, className='table_style_container'),
             modal_add_more,
             modal_delete,
             modal_edit,
             modal_sell,
-            ],
-            className='container_table_general'),
+        ], className='container_table_general'),
+    ])
 
-        html.Div([
-            html.Div(html.H2('Transaction history', className = 'portfolio_transaction_history_h2'), className="history_h2_container"),
+def transactions_content():
+    return html.Div([
+        html.Div(html.H2('Transaction history', className='portfolio_transaction_history_h2'), className="history_h2_container"),
+        html.Div(history, className='history_style_container')
+    ])
 
-            html.Div(history, className='history_style_container')
-        ]),
+##################################### Serve layout ############################################
+
+def serve_layout():
+    return html.Div([
+        dcc.Store(id='data-refresh-trigger', data=0),
+        header,
+        navigation_tabs,
+        html.Div(id="page-content"),
         footer,
     ])

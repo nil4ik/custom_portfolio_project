@@ -5,6 +5,7 @@ from components.callbacks import register_callbacks
 
 app = Dash(
     __name__,
+    suppress_callback_exceptions=True,
     external_stylesheets=[
         dbc.themes.DARKLY,         
         'https://unpkg.com/ag-grid-community/styles/ag-grid.css',
