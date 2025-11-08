@@ -80,7 +80,7 @@ def register_callbacks(app):
         
         total_value = df['total_value'].sum()
 
-        number_of_assets = df['quantity'].sum()
+        number_of_assets = df.shape[0]
 
         most_expensive = df.loc[df['total_value'].idxmax()]
         most_expensive_text = f"{most_expensive['name']} ({most_expensive['total_value']:,.2f}€)"

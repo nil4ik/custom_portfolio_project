@@ -46,14 +46,12 @@ add_item_button = html.Div(
     ], className="add_item_container"
 )
 
-###############################   Header    ###################################################
+###############################   Header   ###################################################
 
 header = html.Div([
     html.Div(html.H1("DataVault"), className="logo_header"),
     html.Div(
         children= [
-            html.Div('feauture1', className='header_icon'),
-            html.Div('feauture2', className='header_icon'),
             html.Div(add_item_button, className='header_icon'),
         ], className="header_icons_container"
     )
