@@ -63,7 +63,7 @@ add_item_button = html.Div(
 
 ###############################   Header   ###################################################
 
-header = html.Div([
+header = html.Div(html.Div([
     html.Div(html.H1("DataVault"), className="logo_header"),
     html.Div(
         children= [
@@ -71,7 +71,7 @@ header = html.Div([
         ], className="header_icons_container"
     )
 ], className="header_container"
-)
+), className="header_main_container")
 
 ######################################## Info panel ###############################################
 
@@ -111,10 +111,10 @@ table = html.Div(
             {"field": "quantity", "headerName": "Quantity", "resizable": False,},
             {"field": "buy_date", "headerName": "Buy Date", "resizable": False, },
             {"field": "total_value", "headerName": "Total Value", "resizable": False,  "valueFormatter": {"function": "d3.format(',.2f')(params.value)"}},
-            {"field": "add", "headerName": "", "filter": False, "sortable": False, "resizable": False, "width": 40, "flex": 0},
-            {"field": "edit", "headerName": "", "filter": False, "sortable": False, "resizable": False, "width": 40, "flex": 0},
-            {"field": "delete", "headerName": "", "filter": False, "sortable": False, "resizable": False, "width": 40, "flex": 0},
-            {"field": "sell", "headerName": "", "filter": False, "sortable": False, "resizable": False, "width": 40, "flex": 0},
+            {"field": "add", "headerName": "", "filter": False, "sortable": False, "resizable": False, "width": 10, "flex": 0},
+            {"field": "edit", "headerName": "", "filter": False, "sortable": False, "resizable": False, "width": 10, "flex": 0},
+            {"field": "delete", "headerName": "", "filter": False, "sortable": False, "resizable": False, "width": 10, "flex": 0},
+            {"field": "sell", "headerName": "", "filter": False, "sortable": False, "resizable": False, "width": 10, "flex": 0},
         ],
         defaultColDef={
             "resizable": True,
@@ -254,7 +254,7 @@ history = html.Div(
             "suppressHorizontalScroll": True,
             "getRowId": {"function": "params.data.transaction_id"}
         },
-        style={"width": "100%", "height": "400px"},
+        style={"width": "100%", "height": "800px"},
         className='ag-theme-alpine'
     ),
     className='portfolio_history_table_css'
@@ -264,7 +264,7 @@ history = html.Div(
 
 footer = html.Footer(
     [
-        html.Span("© 2025 DataVault — Built by Daniils Nils Gosperskis"),
+        html.Span("© 2025 DataVault  Built by Daniils Nils Gosperskis"),
         html.Br(),
         html.A("nil4ik", href="https://github.com/nil4ik", target="_blank", className="footer-link"),
         html.Span(" | "),
@@ -279,22 +279,20 @@ def dashboard_content():
     return html.Div([        
         info_panel,
         
-        html.Div(time_buttons, className='time_buttons_container'),
-        
         html.Div([
             html.Div([
+                html.Div(time_buttons, className='time_buttons_container'),
                 dcc.Graph(id='line_total_plot', config={'displayModeBar': False})
-            ], className='graph_container_line'),
+            ], className='graph_container_line', style={'backgroundColor': 'transparent'}),
             html.Div([
                 dcc.Graph(id='pie_total_plot', config={'displayModeBar': False})
-            ], className='graph_container_pie')
+            ], className='graph_container_pie', style={'backgroundColor': 'transparent'})
         ], className='graph_containers_total'),
     ])
 
 def portfolio_content():
     return html.Div([
         html.Div([
-            html.Div(html.H2('Portfolio details', className='portfolio_details_h2'), className="details_h2_container"),
             html.Div(table, className='table_style_container'),
             modal_add_more,
             modal_delete,
@@ -305,7 +303,6 @@ def portfolio_content():
 
 def transactions_content():
     return html.Div([
-        html.Div(html.H2('Transaction history', className='portfolio_transaction_history_h2'), className="history_h2_container"),
         html.Div(history, className='history_style_container')
     ])
 
@@ -313,9 +310,11 @@ def transactions_content():
 
 def serve_layout():
     return html.Div([
-        dcc.Store(id='data-refresh-trigger', data=0),
-        header,
-        navigation_tabs,
-        html.Div(id="page-content"),
+        html.Div([
+            dcc.Store(id='data-refresh-trigger', data=0),
+            header,
+            navigation_tabs,
+            html.Div(id="page-content"),
+        ], className='main-content'),
         footer,
-    ])
+    ], className='app-container')

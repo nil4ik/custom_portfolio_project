@@ -193,11 +193,11 @@ def register_callbacks(app):
                 text="There were no transactions for the selected period.",
                 xref="paper", yref="paper",
                 x=0.5, y=0.5, showarrow=False,
-                font=dict(size=24, color="#f2f2f2")
+                font=dict(size=16, color="rgba(255, 255, 255, 0.7)")
             )
             fig.update_layout(
-                plot_bgcolor= "#141836",
-                paper_bgcolor="#141836",
+                plot_bgcolor= "rgb(12, 25, 53)",
+                paper_bgcolor="rgb(12, 25, 53)",
                 xaxis_visible=False,
                 yaxis_visible=False
             )
@@ -230,8 +230,8 @@ def register_callbacks(app):
             title={'font': {'size': 30}, 'x': 0.5, 'xanchor': 'center'},
             xaxis=dict(tickfont=dict(size=20)),
             yaxis=dict(tickfont=dict(size=20)),
-            plot_bgcolor="#141836",
-            paper_bgcolor="#141836",
+            plot_bgcolor="rgba(0,0,0,0)",
+            paper_bgcolor="rgba(0,0,0,0)",
         )
 
         fig_total_line.update_yaxes(
@@ -239,13 +239,13 @@ def register_callbacks(app):
             gridcolor='rgba(255,255,255,0.2)',
             side='right',
             gridwidth=1,
-            tickfont=dict(size=16, color='#f2f2f2')
+            tickfont=dict(size=16, color='rgba(255, 255, 255, 0.7)')
         )
 
         fig_total_line.update_xaxes(
             showgrid=False,
             linecolor='grey',
-            tickfont=dict(size=16, color='#f2f2f2')
+            tickfont=dict(size=16, color='rgba(255, 255, 255, 0.7)')
         )
 
         return [fig_total_line] + classes
@@ -270,11 +270,11 @@ def register_callbacks(app):
                 text="No data available",
                 xref="paper", yref="paper",
                 x=0.5, y=0.5, showarrow=False,
-                font=dict(size=24, color="#f2f2f2")
+                font=dict(size=24, color="rgba(255, 255, 255, 0.7)")
             )
             fig.update_layout(
-                plot_bgcolor="#141836",
-                paper_bgcolor="#141836"
+                plot_bgcolor="rgba(0,0,0,0)",
+                paper_bgcolor="rgba(0,0,0,0)"
             )
             return fig
         
@@ -291,15 +291,15 @@ def register_callbacks(app):
         fig_total_pie.update_traces(
             hoverinfo='label+percent+name', 
             textinfo='percent', 
-            textfont=dict(color='white'),
+            textfont=dict(color='rgba(255, 255, 255, 0.7)'),
             hovertemplate="<b>%{label}</b><br>Total: %{value}$<br>Percentage: %{percent}",
             hoverlabel=dict(font_family="Markazi Text", font_size=20)
         )
         
         fig_total_pie.update_layout(
             legend=dict(orientation='v', yanchor="top", font=dict(size=14, color="#f2f2f2")),
-            plot_bgcolor="#141836",
-            paper_bgcolor="#141836",
+            plot_bgcolor="white",
+            paper_bgcolor="rgba(0,0,0,0)",
             showlegend=False
         )
         
