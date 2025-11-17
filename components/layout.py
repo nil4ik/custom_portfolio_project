@@ -83,6 +83,7 @@ info_panel = html.Div(
                 html.Div(id='most-expensive-box', className='info_box'),
                 html.Div(id='average-price-box', className='info_box'),
                 html.Div(id='popular-category-box', className='info_box'),
+                html.Div(id='profit-loss-box', className='info_box'),
             ],
         )
 
@@ -254,7 +255,7 @@ history = html.Div(
             "suppressHorizontalScroll": True,
             "getRowId": {"function": "params.data.transaction_id"}
         },
-        style={"width": "100%", "height": "800px"},
+        style={"width": "100%", "height": "650px"},
         className='ag-theme-alpine'
     ),
     className='portfolio_history_table_css'

@@ -85,15 +85,17 @@ def register_callbacks(app):
         Output('most-expensive-box', 'children'),
         Output('average-price-box', 'children'),
         Output('popular-category-box', 'children'),
+        Output('profit-loss-box', 'children'),
         Input('main-tabs', 'active_tab'),
         Input('data-refresh-trigger', 'data'),
         prevent_initial_call=False
     )
     def update_info_panel(active_tab, refresh_trigger):
         if active_tab != 'dashboard':
-            return no_update, no_update, no_update, no_update, no_update
+            return no_update, no_update, no_update, no_update, no_update, no_update
             
         df = pd.read_csv('data/portfolio.csv')
+        df_his = pd.read_csv('data/portfolio_history.csv')
 
         if df.empty:
             return (
@@ -102,16 +104,42 @@ def register_callbacks(app):
                 [html.Span("Most expensive item:", className='info-text'), html.Br(), "N/A"],
                 [html.Span("Average buy price:", className='info-text'), html.Br(), "0€"],
                 [html.Span("Most popular category:", className='info-text'), html.Br(), "N/A"],
+                [html.Span("Total Profit/Loss:", className='info-text'), html.Br(), "N/A"],
+            )
+        
+        if df_his.empty:
+            return (
+                [html.Span("Total Value:", className='info-text'), html.Br(), f"{total_value:,.2f}€"],
+                [html.Span("Number of Assets:", className='info-text'), html.Br(), f"{number_of_assets:,.0f}"],
+                [html.Span("Most expensive item:", className='info-text'), html.Br(), most_expensive_text],
+                [html.Span("Average buy price:", className='info-text'), html.Br(), f"{average_price:,.2f}€"],
+                [html.Span("Most popular category:", className='info-text'), html.Br(), popular_category_text],
+                [html.Span("Total Profit/Loss:", className='info-text'), html.Br(), "N/A"],
             )
         
         total_value = df['total_value'].sum()
+
         number_of_assets = df.shape[0]
+
         most_expensive = df.loc[df['total_value'].idxmax()]
         most_expensive_text = f"{most_expensive['name']} ({most_expensive['total_value']:,.2f}€)"
+
         average_price = df['total_value'].mean()
+
         popular_category = df.groupby('category')['total_value'].sum().reset_index()
         popular_category = popular_category.loc[popular_category['total_value'].idxmax()]
         popular_category_text = f"{popular_category['category']} ({popular_category['total_value']:,.2f}€)"
+
+        profit_loss = df_his['profit_loss'].sum()
+        if profit_loss > 0:
+            profit_color = 'green'
+            profit_text = f"+{profit_loss:,.2f}€"
+        elif profit_loss < 0:
+            profit_color = 'red'
+            profit_text = f"{profit_loss:,.2f}€"
+        else:
+            profit_color = 'white'
+            profit_text = f"{profit_loss:,.2f}€"
 
         return (
             [html.Span("Total Value:", className='info-text'), html.Br(), f"{total_value:,.2f}€"],
@@ -119,6 +147,7 @@ def register_callbacks(app):
             [html.Span("Most expensive item:", className='info-text'), html.Br(), most_expensive_text],
             [html.Span("Average buy price:", className='info-text'), html.Br(), f"{average_price:,.2f}€"],
             [html.Span("Most popular category:", className='info-text'), html.Br(), popular_category_text],
+            [html.Span("Total Profit/Loss:", className='info-text'), html.Br(), html.Span(profit_text, style={'color': profit_color})],        
         )
 
 ################################## line plot #########################################
@@ -145,8 +174,7 @@ def register_callbacks(app):
         if active_tab != 'dashboard':
             return no_update, no_update, no_update, no_update, no_update, no_update, no_update
             
-        df = pd.read_csv('data/portfolio_history.csv')
-        df["date"] = pd.to_datetime(df["date"])
+        df = pd.read_csv('data/portfolio.csv')
         
         if df.empty:
             fig = go.Figure()
@@ -166,6 +194,8 @@ def register_callbacks(app):
             classes = ['time-btn' for _ in buttons]
             return [fig] + classes
         
+        df["buy_date"] = pd.to_datetime(df["buy_date"])
+        
         triggered_id = ctx.triggered_id or "btn-all"
         today = datetime.today()
 
@@ -180,41 +210,37 @@ def register_callbacks(app):
         elif triggered_id == "btn-1y":
             start_date = today - timedelta(days=365)
         else:
-            start_date = df["date"].min()
+            start_date = df["buy_date"].min()
 
         buttons = ["btn-1d", "btn-1w", "btn-1m", "btn-6m", "btn-1y", "btn-all"]
         classes = ['time-btn active' if btn == triggered_id else 'time-btn' for btn in buttons]
 
-        filtered_df = df[df["date"] >= start_date].copy()
+        df_grouped = df.groupby("buy_date", as_index=False)["total_value"].sum()
+        df_grouped = df_grouped.sort_values("buy_date")
+        
+        df_grouped["cumulative_value"] = df_grouped["total_value"].cumsum()
+        
+        filtered_df = df_grouped[df_grouped["buy_date"] >= start_date].copy()
 
         if filtered_df.empty:
             fig = go.Figure()
             fig.add_annotation(
-                text="There were no transactions for the selected period.",
+                text="No assets for the selected period.",
                 xref="paper", yref="paper",
                 x=0.5, y=0.5, showarrow=False,
                 font=dict(size=16, color="rgba(255, 255, 255, 0.7)")
             )
             fig.update_layout(
-                plot_bgcolor= "rgb(12, 25, 53)",
+                plot_bgcolor="rgb(12, 25, 53)",
                 paper_bgcolor="rgb(12, 25, 53)",
                 xaxis_visible=False,
                 yaxis_visible=False
             )
             return [fig] + classes
-        
-        df["delta"] = df.apply(
-            lambda row: row["total_value"] if row["transaction_type"] == "buy" else -row["total_value"],
-            axis = 1
-        )
-        df_grouped = df.groupby("date", as_index=False)["delta"].sum()
-        df_grouped["total_portfolio_value"] = df_grouped["delta"].cumsum()
-
-        filtered_df = df_grouped[df_grouped["date"] >= start_date].copy()
 
         fig_total_line = px.line(filtered_df, 
-                        x='date', 
-                        y='total_portfolio_value', 
+                        x='buy_date', 
+                        y='cumulative_value',
                         markers=True)
         
         fig_total_line.update_traces(
