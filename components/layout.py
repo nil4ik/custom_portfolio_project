@@ -282,7 +282,7 @@ footer = html.Footer(
         html.Br(),
         html.A("nil4ik", href="https://github.com/nil4ik", target="_blank", className="footer-link"),
         html.Span(" | "),
-        html.A("GitHub Repo", href="https://github.com/nil4ik/custom_portfolio_dash", target="_blank", className="footer-link"),
+        html.A("GitHub Repo", href="https://github.com/nil4ik/custom_portfolio_project", target="_blank", className="footer-link"),
     ],
     className="footer_container"
 )
