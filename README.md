@@ -36,7 +36,7 @@ git clone https://github.com/nil4ik/custom_portfolio_project.git
 cd custom_portfolio_project
 
 # 2. Install required libraries
-
+pip install -r requirements.txt
 
 # 3. Start the application
 python app.py
