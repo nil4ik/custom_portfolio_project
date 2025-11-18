@@ -8,6 +8,8 @@ It combines visual analytics, a structured portfolio table, and a complete trans
 The project stores all data in simple CSV files and provides an intuitive interface for adding new items, editing existing ones, buying or selling quantities, and managing your overall portfolio.  
 No external services or databases are required-everything runs locally and stays on your machine.
 
+The CSV files already contain data that can be used as a baseline. If you wish, you can delete all the items and create your own.
+
 **Note:** This dashboard does **not** track real-time prices or live market data.  
 
 ## Project Purpose
@@ -42,7 +44,7 @@ pip install -r requirements.txt
 python app.py
 ``` 
 
-##  Author
+## Author
 
   Daniils Nils Gosperskis
 
