@@ -11,8 +11,10 @@ from dash import dcc
 from dash import no_update
 import uuid
 
+################################## Utility Functions ##################################
 
 def load_portfolio_with_buttons():
+    """Load portfolio data and add action button columns."""
     df = pd.read_csv('data/portfolio.csv')
     df["add"] = "➕"
     df["edit"] = "🖋️"
@@ -21,21 +23,23 @@ def load_portfolio_with_buttons():
     return df.to_dict('records')
 
 def load_history():
+    """Load transaction history data."""
     df = pd.read_csv('data/portfolio_history.csv')
     return df.to_dict('records')
 
-
-####################################################################################
+################################ Callback Registration ################################
 
 def register_callbacks(app):
+    """Register all application callbacks."""
 
-############################## tabs callback ######################################
+    ################################## Tab Navigation ##################################
 
     @callback(
         Output("page-content", "children"),
         Input("main-tabs", "active_tab")
     )
     def switch_tab(active_tab):
+        """Switch between dashboard, portfolio, and transactions tabs."""
         if active_tab == "dashboard":
             return dashboard_content()
         elif active_tab == "portfolio":
@@ -43,7 +47,7 @@ def register_callbacks(app):
         else:
             return transactions_content()
 
-################################### Table update ###############################
+    ################################ Data Table Updates ################################
 
     @callback(
         Output('portfolio-table', 'rowData'),
@@ -52,6 +56,7 @@ def register_callbacks(app):
         prevent_initial_call=False
     )
     def initialize_table(active_tab, refresh_trigger):
+        """Update portfolio table when tab is active or data changes."""
         if active_tab != 'portfolio':
             return no_update
             
@@ -62,8 +67,6 @@ def register_callbacks(app):
         df["sell"] = "💲"
         return df.to_dict('records')
     
-################################### History update ####################################
-
     @callback(
         Output('portfolio-history-table', 'rowData'),
         Input('main-tabs', 'active_tab'),
@@ -71,26 +74,28 @@ def register_callbacks(app):
         prevent_initial_call=False
     )
     def initialize_history_table(active_tab, refresh_trigger):
+        """Update transaction history table when tab is active or data changes."""
         if active_tab != 'transactions':
             return no_update
             
         df_his = pd.read_csv('data/portfolio_history.csv')
         return df_his.to_dict('records')
     
-################################### Info Panel #######################################
+    ############################# Dashboard - Info Panel #############################
 
     @callback(
         Output('total-value-box', 'children'),
+        Output('profit-loss-box', 'children'),
         Output('number-of-assets-box', 'children'),
         Output('most-expensive-box', 'children'),
         Output('average-price-box', 'children'),
         Output('popular-category-box', 'children'),
-        Output('profit-loss-box', 'children'),
         Input('main-tabs', 'active_tab'),
         Input('data-refresh-trigger', 'data'),
         prevent_initial_call=False
     )
     def update_info_panel(active_tab, refresh_trigger):
+        """Calculate and display portfolio statistics."""
         if active_tab != 'dashboard':
             return no_update, no_update, no_update, no_update, no_update, no_update
             
@@ -100,27 +105,16 @@ def register_callbacks(app):
         if df.empty:
             return (
                 [html.Span("Total Value:", className='info-text'), html.Br(), "0.00€"],
+                [html.Span("Total Profit/Loss:", className='info-text'), html.Br(), "N/A"],
                 [html.Span("Number of Assets:", className='info-text'), html.Br(), "0"],
                 [html.Span("Most expensive item:", className='info-text'), html.Br(), "N/A"],
                 [html.Span("Average buy price:", className='info-text'), html.Br(), "0€"],
                 [html.Span("Most popular category:", className='info-text'), html.Br(), "N/A"],
-                [html.Span("Total Profit/Loss:", className='info-text'), html.Br(), "N/A"],
-            )
-        
-        if df_his.empty:
-            return (
-                [html.Span("Total Value:", className='info-text'), html.Br(), f"{total_value:,.2f}€"],
-                [html.Span("Number of Assets:", className='info-text'), html.Br(), f"{number_of_assets:,.0f}"],
-                [html.Span("Most expensive item:", className='info-text'), html.Br(), most_expensive_text],
-                [html.Span("Average buy price:", className='info-text'), html.Br(), f"{average_price:,.2f}€"],
-                [html.Span("Most popular category:", className='info-text'), html.Br(), popular_category_text],
-                [html.Span("Total Profit/Loss:", className='info-text'), html.Br(), "N/A"],
             )
         
         total_value = df['total_value'].sum()
-
         number_of_assets = df.shape[0]
-
+        
         most_expensive = df.loc[df['total_value'].idxmax()]
         most_expensive_text = f"{most_expensive['name']} ({most_expensive['total_value']:,.2f}€)"
 
@@ -130,27 +124,31 @@ def register_callbacks(app):
         popular_category = popular_category.loc[popular_category['total_value'].idxmax()]
         popular_category_text = f"{popular_category['category']} ({popular_category['total_value']:,.2f}€)"
 
-        profit_loss = df_his['profit_loss'].sum()
-        if profit_loss > 0:
-            profit_color = 'green'
-            profit_text = f"+{profit_loss:,.2f}€"
-        elif profit_loss < 0:
-            profit_color = 'red'
-            profit_text = f"{profit_loss:,.2f}€"
+        if df_his.empty:
+            profit_loss_display = "N/A"
         else:
-            profit_color = 'white'
-            profit_text = f"{profit_loss:,.2f}€"
+            profit_loss = df_his['profit_loss'].sum()
+            if profit_loss > 0:
+                profit_color = 'green'
+                profit_text = f"+{profit_loss:,.2f}€"
+            elif profit_loss < 0:
+                profit_color = 'red'
+                profit_text = f"{profit_loss:,.2f}€"
+            else:
+                profit_color = 'white'
+                profit_text = f"{profit_loss:,.2f}€"
+            profit_loss_display = html.Span(profit_text, style={'color': profit_color})
 
         return (
             [html.Span("Total Value:", className='info-text'), html.Br(), f"{total_value:,.2f}€"],
+            [html.Span("Total Profit/Loss:", className='info-text'), html.Br(), profit_loss_display],
             [html.Span("Number of Assets:", className='info-text'), html.Br(), f"{number_of_assets:,.0f}"],
             [html.Span("Most expensive item:", className='info-text'), html.Br(), most_expensive_text],
             [html.Span("Average buy price:", className='info-text'), html.Br(), f"{average_price:,.2f}€"],
             [html.Span("Most popular category:", className='info-text'), html.Br(), popular_category_text],
-            [html.Span("Total Profit/Loss:", className='info-text'), html.Br(), html.Span(profit_text, style={'color': profit_color})],        
         )
 
-################################## line plot #########################################
+    ############################# Dashboard - Line Chart #############################
 
     @callback (
         Output('line_total_plot', 'figure'),
@@ -171,6 +169,7 @@ def register_callbacks(app):
         prevent_initial_call=False
     )
     def update_line_chart(active_tab, refresh_trigger, btn_1d, btn_1w, btn_1m, btn_6m, btn_1y, btn_all):
+        """Display portfolio value over time with period filters."""
         if active_tab != 'dashboard':
             return no_update, no_update, no_update, no_update, no_update, no_update, no_update
             
@@ -217,7 +216,6 @@ def register_callbacks(app):
 
         df_grouped = df.groupby("buy_date", as_index=False)["total_value"].sum()
         df_grouped = df_grouped.sort_values("buy_date")
-        
         df_grouped["cumulative_value"] = df_grouped["total_value"].cumsum()
         
         filtered_df = df_grouped[df_grouped["buy_date"] >= start_date].copy()
@@ -225,14 +223,14 @@ def register_callbacks(app):
         if filtered_df.empty:
             fig = go.Figure()
             fig.add_annotation(
-                text="No assets for the selected period.",
+                text="No statistics for the selected period.",
                 xref="paper", yref="paper",
                 x=0.5, y=0.5, showarrow=False,
                 font=dict(size=16, color="rgba(255, 255, 255, 0.7)")
             )
             fig.update_layout(
-                plot_bgcolor="rgb(12, 25, 53)",
-                paper_bgcolor="rgb(12, 25, 53)",
+                plot_bgcolor="rgba(0,0,0,0)",
+                paper_bgcolor="rgba(0,0,0,0)",
                 xaxis_visible=False,
                 yaxis_visible=False
             )
@@ -246,7 +244,7 @@ def register_callbacks(app):
         fig_total_line.update_traces(
             line=dict(color='#3b82f6', width=5),
             fill='tozeroy',
-            hovertemplate="Date: %{x}<br>Total: %{y}<extra></extra>",
+            hovertemplate="Date: %{x}<br>Total: €%{y:,.2f}<extra></extra>",
             hoverlabel=dict(font_family="Markazi Text", font_size=20)
         )
         
@@ -276,7 +274,7 @@ def register_callbacks(app):
 
         return [fig_total_line] + classes
 
-######################### Pie chart #############################################
+    ############################## Dashboard - Pie Chart ##############################
 
     @callback(
         Output('pie_total_plot', 'figure'),
@@ -285,6 +283,7 @@ def register_callbacks(app):
         prevent_initial_call=False
     )
     def update_pie_chart(active_tab, refresh_trigger):
+        """Display portfolio distribution by category."""
         if active_tab != 'dashboard':
             return no_update
             
@@ -318,8 +317,9 @@ def register_callbacks(app):
             hoverinfo='label+percent+name', 
             textinfo='percent', 
             textfont=dict(color='rgba(255, 255, 255, 0.7)'),
-            hovertemplate="<b>%{label}</b><br>Total: %{value}$<br>Percentage: %{percent}",
-            hoverlabel=dict(font_family="Markazi Text", font_size=20)
+            hovertemplate="<b>%{label}</b><br>Total: €%{value:,.2f}<br>Percentage: %{percent}<extra></extra>",
+            hoverlabel=dict(font_family="Markazi Text", font_size=20),
+            marker=dict(line=dict(color='rgb(12, 25, 53)', width=1)),
         )
         
         fig_total_pie.update_layout(
@@ -331,7 +331,7 @@ def register_callbacks(app):
         
         return fig_total_pie
     
-################################# Add item button #################################################
+    ############################# Portfolio - Add New Item #############################
 
     @callback(
         Output("modal-add-button", "is_open"),
@@ -339,6 +339,7 @@ def register_callbacks(app):
         State("modal-add-button", "is_open"),
     )
     def toggle_add_modal(n1, is_open):
+        """Toggle add item modal visibility."""
         if n1:
             return not is_open
         return is_open
@@ -361,6 +362,7 @@ def register_callbacks(app):
         prevent_initial_call=True
     )
     def add_item(n, name, category, price, qty, buy_date, current_trigger):
+        """Add new item to portfolio and transaction history."""
         if not n:
             return no_update, no_update, no_update, no_update, no_update, no_update, no_update
         
@@ -410,7 +412,7 @@ def register_callbacks(app):
             print(f"Error adding item {e}")
             return False, no_update, name, category, price, qty, buy_date
 
-############################ Add more button ###########################################
+    ######################### Portfolio - Add More Quantity ###########################
 
     @callback(
         Output("modal-add-more", "is_open", allow_duplicate=True),
@@ -421,6 +423,7 @@ def register_callbacks(app):
         prevent_initial_call=True
     )
     def open_add_more_modal(cell_clicked):
+        """Open modal to add more quantity to existing asset."""
         if not cell_clicked or cell_clicked.get("colId") != "add":
             return no_update, no_update, no_update, no_update
 
@@ -456,6 +459,7 @@ def register_callbacks(app):
         prevent_initial_call=True
     )
     def add_more_item(n_clicks, price, qty, buy_date, row_id, current_trigger):
+        """Add more quantity and recalculate weighted average price."""
         if not n_clicks or row_id is None:
             return no_update, no_update
         
@@ -514,7 +518,7 @@ def register_callbacks(app):
             print(f"Error adding more: {e}")
             return no_update, no_update
 
-############################ Edit button ###############################################
+    ############################## Portfolio - Edit Item ##############################
 
     @callback(
         Output("modal-edit", "is_open", allow_duplicate=True),
@@ -525,6 +529,7 @@ def register_callbacks(app):
         prevent_initial_call=True
     )
     def open_edit_modal(cell_clicked):
+        """Open modal to edit item name and category."""
         if not cell_clicked or cell_clicked.get("colId") != "edit":
             return no_update, no_update, no_update, no_update
 
@@ -559,6 +564,7 @@ def register_callbacks(app):
         prevent_initial_call=True
     )
     def confirm_edit(n_clicks, name, category, row_id, current_trigger):
+        """Update item name and category in portfolio and history."""
         if not n_clicks or row_id is None:
             return no_update, no_update
 
@@ -584,7 +590,7 @@ def register_callbacks(app):
             print(f"Error editing item: {e}")
             return no_update, no_update
 
-############################ Delete button ###############################################
+    ############################ Portfolio - Delete Item ##############################
 
     @callback(
         Output("delete-modal", "is_open", allow_duplicate=True),
@@ -594,6 +600,7 @@ def register_callbacks(app):
         prevent_initial_call=True
     )
     def open_delete_modal(active_cell):
+        """Open confirmation modal for deleting item."""
         if not active_cell or active_cell["colId"] != "delete":
             return no_update, no_update, no_update
         
@@ -622,6 +629,7 @@ def register_callbacks(app):
         prevent_initial_call=True
     )
     def confirm_delete(n_clicks, row_id, current_trigger):
+        """Delete item from portfolio and remove all related transactions."""
         if not n_clicks or row_id is None:
             return no_update, no_update
 
@@ -640,7 +648,7 @@ def register_callbacks(app):
             print(f"Error deleting item: {e}")
             return True, no_update
 
-############################ Sell button ###############################################
+    ############################### Portfolio - Sell Item #############################
 
     @callback(
         Output("modal-sell", "is_open", allow_duplicate=True),
@@ -651,6 +659,7 @@ def register_callbacks(app):
         prevent_initial_call=True
     )
     def open_sell_modal(cell_clicked):
+        """Open modal to sell item."""
         if not cell_clicked or cell_clicked.get("colId") != "sell":
             return no_update, no_update, no_update, no_update
     
@@ -686,6 +695,7 @@ def register_callbacks(app):
         prevent_initial_call=True
     )
     def confirm_sell(n_clicks, price, qty, sell_date, row_id, current_trigger):
+        """Process sell transaction and calculate profit/loss."""
         if not n_clicks or row_id is None:
             return no_update, no_update
         

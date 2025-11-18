@@ -21,8 +21,9 @@ navigation_tabs = html.Div(html.Div([
     ),
 ], className="tabs-container"), className="tabs-main-container")
 
-###################################### Modal add_item_button  ######################################
+###################################### Modal add item button  ######################################
 
+# Success notification for adding items
 alert_add_item = html.Div(
     [
         html.Hr(),
@@ -36,6 +37,7 @@ alert_add_item = html.Div(
     ], className="alert_container"
 )
 
+# Modal dialog for adding new portfolio items
 add_item_button = html.Div(
     [
         dbc.Button("Add item", id="open-add-item", n_clicks=0, className="add_item_button"),
@@ -61,7 +63,7 @@ add_item_button = html.Div(
     ], className="add_item_container"
 )
 
-###############################   Header   ###################################################
+############################### Header ###################################################
 
 header = html.Div(html.Div([
     html.Div(html.H1("DataVault"), className="logo_header"),
@@ -75,20 +77,22 @@ header = html.Div(html.Div([
 
 ######################################## Info panel ###############################################
 
+# Dashboard statistics panel with key metrics
 info_panel = html.Div(
             className='info_panel',
             children=[
                 html.Div(id='total-value-box', className='info_box'),
+                html.Div(id='profit-loss-box', className='info_box'),
                 html.Div(id='number-of-assets-box', className='info_box'),
                 html.Div(id='most-expensive-box', className='info_box'),
                 html.Div(id='average-price-box', className='info_box'),
                 html.Div(id='popular-category-box', className='info_box'),
-                html.Div(id='profit-loss-box', className='info_box'),
             ],
         )
 
 ######################################## Time buttons ###############################################
 
+# Time period filters for portfolio value chart
 time_buttons = html.Div([
     html.Button("1d", id="btn-1d", n_clicks=0, className="time-btn"),
     html.Button("1w", id="btn-1w", n_clicks=0, className="time-btn"),
@@ -98,8 +102,9 @@ time_buttons = html.Div([
     html.Button("all", id="btn-all", n_clicks=0, className="time-btn active")
 ], className="time-filter")
 
-########################################## Table #############################################
+########################################## Portfolio table #############################################
 
+# Main portfolio table with action buttons (add, edit, delete, sell)
 table = html.Div(
     dag.AgGrid(
         id='portfolio-table',
@@ -138,9 +143,10 @@ table = html.Div(
 
 ###################################### Modal add more button ########################################
 
-
+# Store for temporarily holding row data when adding more quantity
 store_add_more_row = dcc.Store(id="store-add-more-row", data=None)
 
+# Modal for adding more quantity to existing asset
 modal_add_more = dbc.Modal(
             [
                 dbc.ModalHeader(id="modal-add-more-header"),
@@ -161,8 +167,10 @@ modal_add_more = dbc.Modal(
 
 ####################################### Modal delete button ##########################################
 
+# Store for temporarily holding row data for deletion
 store_delete_row = dcc.Store(id="store-delete-row", data=None)
 
+# Confirmation modal for deleting portfolio items
 modal_delete = dbc.Modal(
     [
         dbc.ModalHeader("Confirm Deletion"),
@@ -179,8 +187,10 @@ modal_delete = dbc.Modal(
 
 ####################################### Modal edit button ######################################
 
+# Store for temporarily holding row data for editing
 store_edit_row = dcc.Store(id="store-edit-row", data=None)
 
+# Modal for editing existing portfolio items (name and category)
 modal_edit = dbc.Modal(
             [
                 dbc.ModalHeader("Edit item"),
@@ -200,9 +210,10 @@ modal_edit = dbc.Modal(
 
 ####################################### Modal sell button ######################################
 
-
+# Store for temporarily holding row data for selling
 store_sell_row = dcc.Store(id="store-sell-row", data=None)
 
+# Modal for selling portfolio assets
 modal_sell = dbc.Modal(
             [
                 dbc.ModalHeader(id="modal-sell-header"),
@@ -222,8 +233,10 @@ modal_sell = dbc.Modal(
             className = "custom_model_css",
         )
 
-################################# history transaction ##############################
+################################# History transactions table ##############################
 
+# Transaction history table showing all buy/sell operations with profit/loss
+# Color-coded: green for buys, red for sells, profit/loss highlighted
 history = html.Div(
         dag.AgGrid(
         id='portfolio-history-table',
@@ -277,6 +290,10 @@ footer = html.Footer(
 #################################### Content functions ######################################
 
 def dashboard_content():
+    """
+    Dashboard tab content with statistics panel and charts.
+    Displays portfolio value over time (line chart) and asset distribution (pie chart).
+    """
     return html.Div([        
         info_panel,
         
@@ -292,6 +309,10 @@ def dashboard_content():
     ])
 
 def portfolio_content():
+    """
+    Portfolio tab content with interactive table and action modals.
+    Allows users to view, add, edit, delete, and sell portfolio items.
+    """
     return html.Div([
         html.Div([
             html.Div(table, className='table_style_container'),
@@ -303,6 +324,10 @@ def portfolio_content():
     ])
 
 def transactions_content():
+    """
+    Transactions tab content displaying full transaction history.
+    Shows all buy/sell operations with calculated profit/loss.
+    """
     return html.Div([
         html.Div(history, className='history_style_container')
     ])
@@ -310,6 +335,11 @@ def transactions_content():
 ##################################### Serve layout ############################################
 
 def serve_layout():
+    """
+    Main application layout generator.
+    Creates the complete page structure with header, navigation, content area, and footer.
+    Includes data refresh trigger for callback synchronization.
+    """
     return html.Div([
         html.Div([
             dcc.Store(id='data-refresh-trigger', data=0),

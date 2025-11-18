@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Markazi+Text:wght@400..700&display=swap');
 
+/*********************** Global Styles ****************************/
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-    background: linear-gradient(143deg, rgba(3, 12, 38, 1), rgba(22, 40, 80, 1));
-    -webkit-background: linear-gradient(143deg, rgba(3, 12, 38, 1), rgba(22, 40, 80, 1));
-    -moz-background: linear-gradient(143deg, rgba(3, 12, 38, 1), rgba(22, 40, 80, 1));
+    background: linear-gradient(143deg, rgb(3, 12, 38), rgba(22, 40, 80, 1));
+    -webkit-background: linear-gradient(143deg, rgba(3, 12, 38, 1), rgb(35, 58, 109));
+    -moz-background: linear-gradient(143deg, rgba(3, 12, 38, 1), rgb(41, 69, 128));
 }
 
 .app-container {
@@ -17,7 +19,7 @@ body {
     flex: 1;
 }
 
-/********************* Header ************************/
+/*********************** Header ****************************/
 
 .header_main_container {
     width: 100%;
@@ -55,7 +57,8 @@ body {
     font-size: 22px;
 }
 
-/********************* Tabs container ******************************/
+/*********************** Navigation Tabs ****************************/
+
 .tabs-main-container {
     display: flex;
     justify-content: center;
@@ -109,7 +112,7 @@ body {
     box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3);
 }
 
-/********************* Info panel ************************/
+/*********************** Dashboard - Info Panel ****************************/
 
 .info_panel {
     display: flex;
@@ -135,7 +138,7 @@ body {
     font-size: 15px;
 }
 
-/********************* time buttons ************************/
+/*********************** Dashboard - Time Period Filters ****************************/
 
 .time_buttons_container {
     position: absolute;
@@ -173,7 +176,7 @@ body {
     color: rgba(255, 255, 255, 0.95);
 }
 
-/***************** graphs ******************************/
+/*********************** Dashboard - Charts ****************************/
 
 .graph_containers_total {
     display: flex;
@@ -194,7 +197,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(12, 25, 53);
+    background-color: transparent;
     padding: 5px;
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -230,7 +233,25 @@ body {
     }
 }
 
-/********************* Table ************************/
+/*********************** AG-Grid - Filter & Popup Styles ****************************/
+
+.ag-theme-alpine .ag-menu,
+.ag-theme-alpine .ag-filter-toolpanel,
+.ag-theme-alpine .ag-popup {
+    background: linear-gradient(135deg, rgba(40, 40, 40, 0.95), rgba(30, 30, 30, 0.98)) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37) !important;
+}
+
+.ag-theme-alpine .ag-filter {
+    background-color: rgba(3, 12, 38, 0.767);
+}
+
+.ag-theme-alpine .ag-popup .ag-select-list {
+    background-color: rgba(3, 12, 38, 0.9) !important;
+}
+
+/*********************** Portfolio Table ****************************/
 
 .portfolio_table_css .ag-theme-alpine {
     --ag-background-color: transparent;
@@ -295,8 +316,7 @@ body {
     background: transparent !important;
 }
 
-
-/***************** Modal buttons ****************************/
+/*********************** Modals ****************************/
 
 .add_item_button { 
     background: linear-gradient(135deg, #3b82f6, #2563eb); 
@@ -342,8 +362,7 @@ body {
     z-index: 3000 !important;
 }
 
-
-/****************** transaction history *********************/
+/*********************** Transaction History Table ****************************/
 
 .portfolio_history_table_css .ag-theme-alpine {
     --ag-background-color: transparent;
@@ -397,7 +416,7 @@ body {
     justify-content: center !important;
 }
 
-/************************* footer ***************************/
+/*********************** Footer ****************************/
 
 .footer_container {
     width: 100%;
